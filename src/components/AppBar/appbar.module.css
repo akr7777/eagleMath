@@ -1,0 +1,19 @@
+.logo_text_CSS {
+    color: lightgoldenrodyellow;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: "Comic Sans MS";
+}
+.NavLinkCSSDesctop {
+    text-decoration: none;
+    color: lightgoldenrodyellow;
+    font-size: 20px;
+    margin-right: 30px;
+}
+
+.NavLinkCSSMobile {
+    text-decoration: none;
+    color: dimgrey;
+    font-size: 20px;
+    margin-right: 30px;
+}

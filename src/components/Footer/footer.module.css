@@ -1,0 +1,7 @@
+.footerCSS {
+    /*margin-top: auto;
+    margin-bottom: 0;*/
+    background-color: cornflowerblue;
+    flex: 0 0 auto;
+    height: 100px;
+}
