@@ -1,0 +1,23 @@
+.wrappedDiv {
+    /*background-color: green;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.titleDiv {
+    /*background-color: yellow;*/
+}
+.loginDiv {
+    /*background-color: cornflowerblue;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+    /*width: 50%;*/
+}
+
+.error {
+    color: red;
+}

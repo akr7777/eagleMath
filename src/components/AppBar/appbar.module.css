@@ -17,3 +17,11 @@
     font-size: 20px;
     margin-right: 30px;
 }
+
+.someDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+}

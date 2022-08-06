@@ -6,6 +6,7 @@ import {Typography} from "@mui/material";
 import s from './description.module.css';
 import EditContactsPopper from "../Contacts/EditContactsPopper";
 import EditDescritionPopper from "./EditDescritionPopper";
+import AlertDialog1 from "../Materials/AlertDialog";
 
 
 export const Description = () => {
@@ -28,6 +29,8 @@ export const Description = () => {
             </div>
             <div>
                 <Typography className={s.description} variant={'h5'} >
+                    <p></p>111<p></p>222<p></p>
+
                     {useSelector((state:RootState)=> state.author.description)}
                 </Typography>
             </div>

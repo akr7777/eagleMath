@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Avatar from '@mui/material/Avatar';
 
 import {NavLink} from "react-router-dom";
 import s from './appbar.module.css';
@@ -56,24 +57,39 @@ export default function MyAppBar(props: Props) {
         setMobileOpen(!mobileOpen);
     };
 
+    let isAuth = true;
+
 
     //Mobile device
     const drawer = (
-        <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
-            <Typography variant="h5" sx={{my: 2}}>
-                {logoText}
-            </Typography>
-            <Divider/>
-            <List>
-                {navItemsMobile.map((item, elementIndex) => (
-                    <ListItem/* key={item}*/key={elementIndex} disablePadding>
-                        <ListItemButton sx={{textAlign: 'center'}}>
-                            <ListItemText primary={item}/>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
+        <>
+            <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
+                <Typography variant="h5" sx={{my: 2}}>
+                    {logoText}
+                </Typography>
+                <Divider/>
+                <List>
+                    {navItemsMobile.map((item, elementIndex) => (
+                        <ListItem/* key={item}*/ key={elementIndex} disablePadding>
+                            <ListItemButton sx={{textAlign: 'center'}}>
+                                <ListItemText primary={item}/>
+                            </ListItemButton>
+                        </ListItem>
+                    ))}
+
+                </List>
+
+                <Divider/>
+                <div className={s.someDiv}>
+                    {
+                        isAuth ? <Avatar alt="Remy Sharp"
+                                         src="https://pet-mir.ru/wp-content/uploads/2016/06/dzhek-rassel-terer-5.jpeg"/>
+                            : <Avatar/>
+                    }
+                </div>
+            </Box>
+        </>
+
     );
 
     const container = window !== undefined ? () => window().document.body : undefined;
@@ -91,7 +107,9 @@ export default function MyAppBar(props: Props) {
                     >
                         <MenuIcon/>
                     </IconButton>
+
                     {/* ---------- DESCTOP DEVISES -------------- */}
+
                     <Typography
                         variant="h4"
                         component="div"
@@ -107,6 +125,14 @@ export default function MyAppBar(props: Props) {
                                 {item}
                             </Button>
                         ))}
+
+                    </Box>
+                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                        {
+                            isAuth ? <Avatar alt=""
+                                             src="https://pet-mir.ru/wp-content/uploads/2016/06/dzhek-rassel-terer-5.jpeg"/>
+                                : <Avatar/>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>

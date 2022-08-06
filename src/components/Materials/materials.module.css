@@ -5,3 +5,15 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+
+.understandLabelDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+
+    align-items: center;
+    justify-content: end;
+
+    background-color: darkgrey;
+    width: 100%;
+}

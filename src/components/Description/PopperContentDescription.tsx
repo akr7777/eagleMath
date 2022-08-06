@@ -22,9 +22,13 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
     const dispatch = useDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+        let redactedDescription = description.replaceAll("\n", '<p></p>');
+        console.log('redactedDescription=', redactedDescription);
+        setDescription(redactedDescription);
+
         dispatch(setTitleAC(title));
         dispatch(setPhotoURLAC(photoURL));
-        dispatch(setDescriptionAC(description));
+        dispatch(setDescriptionAC(redactedDescription));
         props.handleClickClose(event);
     }
 

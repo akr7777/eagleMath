@@ -9,6 +9,7 @@ import {Contacts} from "./components/Contacts/Contacts";
 import {Footer} from "./components/Footer/Footer";
 import {Tasks} from "./components/Tasks/Tasks";
 import Materials from "./components/Materials/Materials";
+import Login from "./components/AuthPage/Login";
 
 //import logo from './logo.svg';
 //<img src={logo} className="App-logo" alt="logo" />
@@ -38,6 +39,7 @@ function App() {
                 {/*<Route path={PATH.PRE_JUNIOR} element={<PreJuniorHW/>} />
                 <Route path={PATH.JUNIOR} element={<JuniorHW/>} />
                 <Route path={PATH.JUNIOR_PLUS} element={<JuniorPlusHW/>} />*/}
+                <Route path={PATHS.login} element={<Login/>}/>
                 <Route path='/*' element={<Error404/>} />
             </Route>
         </Routes>
