@@ -8,6 +8,7 @@ import {Error404} from "./components/Error404/Error404";
 import {Contacts} from "./components/Contacts/Contacts";
 import {Footer} from "./components/Footer/Footer";
 import {Tasks} from "./components/Tasks/Tasks";
+import Materials from "./components/Materials/Materials";
 
 //import logo from './logo.svg';
 //<img src={logo} className="App-logo" alt="logo" />
@@ -31,6 +32,7 @@ function App() {
         <Routes>
             <Route path='/' element={<Layout/>}>
                 <Route index element={<Description/>} />
+                <Route path={PATHS.materials} element={<Materials/>} />
                 <Route path={PATHS.tasks} element={<Tasks/>} />
                 <Route path={PATHS.contacts} element={<Contacts/>}/>
                 {/*<Route path={PATH.PRE_JUNIOR} element={<PreJuniorHW/>} />

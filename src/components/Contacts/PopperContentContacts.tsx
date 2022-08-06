@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} from "../features/contacts";
+import {setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} from "../features/contactsSlice";
 import s from './contacts.module.css';
 
 

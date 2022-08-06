@@ -1,14 +1,18 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import authorSlice from "../components/features/authorSlice";
 import authSlice from "../components/features/authSlice";
-import contacts from "../components/features/contacts";
+import contactsSlice from "../components/features/contactsSlice";
+import tasksSlice from "../components/features/tasksSlice";
+import materialsSlice from "../components/features/materialsSlice";
 
 
 export const store = configureStore({
     reducer: {
         author: authorSlice,
         auth: authSlice,
-        contacts: contacts,
+        contacts: contactsSlice,
+        tasks: tasksSlice,
+        materials: materialsSlice,
     },
 });
 

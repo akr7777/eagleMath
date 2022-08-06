@@ -13,16 +13,6 @@ export const Description = () => {
 
     const isAdmin = true;
 
-    //let initPhoto = useSelector( (state:RootState) => state.author.photoURL);
-    //const [imgSrcValue, setImgSrcValue] = useState<string>(initPhoto);
-
-    /*const setNewPhotoOnClickHandler = () => {
-        dispatch(setPhotoURL(imgSrcValue))
-    }
-    const setNewPhotoInputValue = (e:ChangeEvent<HTMLInputElement>) => {
-        setImgSrcValue(e.currentTarget.value)
-    }*/
-
     //=============================
     return <>
         <Container className={s.wrapped_container}>

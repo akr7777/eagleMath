@@ -29,7 +29,7 @@ const drawerWidth = 240;
 export const PATHS = {
     description: '/',
     tasks: '/tasks',
-
+    materials: 'materials',
     contacts: '/contacts',
     login: '/login',
 }
@@ -37,11 +37,13 @@ export const PATHS = {
 const logoText = "Eagle's Math"
 const navItemsDesctop = [
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.description}>Главная страница</NavLink>,
+    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.materials}>Материалы</NavLink>,
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.tasks}>Задачи</NavLink>,
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.contacts}>Контакты</NavLink>,
 ];
 const navItemsMobile = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.description}>Главная страница</NavLink>,
+    <NavLink className={s.NavLinkCSSMobile} to={PATHS.materials}>Материалы</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Задачи</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.contacts}>Контакты</NavLink>,
 ];
