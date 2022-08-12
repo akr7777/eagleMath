@@ -16,6 +16,11 @@ import Avatar from '@mui/material/Avatar';
 
 import {NavLink} from "react-router-dom";
 import s from './appbar.module.css';
+import PopoverWithAvatar from "./PopoverWithAvatar";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 interface Props {
     /**
@@ -33,6 +38,11 @@ export const PATHS = {
     materials: 'materials',
     contacts: '/contacts',
     login: '/login',
+    profile: '/profile',
+    logout: '/logout',
+    singup: '/singup',
+
+    posts: '/posts',
 }
 
 const logoText = "Eagle's Math"
@@ -48,17 +58,33 @@ const navItemsMobile = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Задачи</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.contacts}>Контакты</NavLink>,
 ];
+const navItemsMobileExtra = [
+    <NavLink className={s.NavLinkCSSMobile} to={PATHS.profile}>
+        <ManageAccountsIcon/> Профайл
+    </NavLink>,
+    <NavLink className={s.NavLinkCSSMobile} to={PATHS.logout}>
+        <LogoutIcon/>
+        <label>Выйти</label>
+    </NavLink>,
+    /*<Button variant={'text'}><LogoutIcon/>Выйти</Button>,*/
+];
 
 export default function MyAppBar(props: Props) {
     const {window} = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
-    let isAuth = true;
+    let isAuth = useSelector( (state: RootState) => state.auth.isAuth);
+    const avaURL = useSelector( (state: RootState) => state.auth.authPhoto);
+    const avaPhotoMobile = isAuth
+        ? <Avatar src={avaURL}/>
+        : <NavLink to={PATHS.login}><Avatar/></NavLink>
 
+    const avatarImageLink = isAuth
+        ? <PopoverWithAvatar/>
+        : <NavLink to={PATHS.login}><Avatar/></NavLink>
 
     //Mobile device
     const drawer = (
@@ -76,17 +102,29 @@ export default function MyAppBar(props: Props) {
                             </ListItemButton>
                         </ListItem>
                     ))}
-
                 </List>
 
                 <Divider/>
-                <div className={s.someDiv}>
-                    {
-                        isAuth ? <Avatar alt="Remy Sharp"
-                                         src="https://pet-mir.ru/wp-content/uploads/2016/06/dzhek-rassel-terer-5.jpeg"/>
-                            : <Avatar/>
-                    }
+
+                <div className={s.divForAva12}>
+                    {avaPhotoMobile}
                 </div>
+
+                {
+                    isAuth && <>
+                        <Divider/>
+                        <List>
+                            {navItemsMobileExtra.map((item, elementIndex) => (
+                                <ListItem/* key={item}*/ key={elementIndex} disablePadding>
+                                    <ListItemButton sx={{textAlign: 'center'}}>
+                                        <ListItemText primary={item}/>
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </List>
+                    </>
+                }
+
             </Box>
         </>
 
@@ -129,9 +167,13 @@ export default function MyAppBar(props: Props) {
                     </Box>
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {
-                            isAuth ? <Avatar alt=""
+                            /*isAuth ? <Avatar alt=""
                                              src="https://pet-mir.ru/wp-content/uploads/2016/06/dzhek-rassel-terer-5.jpeg"/>
-                                : <Avatar/>
+                                : <Avatar/>*/
+                            /*isAuth
+                                ? <PopoverWithAvatar/>
+                                : <Avatar/>*/
+                            avatarImageLink
                         }
                     </Box>
                 </Toolbar>

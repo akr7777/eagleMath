@@ -22,7 +22,8 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
     const dispatch = useDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-        let redactedDescription = description.replaceAll("\n", '<p></p>');
+        //let redactedDescription = description.replaceAll("\n", '<p></p>');
+        let redactedDescription = description
         console.log('redactedDescription=', redactedDescription);
         setDescription(redactedDescription);
 

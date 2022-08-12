@@ -25,11 +25,14 @@ export const Contacts = () => {
                 <Typography variant="h4" >This is my contacts:</Typography>
                 { isAdmin && <EditContactsPopper/> }
             </div>
-            {!!phone && <div><Typography variant="h5" >Phone: {phone}</Typography></div> }
-            {!!telegram && <div><Typography variant="h5" >telegram: {telegram}</Typography></div> }
-            {!!whatsapp && <div><Typography variant="h5" >whatsapp: {whatsapp}</Typography></div> }
-            {!!email && <div><Typography variant="h5" >email: {email}</Typography></div> }
-            {!!skype && <div><Typography variant="h5" >skype: {skype}</Typography></div> }
+            <div className={s.body_title}>
+                {!!phone && <div><Typography variant="h5" >Phone: {phone}</Typography></div> }
+                {!!telegram && <div><Typography variant="h5" >telegram: {telegram}</Typography></div> }
+                {!!whatsapp && <div><Typography variant="h5" >whatsapp: {whatsapp}</Typography></div> }
+                {!!email && <div><Typography variant="h5" >email: {email}</Typography></div> }
+                {!!skype && <div><Typography variant="h5" >skype: {skype}</Typography></div> }
+            </div>
+
         </Container>
     </>
 }

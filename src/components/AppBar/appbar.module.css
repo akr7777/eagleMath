@@ -1,12 +1,21 @@
+.wrappedDiv{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0 20px 0;
+}
+
 .logo_text_CSS {
-    color: lightgoldenrodyellow;
     font-size: 40px;
     font-weight: bold;
     font-family: "Comic Sans MS";
 }
 .NavLinkCSSDesctop {
     text-decoration: none;
-    color: lightgoldenrodyellow;
     font-size: 20px;
     margin-right: 30px;
 }
@@ -25,3 +34,31 @@
     text-align: center;
     margin-top: 20px;
 }
+
+.BoxPopover {
+    display: flex;
+    flex-direction: column;
+}
+.SmallMenuLinks {
+    text-decoration: none;
+    color: #312f2f;
+    text-underline: none;
+}
+
+.logoutButtonIcon {
+    margin-right: 15px;
+}
+
+.divForAva12 {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.mobileExtraDiv{
+    background-color: cyan;
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+}
+

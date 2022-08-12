@@ -10,7 +10,11 @@ import {Footer} from "./components/Footer/Footer";
 import {Tasks} from "./components/Tasks/Tasks";
 import Materials from "./components/Materials/Materials";
 import Login from "./components/AuthPage/Login";
+import Profile from "./components/Profile/Profile";
 
+import {Posts} from './components/Posts/Posts';
+import SingUpPage from "./components/AuthPage/SingUpPage";
+import Logout from "./components/AuthPage/Logout";
 //import logo from './logo.svg';
 //<img src={logo} className="App-logo" alt="logo" />
 
@@ -40,6 +44,14 @@ function App() {
                 <Route path={PATH.JUNIOR} element={<JuniorHW/>} />
                 <Route path={PATH.JUNIOR_PLUS} element={<JuniorPlusHW/>} />*/}
                 <Route path={PATHS.login} element={<Login/>}/>
+                <Route path={PATHS.logout} element={<Logout/>}/>
+                <Route path={PATHS.profile} element={<Profile/>}/>
+                <Route path={PATHS.singup} element={<SingUpPage/>}/>
+
+
+                <Route path={PATHS.posts} element={<Posts/>}/>
+
+
                 <Route path='/*' element={<Error404/>} />
             </Route>
         </Routes>

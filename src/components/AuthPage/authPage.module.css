@@ -1,12 +1,26 @@
 .wrappedDiv {
-    /*background-color: green;*/
+    /*background-color: lightgoldenrodyellow;*/
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     text-align: center;
+    align-items: center;
+    align-content: center;
+
+    gap: 30px;
+    margin: 20px 0 20px 0;
 }
 .titleDiv {
-    /*background-color: yellow;*/
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    justify-content: center;
+    align-items: center;
+}
+.titleDivDesription {
+    text-align: center;
 }
 .loginDiv {
     /*background-color: cornflowerblue;*/
@@ -20,4 +34,16 @@
 
 .error {
     color: red;
+}
+.signUpButton {
+    width: 200px;
+    height: 40px;
+}
+
+.signup_textFields {
+    width: 400px;
+    height: 30px;
+}
+.navLink1 {
+    text-decoration: none;
 }
