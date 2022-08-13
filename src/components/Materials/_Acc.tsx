@@ -12,20 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import AlertDialog2 from './AlertDialog';
-
-//>dialog
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import {TransitionProps} from '@mui/material/transitions';
-//<dialog
-
 import s from './materials.module.css';
-import {useState} from "react";
 
 export default function ControlledAccordions() {
 

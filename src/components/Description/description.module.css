@@ -1,7 +1,7 @@
 .wrapped_container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     min-height: 700px;
     /*display: grid;
     grid-template-columns: 1fr;
@@ -14,9 +14,8 @@
     align-self: center;
 
 
-    margin-top: 30px;
-    margin-bottom: 30px;
-    /*background-color: red;*/
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .title {
@@ -33,7 +32,7 @@
     flex-direction: column;
     align-content: center;
     align-items: center;
-    margin: 1px;
+    margin: 10px;
 }
 .big_eagle_photo {
     width: 300px;
@@ -48,6 +47,7 @@
     /*align-self: center;
     text-align: center;*/
     white-space: pre-line;
+    margin-top: 10px;
 }
 
 .edit_description_div {

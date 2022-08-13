@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} from "../features/contactsSlice";
+import {setTitleAC, setDescriptionAC, setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} from "../features/contactsSlice";
 import s from './contacts.module.css';
 
 
@@ -13,6 +13,8 @@ type PopperContentPropsType = {
 }
 const PopperContentContacts = (props: PopperContentPropsType) => {
 
+    const [title, setTitle] = useState<string>( useSelector( (state:RootState) => state.contacts.title) );
+    const [description, setDescription] = useState<string>( useSelector( (state:RootState) => state.contacts.description) );
     const [phone, setPhone] = useState<string>( useSelector( (state:RootState) => state.contacts.phone) );
     const [telegram, setTelegram] = useState<string>( useSelector( (state:RootState) => state.contacts.telegram) );
     const [whatsapp, setWhatsapp] = useState<string>( useSelector( (state:RootState) => state.contacts.whatsapp) );
@@ -22,6 +24,8 @@ const PopperContentContacts = (props: PopperContentPropsType) => {
     const dispatch = useDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+        dispatch(setTitleAC(title));
+        dispatch(setDescriptionAC(description));
         dispatch(setPhoneAC(phone));
         dispatch(setTelegramAC(telegram));
         dispatch(setWhatsappAC(whatsapp));
@@ -33,6 +37,8 @@ const PopperContentContacts = (props: PopperContentPropsType) => {
     return <div>
         <h2> Here you can edit your contacts: </h2>
         <div className={s.popperWrapper}>
+            <div><TextField id="outlined-title" label="Заголовок:" variant="outlined" value={title} onChange={ (e) => setTitle(e.currentTarget.value)}/></div>
+            <div><TextField id="outlined-description" label="Описание:" variant="outlined" value={description} onChange={ (e) => setDescription(e.currentTarget.value)}/></div>
             <div><TextField id="outlined-phone" label="phone" variant="outlined" value={phone} onChange={ (e) => setPhone(e.currentTarget.value)}/></div>
             <div><TextField id="outlined-telegram" label="telegram" variant="outlined" value={telegram} onChange={ (e) => setTelegram(e.currentTarget.value)}/></div>
             <div><TextField id="outlined-whatsapp" label="whatsapp" variant="outlined" value={whatsapp} onChange={ (e) => setWhatsapp(e.currentTarget.value)}/></div>

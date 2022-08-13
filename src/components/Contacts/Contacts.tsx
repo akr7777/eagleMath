@@ -1,36 +1,75 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useSelector} from "react-redux";
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import {RootState} from "../../store/store";
 import EditContactsPopper from "./EditContactsPopper";
-import { Typography } from '@mui/material';
+import {Typography} from '@mui/material';
 import s from './contacts.module.css';
 import Container from '@mui/material/Container';
 import PopperContentContacts from "./PopperContentContacts";
 
+function phoneFormat(phone: string) {
+    if (phone.length === 12)
+        return phone.slice(0, 2) + ' (' + phone.slice(2, 5) + ') ' + phone.slice(5, 8) + '-' + phone.slice(8, 10) + '-' + phone.slice(10, 12);
+    else
+        return phone;
+}
+
 export const Contacts = () => {
 
     //const isAdmin:boolean = useSelector( (state:RootState) => state.auth.isAuth)
-    const isAdmin = useSelector( (state:RootState) => state.auth.isAdmin);
+    const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
 
-    const phone = useSelector( (state: RootState) => state.contacts.phone);
-    const telegram = useSelector( (state:RootState) => state.contacts.telegram);
-    const whatsapp = useSelector( (state:RootState) => state.contacts.whatsapp);
-    const email = useSelector( (state: RootState) => state.contacts.email);
-    const skype = useSelector( (state: RootState) => state.contacts.skype);
+    const contactsTitle = useSelector((state: RootState) => state.contacts.title);
+    const contactsDescription = useSelector((state: RootState) => state.contacts.description);
+
+    const phone = useSelector((state: RootState) => state.contacts.phone);
+    const telegram = useSelector((state: RootState) => state.contacts.telegram);
+    const whatsapp = useSelector((state: RootState) => state.contacts.whatsapp);
+    const email = useSelector((state: RootState) => state.contacts.email);
+    const skype = useSelector((state: RootState) => state.contacts.skype);
 
     return <>
         <Container className={s.wrapper}>
             <div className={s.head_title}>
-                <Typography variant="h4" >This is my contacts:</Typography>
-                { isAdmin && <EditContactsPopper/> }
+                <Typography variant="h4">{contactsTitle}</Typography>
             </div>
+            <div className={s.head_description}>
+                <Typography variant={'h5'}>
+                    {contactsDescription}
+                </Typography>
+            </div>
+
             <div className={s.body_title}>
-                {!!phone && <div><Typography variant="h5" >Phone: {phone}</Typography></div> }
-                {!!telegram && <div><Typography variant="h5" >telegram: {telegram}</Typography></div> }
-                {!!whatsapp && <div><Typography variant="h5" >whatsapp: {whatsapp}</Typography></div> }
-                {!!email && <div><Typography variant="h5" >email: {email}</Typography></div> }
-                {!!skype && <div><Typography variant="h5" >skype: {skype}</Typography></div> }
+
+                <div>{isAdmin && <EditContactsPopper/>}</div>
+
+                {!!phone && <div>
+                    <Typography variant="h5">
+                        Телефон: <a className={s.alink} href={"tel:" + phone}>{phoneFormat(phone)}</a>
+                    </Typography>
+                </div>}
+                {!!telegram && <div>
+                    <Typography variant="h5">
+                        Telegram: <a className={s.alink} href={"https://t.me/" + telegram}>{telegram}</a>
+                    </Typography>
+                </div>}
+                {!!whatsapp && <div>
+                    <Typography variant="h5">
+                        What's app: <a className={s.alink}
+                                       href={'https://api.whatsapp.com/send?phone=' + whatsapp.slice(1, whatsapp.length)}>{whatsapp}</a>
+                    </Typography>
+                </div>}
+                {!!email && <div>
+                    <Typography variant="h5">
+                        e-mail: <a className={s.alink} href={'mailto:' + email}>{email}</a>
+                    </Typography>
+                </div>}
+                {!!skype && <div>
+                    <Typography variant="h5">
+                        Skype: <a className={s.alink} href={"skype:" + skype + "?chat"}>{skype}</a>
+                    </Typography>
+                </div>}
             </div>
 
         </Container>

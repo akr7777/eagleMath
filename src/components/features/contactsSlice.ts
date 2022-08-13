@@ -1,14 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit';
+import type {PayloadAction} from '@reduxjs/toolkit'
 
 export type ContactsType = {
+    title: string,
+    description: string,
     phone: string,
     telegram: string,
     whatsapp: string,
     email: string,
     skype: string,
 }
-let initialState:ContactsType = {
+let initialState: ContactsType = {
+    title: 'Мои контакты:',
+    description: 'Описание',
     phone: '',
     telegram: '',
     whatsapp: '',
@@ -19,23 +23,29 @@ export const contactsSlice = createSlice({
     name: 'contacts',
     initialState: initialState,
     reducers: {
-        setPhoneAC: (state:ContactsType, action: PayloadAction<string>):void => {
+        setTitleAC: (state:ContactsType, action: PayloadAction<string>): void => {
+            state.title = action.payload;
+        },
+        setDescriptionAC: (state:ContactsType, action: PayloadAction<string>): void => {
+            state.description = action.payload;
+        },
+        setPhoneAC: (state: ContactsType, action: PayloadAction<string>): void => {
             state.phone = action.payload;
         },
-        setTelegramAC: (state:ContactsType, action: PayloadAction<string>):void => {
+        setTelegramAC: (state: ContactsType, action: PayloadAction<string>): void => {
             state.telegram = action.payload;
         },
-        setWhatsappAC: (state:ContactsType, action: PayloadAction<string>):void => {
+        setWhatsappAC: (state: ContactsType, action: PayloadAction<string>): void => {
             state.whatsapp = action.payload;
         },
-        setEmailAC: (state:ContactsType, action: PayloadAction<string>):void => {
+        setEmailAC: (state: ContactsType, action: PayloadAction<string>): void => {
             state.email = action.payload;
         },
-        setSkypeAC: (state:ContactsType, action: PayloadAction<string>):void => {
+        setSkypeAC: (state: ContactsType, action: PayloadAction<string>): void => {
             state.skype = action.payload;
         },
     }
 })
-export const {setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} = contactsSlice.actions;
+export const {setTitleAC, setDescriptionAC, setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} = contactsSlice.actions;
 
 export default contactsSlice.reducer;
