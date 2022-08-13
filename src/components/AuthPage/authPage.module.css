@@ -1,5 +1,4 @@
 .wrappedDiv {
-    /*background-color: lightgoldenrodyellow;*/
     display: flex;
     flex-direction: column;
 
@@ -23,13 +22,13 @@
     text-align: center;
 }
 .loginDiv {
-    /*background-color: cornflowerblue;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    align-items: center;
+    align-content: center;
     gap: 20px;
-    /*width: 50%;*/
 }
 
 .error {
@@ -39,10 +38,18 @@
     width: 200px;
     height: 40px;
 }
+.loginButton {
+    width: 200px;
+    height: 40px;
+}
 
 .signup_textFields {
     width: 400px;
     height: 30px;
+}
+.login_textFields {
+    width: 400px;
+    /*height: 30px;*/
 }
 .navLink1 {
     text-decoration: none;

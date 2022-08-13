@@ -7,19 +7,21 @@ import s from './authPage.module.css';
 import {ChangeEvent, useState} from "react";
 import Button from "@mui/material/Button";
 import CustomColorButton from "../common/CustomColorButton";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink, useNavigate} from "react-router-dom";
+
 import {PATHS} from "../AppBar/AppBar";
-import {login} from "../features/authSlice";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
+import {login} from "../features/authSlice";
 
 const Login = () => {
     const [error, setError] = useState<string>('');
-    const serverError:string = useSelector( (state: RootState) => state.auth.serverError);
+    const serverError: string = useSelector((state: RootState) => state.auth.serverError);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
     const dispatch = useAppDispatch();
+    let navigate = useNavigate();
 
     const emailChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setEmail(e.currentTarget.value);
@@ -29,9 +31,10 @@ const Login = () => {
     }
     const enterClickHandler = () => {
         dispatch(login({email: email, password: password}));
+        navigate(PATHS.description, {replace: true});
     }
 
-    return <Container>
+    return <Container className={s.wrappedDiv}>
         <div className={s.titleDiv}>
             <Typography variant={'h4'}>
                 Вход в систему
@@ -43,42 +46,41 @@ const Login = () => {
             <NavLink to={PATHS.singup} className={s.navLink1}>
                 <CustomColorButton
                     className={s.signUpButton}
-
                 >Зарегистрироваться1</CustomColorButton>
             </NavLink>
         </div>
 
-        <Grid item md={6}>
-            <div className={s.loginDiv}>
-                <TextField
-                    error={!!error}
-                    label="e-mail"
-                    id="outlined-error-helper-text"
-                    defaultValue=""
-                    value={email}
+        <div className={s.loginDiv}>
+            <TextField
+                className={s.login_textFields}
+                error={!!error}
+                label="e-mail"
+                id="outlined-error-helper-text"
+                defaultValue=""
+                value={email}
+                onChange={(e) => emailChangeHandler(e)}
+            />
+            <TextField
+                className={s.login_textFields}
+                error={!!error}
+                label="password"
+                id="outlined-error-helper-text"
+                defaultValue=""
+                type={'password'}
+                value={password}
+                onChange={(e) => passwordChangeHandler(e)}
+            />
 
-                    /*helperText="Incorrect entry."*/
-                    onChange={(e) => emailChangeHandler(e)}
-                />
-                <TextField
-                    error={!!error}
-                    label="password"
-                    id="outlined-error-helper-text"
-                    defaultValue=""
-                    type={'password'}
-                    value={password}
-                    onChange={(e)=> passwordChangeHandler(e)}
-                    /*helperText="Incorrect entry."*/
-                />
+            <Typography className={s.error}>
+                {serverError}
+            </Typography>
 
-                <Typography className={s.error}>
-                    {serverError}
-                </Typography>
-
-                <Button onClick={enterClickHandler}>Войти</Button>
-
-            </div>
-        </Grid>
+            <Button
+                className={s.loginButton}
+                onClick={enterClickHandler}
+                variant={'contained'}
+            >Войти</Button>
+        </div>
     </Container>
 }
 

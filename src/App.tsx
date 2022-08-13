@@ -15,8 +15,6 @@ import Profile from "./components/Profile/Profile";
 import {Posts} from './components/Posts/Posts';
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
-//import logo from './logo.svg';
-//<img src={logo} className="App-logo" alt="logo" />
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -46,6 +44,7 @@ function App() {
                 <Route path={PATHS.login} element={<Login/>}/>
                 <Route path={PATHS.logout} element={<Logout/>}/>
                 <Route path={PATHS.profile} element={<Profile/>}/>
+
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 
 

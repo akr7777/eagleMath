@@ -11,7 +11,7 @@ import PopperContentContacts from "./PopperContentContacts";
 export const Contacts = () => {
 
     //const isAdmin:boolean = useSelector( (state:RootState) => state.auth.isAuth)
-    const isAdmin = true;
+    const isAdmin = useSelector( (state:RootState) => state.auth.isAdmin);
 
     const phone = useSelector( (state: RootState) => state.contacts.phone);
     const telegram = useSelector( (state:RootState) => state.contacts.telegram);

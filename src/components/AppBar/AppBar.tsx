@@ -159,7 +159,7 @@ export default function MyAppBar(props: Props) {
 
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {navItemsDesctop.map((item, elementIndex) => (
-                            <Button /*key={item}*/ key={elementIndex} sx={{color: '#fff'}}>
+                            <Button key={elementIndex} sx={{color: '#fff'}}>
                                 {item}
                             </Button>
                         ))}
@@ -167,17 +167,12 @@ export default function MyAppBar(props: Props) {
                     </Box>
                     <Box sx={{display: {xs: 'none', sm: 'block'}}}>
                         {
-                            /*isAuth ? <Avatar alt=""
-                                             src="https://pet-mir.ru/wp-content/uploads/2016/06/dzhek-rassel-terer-5.jpeg"/>
-                                : <Avatar/>*/
-                            /*isAuth
-                                ? <PopoverWithAvatar/>
-                                : <Avatar/>*/
                             avatarImageLink
                         }
                     </Box>
                 </Toolbar>
             </AppBar>
+
             <Box component="nav">
                 <Drawer
                     container={container}
@@ -195,9 +190,7 @@ export default function MyAppBar(props: Props) {
                     {drawer}
                 </Drawer>
             </Box>
-            {/*<Box component="main" sx={{p: 3}}>
-                <Toolbar/>
-            </Box>*/}
+
         </Box>
     );
 }
