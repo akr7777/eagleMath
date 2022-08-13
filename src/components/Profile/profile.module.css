@@ -1,0 +1,39 @@
+.wrappedDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    margin: 20px 0 20px 0;
+}
+.profile_ava_img {
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    border: grey 2px solid;
+}
+.someDiv {
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 10px 0 10px 0;
+}
+.textFields {
+    width: 220px;
+}
+.changePasswordDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 250px;
+}
+.error {
+    color: red;
+}

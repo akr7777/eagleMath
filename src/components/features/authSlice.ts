@@ -23,13 +23,15 @@ type LoginActionType = {
     email: string,
     password: string,
 }
+export type ChangePasswordActionType = {
+    email:string,
+    oldPassword: string,
+    newPassword: string,
+}
 export const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
-        setAuth: (state: AuthType, action: PayloadAction<boolean>): void => {
-            state.isAuth = action.payload;
-        },
         logout: (state: AuthType): void => {
             state.isAuth = false;
             state.authID = 0;
@@ -56,9 +58,16 @@ export const authSlice = createSlice({
             } else {
                 state.serverError='Wrong email or password'
             }
+        },
+        saveNewEmail: (state: AuthType, action: PayloadAction<string>): void => {
+            //сдклать асинхронный запрос, когда сервер будет готов
+            state.email = action.payload;
+        },
+        changeUserPassword: (state: AuthType, action: PayloadAction<ChangePasswordActionType>):void => {
+            //Замена пароля для существующего пользователя с асинхронным запросом на сервер
         }
     }
 })
-export const {setAuth, logout, login} = authSlice.actions;
+export const {login, logout, saveNewEmail, changeUserPassword} = authSlice.actions;
 
 export default authSlice.reducer;
