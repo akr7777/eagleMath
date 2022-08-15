@@ -58,7 +58,7 @@ export default function ControlledAccordions() {
 
             {/*open={open} handleOK={deleteMaterialByID(m.materialID) handleCancel={clo}}*/}
             {
-                materialsToMap.map(m => {
+                /*materialsToMap.map(m => {
                     return <>
                         <Accordion key={m.materialID} expanded={expanded === m.materialID.toString()}
                                    onChange={handleChange(m.materialID.toString())}>
@@ -80,7 +80,7 @@ export default function ControlledAccordions() {
                             </AccordionDetails>
 
                             <div className={s.understandLabelDiv}>
-                                {/*------ ADMIN EDIT & DELETE MATERIAL ---------*/}
+                                {/!*------ ADMIN EDIT & DELETE MATERIAL ---------*!/}
                                 {
                                     isAdmin && <div className={s.understandLabelDiv}>
                                         <ModeEditIcon/>
@@ -89,7 +89,7 @@ export default function ControlledAccordions() {
                                     </div>
                                 }
 
-                                {/*--------STUDENT has read ---------*/}
+                                {/!*--------STUDENT has read ---------*!/}
                                 <FormGroup>
                                     <FormControlLabel control={<Checkbox/>} label="Прочитал и понял"/>
                                 </FormGroup>
@@ -108,7 +108,7 @@ export default function ControlledAccordions() {
                         </Accordion>
 
 
-                        {/*<div>
+                        {/!*<div>
                             <Dialog
                                 open={open}
                                 TransitionComponent={Transition}
@@ -127,10 +127,10 @@ export default function ControlledAccordions() {
                                     <Button color={'error'} onClick={() => deleteMaterialById(m.materialID)}>Delete</Button>
                                 </DialogActions>
                             </Dialog>
-                        </div>*/}
+                        </div>*!/}
 
                     </>
-                })
+                })*/
             }
 
         </div>

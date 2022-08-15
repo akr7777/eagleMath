@@ -1,4 +1,4 @@
-import {AllMAterialsInitialState} from "./materialsAPIData";
+import {materialsAPI} from "./materialsAPIData";
 
 
 export const AuthAPI = {
@@ -23,7 +23,7 @@ export const MaterialsAPI = {
     getMaterials: () => {
         return {
             resultCode: 0,
-            data: AllMAterialsInitialState,
+            data: materialsAPI,
         }
     }
 }
