@@ -1,15 +1,20 @@
-.wrapper {
+.wrapped_div {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-
-    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     justify-content: center;
-    align-content: center;
-    align-self: center;
-
-    margin-top: 50px;
-    margin-bottom: 50px;
-
-    min-height: 500px;
+    align-items: center;
+    text-align: center;
+    horiz-align: center;
+}
+.someDiv1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px 0 10px 0;
 }
