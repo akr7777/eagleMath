@@ -4,7 +4,8 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import {RootState} from "../../store/store";
 import {Typography} from '@mui/material';
 import Container from '@mui/material/Container';
-import s from './tasks.module.css';
+//import s from './tasks.module.css';
+import s from "../common/commonCSS.module.css";
 import Tree4 from "../common/Tree4";
 
 

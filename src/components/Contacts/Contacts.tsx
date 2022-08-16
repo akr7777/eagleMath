@@ -4,7 +4,9 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import {RootState} from "../../store/store";
 import EditContactsPopper from "./EditContactsPopper";
 import {Typography} from '@mui/material';
-import s from './contacts.module.css';
+import s1 from './contacts.module.css';
+import s from "../common/commonCSS.module.css";
+
 import Container from '@mui/material/Container';
 import PopperContentContacts from "./PopperContentContacts";
 
@@ -30,17 +32,17 @@ export const Contacts = () => {
     const skype = useSelector((state: RootState) => state.contacts.skype);
 
     return <>
-        <Container className={s.wrapper}>
-            <div className={s.head_title}>
+        <Container className={s.wrapped_div}>
+            <div className={s.someDiv1}> {/*s.head_title*/}
                 <Typography variant="h4">{contactsTitle}</Typography>
             </div>
-            <div className={s.head_description}>
+            <div className={s.someDiv1}> {/*s.head_description*/}
                 <Typography variant={'h5'}>
                     {contactsDescription}
                 </Typography>
             </div>
 
-            <div className={s.body_title}>
+            <div className={s.someDiv1}>  {/*s.body_title*/}
 
                 <div>{isAdmin && <EditContactsPopper/>}</div>
 
