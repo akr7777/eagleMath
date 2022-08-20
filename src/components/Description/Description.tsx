@@ -5,10 +5,7 @@ import {Container} from "@material-ui/core";
 import {Typography} from "@mui/material";
 import s1 from './description.module.css';
 import s from "../common/commonCSS.module.css";
-
-import EditContactsPopper from "../Contacts/EditContactsPopper";
 import EditDescritionPopper from "./EditDescritionPopper";
-import AlertDialog1 from "../Materials/AlertDialog";
 
 
 export const Description = () => {

@@ -10,13 +10,14 @@ import Tree4 from "../common/Tree4";
 
 
 //Потом надо удалить!
-import {categoriesAPI, materialsAPI} from "../api/tasksAPIData";
+import {categoriesAPI, tasksAPI} from "../api/tasksAPIData";
+import {Tree5} from "../common/Tree5";
 
 export const Tasks = () => {
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
     const categories = [...categoriesAPI];
-    const materials = [...materialsAPI];
+    const materials = [...tasksAPI];
 
     return <>
         <Container className={s.wrapped_div}>
@@ -28,9 +29,17 @@ export const Tasks = () => {
                     На данной странице Вы можете найти задачи для практики.
                 </Typography>
             </div>
-            <div className={s.someDiv1}>
+
+           {/* <div className={s.someDiv1}>
                 <Tree4 categories={categories}
                        materials={materials}
+                />
+            </div>*/}
+
+            <div className={s.someDiv1}>
+                <Tree5
+                    categories={categories}
+                    materials={materials}
                 />
             </div>
 

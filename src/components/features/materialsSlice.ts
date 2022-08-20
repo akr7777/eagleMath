@@ -1,31 +1,18 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import axios from 'axios';
-import {categoriesAPI, materialsAPI} from "../api/materialsAPIData";
-
-/*export type MaterialType = {
-    materialID: number,
-    title: string,
-    description: string | null,
-    text: string
-    additions: string,
-    parentCatId: number,
-}
-export type MaterialsType = Array<MaterialType>;
-export type CategoryType = {catID: number, catTitle: string, parentCatId: number}
-export type CategoriesType = Array<CategoryType>;*/
+import {MaterialsAPI} from "../api/api";
 
 export type MaterialType = {
     id: number | string,
     parentId: number | null | string,
     label: string,
-    //items: Array<MaterialType>,//if sub-categories exists
+    items: Array<MaterialType>,//if sub-categories exists
 }
 export type CategoryType = {
     id: number | string,
     parentId: number | null | string,
     label: string,
-    items?: Array<CategoryType> | Array<MaterialType>,//if sub-categories exists
+    items: Array<CategoryType>// | Array<MaterialType>,//if sub-categories exists
 }
 
 type InitStateMaterialsType = {
@@ -33,42 +20,46 @@ type InitStateMaterialsType = {
     materials: Array<MaterialType>,
 }
 let initialState: InitStateMaterialsType = {
-    categories: [{id: '12345678', parentId: null, label: "My parent node 12345678", items:[]}],
-    materials: [{id: 1238, parentId: 12345678, label: "My parent node 1238"}]
+    categories: [
+        {id: '12345678', parentId: null, label: "My parent node 12345678", items:[]},
+        {id: '123', parentId: null, label: 'dsa', items: []}
+    ],
+    materials: [
+        {id: 12380, parentId: 12345678, label: "My parent node 12380", items: []},
+
+
+    ]
 }
 
-/*export const getAllMaterials = createAsyncThunk(
+export const getAllMaterials = createAsyncThunk(
     'materials/getAllMaterials',
-    async function (_, { rejectWithValue, dispatch } ) {
-        const res = await axios.get('https://someURL');
-        dispatch(setAllMaterials(res.data))
+    async (_, { rejectWithValue, dispatch } ) => {
+        const data = await MaterialsAPI.getAllMaterials();
+        if (data.materials && data.categories) {
+            dispatch(setAllMaterialsAC(data.materials));
+            dispatch(setAllCategoriesAC(data.categories));
+        }
     }
-);*/
+);
 
 
 export const materialsSlice = createSlice({
     name: 'materials',
     initialState,
     reducers: {
-        /*setTaskDescription: (state: TaskType, action: PayloadAction<string>) => {
-            state.taskDescription = action.payload;
-        }*/
-        setAllMaterialsAC: (state:InitStateMaterialsType) => {
-            state.materials = [...materialsAPI];
+        setAllMaterialsAC: (state:InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
+            state.materials = action.payload;
         },
-        setAllCategoriesAC: (state:InitStateMaterialsType) => {
-            state.categories = [...categoriesAPI];
+        setAllCategoriesAC: (state:InitStateMaterialsType, action: PayloadAction<CategoryType[]>) => {
+            state.categories = action.payload;
         },
-        /*setPosts: (state:MaterialType[], action:PayloadAction<any>) => {
-            state[0].posts = action.payload;
-        }*/
+
     },
-    /*extraReducers: {
-        /!*[getAllMaterials.fulfilled]: ()=> console.log('fulfilled');
-        [getAllMaterials.pending]: ()=> console.log('pending');
-        [getAllMaterials.rejected]: ()=> console.log('rejected');*!/
-        [getPosts.fulfilled]: () => console.log('fulfilled')
-    }*/
+    extraReducers: {
+        [getAllMaterials.fulfilled.toString()]: ()=> console.log('fulfilled'),
+        [getAllMaterials.pending.toString()]: ()=> console.log('pending'),
+        [getAllMaterials.rejected.toString()]: ()=> console.log('rejected'),
+    }
 })
 
 export const { setAllMaterialsAC, setAllCategoriesAC } = materialsSlice.actions;

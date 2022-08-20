@@ -1,0 +1,40 @@
+
+.wrappedDiv {
+    background-color: darkgrey;
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px 10px 20px 10px;
+}
+.leafAndChildren {
+    width: 95%;
+}
+.treeLeaf {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+    text-align: start;
+    width: 100%;
+
+    margin-left: 20px;/* Расстояние для каждого нового листа*/
+}
+.treeLine {
+    margin: 5px 0 5px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+    align-items: center;
+    width: 100%;
+    min-height: 20px;
+    gap: 10px;
+}
+.selectedLine {
+    background-color: cornflowerblue;
+    min-height: 35px;
+    padding: 0 10px 0 10px;
+}
+.navLink {
+    color: #312f2f;
+    text-decoration: none;
+}

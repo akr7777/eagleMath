@@ -15,6 +15,8 @@ import Profile from "./components/Profile/Profile";
 import {Posts} from './components/Posts/Posts';
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
+import {useAppDispatch} from "./store/store";
+import {getAllMaterials} from "./components/features/materialsSlice";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -30,6 +32,9 @@ const Layout = () => {
 function App() {
 
     //initializeApp
+    /*let dispatch = useAppDispatch();
+    dispatch(getAllMaterials());*/
+    //
 
     return (<>
         <Routes>
