@@ -5,7 +5,7 @@ const instance = axios.create({
     /*headers: {
         'Access-Control-Allow-Origin': '*',
     },*/
-    baseURL: 'http://localhost:3001',
+    baseURL: 'http://localhost:3001/',
     //baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
 });
 
@@ -13,6 +13,7 @@ export enum ResultCodesEnum {
     Success = 0,
     Error = 1,
 }
+
 export enum ResultCodeForCaptcha {
     CaptchaNeeded = 10
 }
@@ -37,9 +38,12 @@ export const AuthAPI = {
 
 export const MaterialsAPI = {
     getAllMaterials: () => {
-        return instance.get(`materials/getAllMaterials`).then(response => {
-            return JSON.parse(response.data);
-        });
+        //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
+        return instance.get(`materials/getAllMaterials`);
+    },
+    getAllcategories: () => {
+        //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
+        return instance.get(`materials/getAllCategories`);
     },
 
 }

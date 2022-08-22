@@ -28,11 +28,12 @@
     width: 100%;
     min-height: 20px;
     gap: 10px;
+    padding-left: 10px;
 }
 .selectedLine {
     background-color: cornflowerblue;
     min-height: 35px;
-    padding: 0 10px 0 10px;
+    /*padding: 0 10px 0 10px;*/
 }
 .navLink {
     color: #312f2f;

@@ -1,5 +1,5 @@
 import Tree, {NodeId} from '@naisutech/react-tree'
-import {CategoryType, MaterialType} from "../features/materialsSlice";
+import {CategoryType, MaterialType} from "../../features/materialsSlice";
 import myTheme from "./TreeTheme";
 
 type TreePropsType = {

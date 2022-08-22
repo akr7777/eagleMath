@@ -43,18 +43,13 @@ function App() {
                 <Route path={PATHS.materials} element={<Materials/>} />
                 <Route path={PATHS.tasks} element={<Tasks/>} />
                 <Route path={PATHS.contacts} element={<Contacts/>}/>
-                {/*<Route path={PATH.PRE_JUNIOR} element={<PreJuniorHW/>} />
-                <Route path={PATH.JUNIOR} element={<JuniorHW/>} />
-                <Route path={PATH.JUNIOR_PLUS} element={<JuniorPlusHW/>} />*/}
                 <Route path={PATHS.login} element={<Login/>}/>
                 <Route path={PATHS.logout} element={<Logout/>}/>
                 <Route path={PATHS.profile} element={<Profile/>}/>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 
-
                 <Route path={PATHS.posts} element={<Posts/>}/>
-
 
                 <Route path='/*' element={<Error404/>} />
             </Route>

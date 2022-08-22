@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import {RootState} from "../../store/store";
+import {RootState, useAppDispatch} from "../../store/store";
 import {Typography} from '@mui/material';
 import Container from '@mui/material/Container';
-//import s from './tasks.module.css';
 import s from "../common/commonCSS.module.css";
-import Tree4 from "../common/Tree4";
-
-
-//Потом надо удалить!
-import {categoriesAPI, tasksAPI} from "../api/tasksAPIData";
-import {Tree5} from "../common/Tree5";
+import {Tree5} from "../common/Tree/Tree5";
+import {CategoryType, getAllCategories, getAllMaterials, MaterialType} from "../features/materialsSlice";
 
 export const Tasks = () => {
 
+    let dispatch = useAppDispatch();
+    useEffect(() => {
+        console.log('tasks / useEffect')
+        dispatch(getAllMaterials());
+        dispatch(getAllCategories());
+    }, []);
+
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
-    const categories = [...categoriesAPI];
-    const materials = [...tasksAPI];
+    const categories:CategoryType[] = useSelector( (state: RootState) => state.materials.categories);//[]//[...categoriesAPI];
+    const materials:MaterialType[] = useSelector((state: RootState) => state.materials.materials);//[]//[...tasksAPI];
+
+    console.log('Tasks / categories=', categories)
+    console.log('Tasks / materials=', materials)
 
     return <>
         <Container className={s.wrapped_div}>
@@ -29,12 +33,6 @@ export const Tasks = () => {
                     На данной странице Вы можете найти задачи для практики.
                 </Typography>
             </div>
-
-           {/* <div className={s.someDiv1}>
-                <Tree4 categories={categories}
-                       materials={materials}
-                />
-            </div>*/}
 
             <div className={s.someDiv1}>
                 <Tree5
