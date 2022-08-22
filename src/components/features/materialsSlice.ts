@@ -90,8 +90,6 @@ export const materialsSlice = createSlice({
 })
 
 export const {
-    setAllMaterialsAC,
-    setAllCategoriesAC,
     addIdToFavoritesMaterialsAC,
     deleteIdFromFavoritesMaterialsAC
 } = materialsSlice.actions;

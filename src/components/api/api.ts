@@ -47,3 +47,15 @@ export const MaterialsAPI = {
     },
 
 }
+
+export const TasksAPI = {
+    getAllTasks: () => {
+        //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
+        return instance.get(`tasks/getAllTasks`);
+    },
+    getAllcategories: () => {
+        //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
+        return instance.get(`tasks/getAllCategories`);
+    },
+
+}

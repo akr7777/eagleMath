@@ -5,23 +5,20 @@ import {Typography} from '@mui/material';
 import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
-import {CategoryType, getAllCategories, getAllMaterials, MaterialType} from "../features/materialsSlice";
+import {CategoryType, } from "../features/materialsSlice";
+import {getAllCategories, getAllTasks, TaskType} from "../features/tasksSlice";
 
 export const Tasks = () => {
 
     let dispatch = useAppDispatch();
     useEffect(() => {
-        console.log('tasks / useEffect')
-        dispatch(getAllMaterials());
+        dispatch(getAllTasks());
         dispatch(getAllCategories());
     }, []);
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
-    const categories:CategoryType[] = useSelector( (state: RootState) => state.materials.categories);//[]//[...categoriesAPI];
-    const materials:MaterialType[] = useSelector((state: RootState) => state.materials.materials);//[]//[...tasksAPI];
-
-    console.log('Tasks / categories=', categories)
-    console.log('Tasks / materials=', materials)
+    const categories:CategoryType[] = useSelector( (state: RootState) => state.tasks.categories);//[]//[...categoriesAPI];
+    const materials:TaskType[] = useSelector((state: RootState) => state.tasks.materials);//[]//[...tasksAPI];
 
     return <>
         <Container className={s.wrapped_div}>
