@@ -12,6 +12,7 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import ReadThisMaterial from '@mui/icons-material/AutoStories';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import React, {useState} from "react";
 import Typography from "@mui/material/Typography";
 import {NavLink} from "react-router-dom";
@@ -110,6 +111,10 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                     : <StarOutlineIcon onClick={() => dispatch(addIdToFavoritesMaterialsAC(item.id))}/>
                                 : ""
                         }
+
+                        <div>
+                            <ModeEditIcon/>
+                        </div>
                     </div>
                     <div hidden={isHidden}>
                         {

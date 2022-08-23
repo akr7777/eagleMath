@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {MaterialsAPI} from "../api/api";
+import {CategoriesAPI, MaterialsAPI} from "../api/api";
 
 export type IdFiledType = string | number;
 export type MaterialType = {
@@ -46,7 +46,7 @@ export const getAllMaterials = createAsyncThunk(
 export const getAllCategories = createAsyncThunk(
     'materials/getAllCategories',
     async (_, {rejectWithValue, dispatch}) => {
-        const res = await MaterialsAPI.getAllcategories();
+        const res = await CategoriesAPI.getAllcategories();
         if (res.data)
             return res.data;
     }

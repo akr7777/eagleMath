@@ -18,7 +18,7 @@ export const Tasks = () => {
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
     const categories:CategoryType[] = useSelector( (state: RootState) => state.tasks.categories);//[]//[...categoriesAPI];
-    const materials:TaskType[] = useSelector((state: RootState) => state.tasks.materials);//[]//[...tasksAPI];
+    const materials:TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
 
     return <>
         <Container className={s.wrapped_div}>

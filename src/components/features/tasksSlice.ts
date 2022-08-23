@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {TasksAPI} from "../api/api";
+import {CategoriesAPI, TasksAPI} from "../api/api";
 
 export type IdFiledType = string | number;
 export type TaskType = {
@@ -18,8 +18,8 @@ export type CategoryType = {
 
 type InitStateTasksType = {
     categories: Array<CategoryType>,
-    materials: Array<TaskType>,
-    favoriteMaterialIds: Array<IdFiledType>,
+    tasks: Array<TaskType>,
+    favoriteTasksIds: Array<IdFiledType>,
     isLoading: boolean,
 }
 let initialState: InitStateTasksType = {
@@ -27,10 +27,10 @@ let initialState: InitStateTasksType = {
         {id: '12345678', parentId: null, label: "My parent node 12345678", items: []},
         {id: '123', parentId: null, label: 'dsa', items: []}
     ],
-    materials: [
+    tasks: [
         {id: 12380, parentId: 12345678, label: "My parent node 12380", items: []},
     ],
-    favoriteMaterialIds: [],
+    favoriteTasksIds: [],
     isLoading: false,
 }
 
@@ -46,7 +46,7 @@ export const getAllTasks = createAsyncThunk(
 export const getAllCategories = createAsyncThunk(
     'tasks/getAllCategories',
     async (_, {rejectWithValue, dispatch}) => {
-        const res = await TasksAPI.getAllcategories();
+        const res = await CategoriesAPI.getAllcategories();
         if (res.data)
             return res.data;
     }
@@ -58,22 +58,22 @@ export const tasksSlice = createSlice({
     initialState,
     reducers: {
         setAllTasksAC: (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
-            state.materials = action.payload;
+            state.tasks = action.payload;
         },
         setAllCategoriesAC: (state: InitStateTasksType, action: PayloadAction<CategoryType[]>) => {
             state.categories = action.payload;
         },
         addIdToFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteMaterialIds = [...state.favoriteMaterialIds, action.payload]
+            state.favoriteTasksIds = [...state.favoriteTasksIds, action.payload]
         },
         deleteIdFromFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteMaterialIds = state.favoriteMaterialIds.filter(el => el != action.payload)
+            state.favoriteTasksIds = state.favoriteTasksIds.filter(el => el != action.payload)
         }
 
     },
     extraReducers: (builder) => {
         builder.addCase(getAllTasks.fulfilled, (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
-            state.materials = action.payload;
+            state.tasks = action.payload;
         })
         builder.addCase(getAllTasks.rejected, ()=>{
             console.log('extraReducers / getAllMaterials.rejected');

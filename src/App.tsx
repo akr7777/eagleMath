@@ -12,7 +12,6 @@ import Materials from "./components/Materials/Materials";
 import Login from "./components/AuthPage/Login";
 import Profile from "./components/Profile/Profile";
 
-import {Posts} from './components/Posts/Posts';
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
 import {useAppDispatch} from "./store/store";
@@ -48,8 +47,6 @@ function App() {
                 <Route path={PATHS.profile} element={<Profile/>}/>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
-
-                <Route path={PATHS.posts} element={<Posts/>}/>
 
                 <Route path='/*' element={<Error404/>} />
             </Route>

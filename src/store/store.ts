@@ -6,7 +6,7 @@ import tasksSlice from "../components/features/tasksSlice";
 import materialsSlice from "../components/features/materialsSlice";
 import postsSlice from "../components/features/postSlice";
 import {useDispatch} from "react-redux";
-//import postsSlice from "../components/features/postSlice";
+import categoriesSlice from "../components/features/categoriesSlice";
 
 
 export const store = configureStore({
@@ -17,6 +17,7 @@ export const store = configureStore({
         tasks: tasksSlice,
         materials: materialsSlice,
         posts: postsSlice,
+        categories: categoriesSlice,
     },
 });
 

@@ -1,12 +1,12 @@
 import Tree, {NodeId} from '@naisutech/react-tree'
 import {CategoryType, MaterialType} from "../../features/materialsSlice";
-import myTheme from "./TreeTheme";
+import myTheme from "./_TreeTheme";
 
 type TreePropsType = {
     categories: Array<CategoryType>,
     materials: Array<MaterialType>,
 }
-const Tree4 = (props: TreePropsType) => {
+const _Tree4 = (props: TreePropsType) => {
     const nodeData = props.categories.map(c => {
         let mat = props.materials.filter(m => c.id == m.parentId);
         if (mat && c.items) {
@@ -17,7 +17,7 @@ const Tree4 = (props: TreePropsType) => {
     });
 
     const TreeOnChangeHandler = (nodeIds: NodeId[]) => {
-        console.log('Tree4/TreeOnChangeHandler/nodeIds=', nodeIds)
+        console.log('_Tree4/TreeOnChangeHandler/nodeIds=', nodeIds)
         //if nodeIds[0] { open material by nodeIds[0]}
     }
     return <Tree nodes={nodeData}
@@ -29,4 +29,4 @@ const Tree4 = (props: TreePropsType) => {
     />
 }
 
-export default Tree4;
+export default _Tree4;

@@ -41,21 +41,24 @@ export const MaterialsAPI = {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`materials/getAllMaterials`);
     },
-    getAllcategories: () => {
+   /* getAllcategories: () => {
         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
         return instance.get(`materials/getAllCategories`);
-    },
-
+    },*/
 }
-
 export const TasksAPI = {
     getAllTasks: () => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`tasks/getAllTasks`);
     },
-    getAllcategories: () => {
+    /*getAllcategories: () => {
         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
         return instance.get(`tasks/getAllCategories`);
+    },*/
+}
+export const CategoriesAPI = {
+    getAllcategories: () => {
+        //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
+        return instance.get(`categories/getAllCategories`);
     },
-
 }
