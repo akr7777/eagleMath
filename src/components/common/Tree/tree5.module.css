@@ -3,10 +3,11 @@
     background-color: darkgrey;
     border-radius: 10px;
     width: 100%;
-    padding: 20px 10px 20px 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .leafAndChildren {
-    width: 95%;
+    width: 100%;
 }
 .treeLeaf {
     display: flex;
@@ -16,7 +17,7 @@
     text-align: start;
     width: 100%;
 
-    margin-left: 20px;/* Расстояние для каждого нового листа*/
+    padding-left: 20px;/* Расстояние для каждого нового листа*/
 }
 .treeLine {
     margin: 5px 0 5px 0;

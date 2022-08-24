@@ -45,7 +45,7 @@ export const categoriesSlice = createSlice({
             state.favoriteCategoryIds = [...state.favoriteCategoryIds, action.payload]
         },
         deleteIdFromFavoritesCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteCategoryIds = state.favoriteCategoryIds.filter(el => el != action.payload)
+            state.favoriteCategoryIds = state.favoriteCategoryIds.filter(el => String(el) !== String(action.payload))
         }
 
     },

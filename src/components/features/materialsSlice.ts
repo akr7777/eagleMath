@@ -67,7 +67,7 @@ export const materialsSlice = createSlice({
             state.favoriteMaterialIds = [...state.favoriteMaterialIds, action.payload]
         },
         deleteIdFromFavoritesMaterialsAC: (state: InitStateMaterialsType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteMaterialIds = state.favoriteMaterialIds.filter(el => el != action.payload)
+            state.favoriteMaterialIds = state.favoriteMaterialIds.filter(el => String(el) !== String(action.payload))
         }
 
     },

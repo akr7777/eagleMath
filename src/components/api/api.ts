@@ -5,7 +5,8 @@ const instance = axios.create({
     /*headers: {
         'Access-Control-Allow-Origin': '*',
     },*/
-    baseURL: 'http://localhost:3001/',
+    //baseURL: 'http://localhost:3001/',
+    baseURL: 'http://192.168.153.17:3001/'
     //baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
 });
 

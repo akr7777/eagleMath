@@ -27,7 +27,7 @@ type DataMutationPropsType = {
 function dataMutation(props: DataMutationPropsType) {
     //For the first we add materials fileds in items object of the categories
     const nodeData = [...props.categories.map(c => {
-        let mat = props.materials.filter(m => c.id == m.parentId);
+        let mat = props.materials.filter(m => String(c.id) === String(m.parentId));
         if (mat && c.items) {
             return {...c, items: [...c.items, ...mat]}
         } else {
@@ -37,7 +37,7 @@ function dataMutation(props: DataMutationPropsType) {
 
     //Secondly, we make a result Array where sub-categories will be added to the basic (nulls) categories in items
     const nodeData1 = [...nodeData.map(c => {
-        let childrenCats = nodeData.filter(m => c.id == m.parentId);
+        let childrenCats = nodeData.filter(m => String(c.id) === String(m.parentId));
         if (childrenCats) {
             //return {...c, items: [...c.items, ...childrenCats]}
             for (let i = 0; i < childrenCats.length; i++) {
@@ -56,7 +56,7 @@ type DrawTreePropsType = {
     items: Array<CategoryType>,
     isShowArr: Array<IdFiledType>,
 
-    selected: string | number,
+    selectedId: string | number,
     setSelected: (id: IdFiledType) => void,
 
     materialsIds: Array<IdFiledType>,
@@ -69,7 +69,7 @@ type DrawTreePropsType = {
 }
 const DrawTree: React.FC<DrawTreePropsType> = ({
                                                    items, isShowArr,
-                                                   selected, setSelected,
+                                                   selectedId, setSelected,
                                                    materialsIds,
                                                    plusIconClick, minusIconClick,
                                                    favoritesIds,
@@ -86,7 +86,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
 
                     {/* Содержание линии */}
                     <div onClick={() => setSelected(item.id)}
-                         className={item.id == selected ? (s.treeLine + ' ' + s.selectedLine) : s.treeLine}
+                         className={String(item.id) === String(selectedId) ? (s.treeLine + ' ' + s.selectedLine) : s.treeLine}
                     >
                         {
                             (item.items.length > 0 && isHidden)
@@ -106,7 +106,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
 
                         {
                             isAuth && isMaterial
-                                ? favoritesIds.some(el => el == item.id)
+                                ? favoritesIds.some(el => String(el) === String(item.id))
                                     ? <StarIcon onClick={() => dispatch(deleteIdFromFavoritesMaterialsAC(item.id))}/>
                                     : <StarOutlineIcon onClick={() => dispatch(addIdToFavoritesMaterialsAC(item.id))}/>
                                 : ""
@@ -121,7 +121,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                             item.items && DrawTree({
                                 items: item.items,
                                 isShowArr: isShowArr,
-                                selected: selected,
+                                selectedId: selectedId,
                                 materialsIds: materialsIds,
                                 favoritesIds: favoritesIds,
                                 plusIconClick: plusIconClick,
@@ -146,14 +146,14 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
         materials: props.materials,
         categories: props.categories,
     });
-    const [isShowArr, setIsShowArr] = useState<Array<number | string>>([]);
+    const [isShowArr, setIsShowArr] = useState<Array<IdFiledType>>([]);
     const plusIconClick = (id: number | string) => {
         setIsShowArr([...isShowArr, id])
     }
-    const minusIconClick = (id: number | string) => {
+    const minusIconClick = (id: IdFiledType) => {
         setIsShowArr(isShowArr.filter(s => s !== id))
     }
-    const [selected, setSelected] = useState<string | number>('');
+    const [selectedId, setSelectedId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
     const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
     //console.log('favoriteIds=', favoritesIds)
@@ -163,11 +163,11 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
             DrawTree({
                 items: nodeData1,
                 isShowArr: isShowArr,
-                selected: selected,
+                selectedId: selectedId,
                 materialsIds: materialIds,
                 plusIconClick: plusIconClick,
                 minusIconClick: minusIconClick,
-                setSelected: setSelected,
+                setSelected: setSelectedId,
                 favoritesIds: favoritesIds,
                 isAuth: isAuth,
             })

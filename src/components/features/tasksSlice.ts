@@ -67,7 +67,7 @@ export const tasksSlice = createSlice({
             state.favoriteTasksIds = [...state.favoriteTasksIds, action.payload]
         },
         deleteIdFromFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteTasksIds = state.favoriteTasksIds.filter(el => el != action.payload)
+            state.favoriteTasksIds = state.favoriteTasksIds.filter(el => String(el) !== String(action.payload))
         }
 
     },
