@@ -1,11 +1,13 @@
 import Tree, {NodeId} from '@naisutech/react-tree'
-import {CategoryType, MaterialType} from "../../features/materialsSlice";
+import { MaterialType} from "../../features/materialsSlice";
 import myTheme from "./_TreeTheme";
+import {CategoryType} from "../../features/categoriesSlice";
 
-type TreePropsType = {
+export type Tree4PropsType = {
     categories: Array<CategoryType>,
     materials: Array<MaterialType>,
 }
+/*
 const _Tree4 = (props: TreePropsType) => {
     const nodeData = props.categories.map(c => {
         let mat = props.materials.filter(m => c.id == m.parentId);
@@ -29,4 +31,4 @@ const _Tree4 = (props: TreePropsType) => {
     />
 }
 
-export default _Tree4;
+export default _Tree4;*/

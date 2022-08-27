@@ -5,8 +5,10 @@ import {Typography} from '@mui/material';
 import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
-import {CategoryType, } from "../features/materialsSlice";
-import {getAllCategories, getAllTasks, TaskType} from "../features/tasksSlice";
+import {Tree6} from "../common/Tree/Tree6";
+//import {CategoryType, } from "../features/materialsSlice";
+import {getAllTasks, TaskType} from "../features/tasksSlice";
+import {CategoryType, getAllCategories} from "../features/categoriesSlice";
 
 export const Tasks = () => {
 
@@ -17,8 +19,8 @@ export const Tasks = () => {
     }, []);
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
-    const categories:CategoryType[] = useSelector( (state: RootState) => state.tasks.categories);//[]//[...categoriesAPI];
-    const materials:TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
+    const categories:CategoryType[] = useSelector( (state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
+    const tasks:TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
 
     return <>
         <Container className={s.wrapped_div}>
@@ -34,9 +36,15 @@ export const Tasks = () => {
             <div className={s.someDiv1}>
                 <Tree5
                     categories={categories}
-                    materials={materials}
+                    materials={tasks}
                 />
             </div>
+            {/*<div className={s.someDiv1}>
+                <Tree6
+                    categories={categories}
+                    materials={tasks}
+                />
+            </div>*/}
 
         </Container>
     </>

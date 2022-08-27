@@ -1,13 +1,15 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {CategoriesAPI} from "../api/api";
+import {MaterialType} from "./materialsSlice";
+import {TaskType} from "./tasksSlice";
 
 export type IdFiledType = string | number;
 export type CategoryType = {
     id: IdFiledType,
-    parentId: IdFiledType | null,
+    parentId: IdFiledType,
     label: string,
-    items: Array<CategoryType>// | Array<MaterialType>,//if sub-categories exists
+    //items: Array<any>//Array<CategoryType> | Array<MaterialType> | Array<TaskType>,//if sub-categories exists
 }
 
 type InitStatecategoryType = {
@@ -17,8 +19,10 @@ type InitStatecategoryType = {
 }
 let initialState: InitStatecategoryType = {
     categories: [
-        {id: '12345678', parentId: null, label: "My parent node 12345678", items: []},
-        {id: '123', parentId: null, label: 'dsa', items: []}
+       /* {id: '12345678', parentId: '0', label: "My parent node 12345678", items: []},
+        {id: '123', parentId: '0', label: 'dsa', items: []}*/
+        {id: '12345678', parentId: '0', label: "My parent node 12345678"},
+        {id: '123', parentId: '0', label: 'dsa'}
     ],
     favoriteCategoryIds: [],
     isLoading: false,
@@ -28,8 +32,15 @@ export const getAllCategories = createAsyncThunk(
     'materials/getAllCategories',
     async (_, {rejectWithValue, dispatch}) => {
         const res = await CategoriesAPI.getAllcategories();
-        if (res.data)
-            return res.data;
+        if (res.data) {
+            const result:CategoryType[] = [];
+            for (let i=0; i<res.data.length; i++)
+                //result.push({id: 0, parentId: 0, label: '000', items: []});
+                result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
+            //return res.data;
+            return result;
+        } else
+            return [];
     }
 );
 
@@ -52,6 +63,7 @@ export const categoriesSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getAllCategories.fulfilled, (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
             state.isLoading = false;
+            //console.log('categoriesSlice / extraReducers / extraReducers actionPayload=', action.payload);
             state.categories = action.payload;
         })
         builder.addCase(getAllCategories.rejected, (state: InitStatecategoryType)=>{

@@ -1,34 +1,31 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {CategoriesAPI, MaterialsAPI} from "../api/api";
+import {CategoryType} from "./categoriesSlice";
 
 export type IdFiledType = string | number;
 export type MaterialType = {
     id: IdFiledType,
-    parentId: number | null | string,
+    parentId: IdFiledType,
     label: string,
-    items: Array<MaterialType>,//if sub-categories exists
+    //items: Array<MaterialType>,//if sub-categories exists
+    //content: string;
 }
-export type CategoryType = {
+/*export type CategoryType = {
     id: IdFiledType,
     parentId: IdFiledType | null,
     label: string,
     items: Array<CategoryType>// | Array<MaterialType>,//if sub-categories exists
-}
+}*/
 
 type InitStateMaterialsType = {
-    categories: Array<CategoryType>,
     materials: Array<MaterialType>,
     favoriteMaterialIds: Array<IdFiledType>,
     isLoading: boolean,
 }
 let initialState: InitStateMaterialsType = {
-    categories: [
-        {id: '12345678', parentId: null, label: "My parent node 12345678", items: []},
-        {id: '123', parentId: null, label: 'dsa', items: []}
-    ],
     materials: [
-        {id: 12380, parentId: 12345678, label: "My parent node 12380", items: []},
+        {id: 12380, parentId: 12345678, label: "My parent node 12380"},
     ],
     favoriteMaterialIds: [],
     isLoading: false,
@@ -37,18 +34,16 @@ let initialState: InitStateMaterialsType = {
 export const getAllMaterials = createAsyncThunk(
     'materials/getAllMaterials',
     async (_, {rejectWithValue, dispatch}) => {
-        //console.log('thunk getAllMaterials 1111')
         const res = await MaterialsAPI.getAllMaterials();
-        if (res.data)
-            return res.data;
-    }
-);
-export const getAllCategories = createAsyncThunk(
-    'materials/getAllCategories',
-    async (_, {rejectWithValue, dispatch}) => {
-        const res = await CategoriesAPI.getAllcategories();
-        if (res.data)
-            return res.data;
+        if (res.data) {
+            const result:CategoryType[] = [];
+            for (let i=0; i<res.data.length; i++)
+                //result.push({id: 0, parentId: 0, label: '000', items: []});
+                result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
+            //return res.data;
+            return result;
+        } else
+            return [];
     }
 );
 
@@ -59,9 +54,6 @@ export const materialsSlice = createSlice({
     reducers: {
         setAllMaterialsAC: (state: InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
             state.materials = action.payload;
-        },
-        setAllCategoriesAC: (state: InitStateMaterialsType, action: PayloadAction<CategoryType[]>) => {
-            state.categories = action.payload;
         },
         addIdToFavoritesMaterialsAC: (state: InitStateMaterialsType, action: PayloadAction<IdFiledType>) => {
             state.favoriteMaterialIds = [...state.favoriteMaterialIds, action.payload]
@@ -79,13 +71,13 @@ export const materialsSlice = createSlice({
             console.log('extraReducers / getAllMaterials.rejected');
         })
 
-        builder.addCase(getAllCategories.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<CategoryType[]>) => {
+        /*builder.addCase(getAllCategories.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<CategoryType[]>) => {
             //console.log('extraReducers / getAllCategories.fulfilled=', action)
             state.categories = action.payload;
         })
         builder.addCase(getAllCategories.rejected, () => {
             console.log('extraReducers / getAllCategories.rejected')
-        })
+        })*/
     },
 })
 
