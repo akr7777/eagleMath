@@ -138,7 +138,6 @@ export const Tree6: React.FC<TreePropsType> = (props) => {
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
     const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
-    //console.log('favoriteIds=', favoritesIds)
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     return <div className={s.wrappedDiv}>
         {

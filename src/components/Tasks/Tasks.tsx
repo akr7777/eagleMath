@@ -39,12 +39,6 @@ export const Tasks = () => {
                     materials={tasks}
                 />
             </div>
-            {/*<div className={s.someDiv1}>
-                <Tree6
-                    categories={categories}
-                    materials={tasks}
-                />
-            </div>*/}
 
         </Container>
     </>

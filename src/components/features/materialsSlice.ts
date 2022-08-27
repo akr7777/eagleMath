@@ -8,16 +8,7 @@ export type MaterialType = {
     id: IdFiledType,
     parentId: IdFiledType,
     label: string,
-    //items: Array<MaterialType>,//if sub-categories exists
-    //content: string;
 }
-/*export type CategoryType = {
-    id: IdFiledType,
-    parentId: IdFiledType | null,
-    label: string,
-    items: Array<CategoryType>// | Array<MaterialType>,//if sub-categories exists
-}*/
-
 type InitStateMaterialsType = {
     materials: Array<MaterialType>,
     favoriteMaterialIds: Array<IdFiledType>,
@@ -38,9 +29,7 @@ export const getAllMaterials = createAsyncThunk(
         if (res.data) {
             const result:CategoryType[] = [];
             for (let i=0; i<res.data.length; i++)
-                //result.push({id: 0, parentId: 0, label: '000', items: []});
                 result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
-            //return res.data;
             return result;
         } else
             return [];
@@ -70,14 +59,6 @@ export const materialsSlice = createSlice({
         builder.addCase(getAllMaterials.rejected, ()=>{
             console.log('extraReducers / getAllMaterials.rejected');
         })
-
-        /*builder.addCase(getAllCategories.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<CategoryType[]>) => {
-            //console.log('extraReducers / getAllCategories.fulfilled=', action)
-            state.categories = action.payload;
-        })
-        builder.addCase(getAllCategories.rejected, () => {
-            console.log('extraReducers / getAllCategories.rejected')
-        })*/
     },
 })
 

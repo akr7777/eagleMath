@@ -26,14 +26,11 @@ let initialState: InitStateTasksType = {
 export const getAllTasks = createAsyncThunk(
     'tasks/getAllTasks',
     async (_, {rejectWithValue, dispatch}) => {
-        //console.log('thunk getAllMaterials 1111')
         const res = await TasksAPI.getAllTasks();
         if (res.data) {
             const result:CategoryType[] = [];
             for (let i=0; i<res.data.length; i++)
-                //result.push({id: 0, parentId: 0, label: '000', items: []});
                 result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
-            //return res.data;
             return result;
         } else
             return [];
@@ -65,14 +62,6 @@ export const tasksSlice = createSlice({
         builder.addCase(getAllTasks.rejected, ()=>{
             console.log('extraReducers / getAllMaterials.rejected');
         })
-
-        /*builder.addCase(getAllCategories.fulfilled, (state: InitStateTasksType, action: PayloadAction<CategoryType[]>) => {
-            //console.log('extraReducers / getAllCategories.fulfilled=', action)
-            state.categories = action.payload;
-        })
-        builder.addCase(getAllCategories.rejected, () => {
-            console.log('extraReducers / getAllCategories.rejected')
-        })*/
     },
 })
 

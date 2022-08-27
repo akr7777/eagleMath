@@ -30,46 +30,21 @@ type DataMutationPropsType = {
 }
 
 function dataMutation(props: DataMutationPropsType) {
-    console.log('props=', props);
-
     //add items to every category
     let categories1:Array<CategoryLongType> = [];
     [...props.categories].forEach(c => {
         categories1.push({id: c.id, parentId: c.parentId, label: c.label, items: []});
     });
-    //let materials1: Array<CategoryLongType> = [];
     [...props.materials].forEach(m => {
         categories1 = [...categories1, {id: m.id, parentId: m.parentId, label: m.label, items: []}]
     });
+
     //For the first we add materials fileds in items object of the categories
-    //console.log('props=', props, 'categories1=', categories1);
-
-    console.log('!!!!dataMutation/categories1=', categories1)
-
     const nodeData:Array<CategoryLongType> = [...categories1.map(c => {
         c.items = [...categories1.filter(sc => String(c.id) === String(sc.parentId))];
         return c;
     })].filter(pc => pc.parentId === null || String(pc.parentId) === "0")
 
-    console.log('!!!!nodeData=', nodeData)
-    //return nodeData;
-    //Secondly, we make a result Array where sub-categories will be added to the basic (nulls) categories in items
-    /*const nodeData1 = nodeData.map(c => {
-        let childrenCats = [...nodeData.filter(sc => String(c.id) === String(sc.parentId))];
-        //console.log('childrenCats=', childrenCats)
-        if (childrenCats) {
-            //return {...c, items: [...c.items, ...childrenCats]}
-            //childrenCats.forEach(chCat => c.items.push(chCat))
-            for (let i = 0; i < childrenCats.length; i++) {
-                c.items.push(childrenCats[i])
-            }
-            return c;
-        } else {
-            return c
-        }
-    }).filter(pc => pc.parentId === null || String(pc.parentId) === "0");*/
-
-    //console.log('nodeData1=', nodeData)
     return nodeData;
 }
 
@@ -177,7 +152,6 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
     const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
-    //console.log('favoriteIds=', favoritesIds)
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     return <div className={s.wrappedDiv}>
         {

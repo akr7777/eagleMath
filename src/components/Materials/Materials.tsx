@@ -43,13 +43,7 @@ const Materials = () => {
                             materials={materials}
                         />
                     </div>
-                    {/*Tree6:
-                    <div className={s.someDiv1}>
-                        <Tree6
-                            categories={categories}
-                            materials={materials}
-                        />
-                    </div>*/}
+
                 </Container>
         }
     </>
