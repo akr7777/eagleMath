@@ -20,7 +20,7 @@ let initialState: InitStateTasksType = {
         {id: 12380, parentId: 12345678, label: "My parent node 12380"},
     ],
     favoriteTasksIds: [],
-    isLoading: false,
+    isLoading: true,
 }
 
 export const getAllTasks = createAsyncThunk(
@@ -28,8 +28,8 @@ export const getAllTasks = createAsyncThunk(
     async (_, {rejectWithValue, dispatch}) => {
         const res = await TasksAPI.getAllTasks();
         if (res.data) {
-            const result:CategoryType[] = [];
-            for (let i=0; i<res.data.length; i++)
+            const result: CategoryType[] = [];
+            for (let i = 0; i < res.data.length; i++)
                 result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
             return result;
         } else
@@ -44,9 +44,6 @@ export const tasksSlice = createSlice({
         setAllTasksAC: (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
             state.tasks = action.payload;
         },
-        /*setAllCategoriesAC: (state: InitStateTasksType, action: PayloadAction<CategoryType[]>) => {
-            state.categories = action.payload;
-        },*/
         addIdToFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
             state.favoriteTasksIds = [...state.favoriteTasksIds, action.payload]
         },
@@ -56,10 +53,15 @@ export const tasksSlice = createSlice({
 
     },
     extraReducers: (builder) => {
+        builder.addCase(getAllTasks.pending, (state: InitStateTasksType) => {
+            state.isLoading = true;
+        })
         builder.addCase(getAllTasks.fulfilled, (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
             state.tasks = action.payload;
+            state.isLoading = false;
         })
-        builder.addCase(getAllTasks.rejected, ()=>{
+        builder.addCase(getAllTasks.rejected, (state: InitStateTasksType) => {
+            state.isLoading = false;
             console.log('extraReducers / getAllMaterials.rejected');
         })
     },

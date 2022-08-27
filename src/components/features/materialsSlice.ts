@@ -19,7 +19,7 @@ let initialState: InitStateMaterialsType = {
         {id: 12380, parentId: 12345678, label: "My parent node 12380"},
     ],
     favoriteMaterialIds: [],
-    isLoading: false,
+    isLoading: true,
 }
 
 export const getAllMaterials = createAsyncThunk(
@@ -53,10 +53,15 @@ export const materialsSlice = createSlice({
 
     },
     extraReducers: (builder) => {
+        builder.addCase(getAllMaterials.pending, (state: InitStateMaterialsType) => {
+            state.isLoading = true;
+        })
         builder.addCase(getAllMaterials.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
             state.materials = action.payload;
+            state.isLoading = false;
         })
-        builder.addCase(getAllMaterials.rejected, ()=>{
+        builder.addCase(getAllMaterials.rejected, (state: InitStateMaterialsType)=>{
+            state.isLoading = false;
             console.log('extraReducers / getAllMaterials.rejected');
         })
     },
