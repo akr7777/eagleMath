@@ -77,7 +77,7 @@ export default function MyAppBar(props: Props) {
     };
 
     let isAuth = useSelector( (state: RootState) => state.auth.isAuth);
-    const avaURL = useSelector( (state: RootState) => state.auth.authPhoto);
+    const avaURL = useSelector( (state: RootState) => state.auth.user.photo);
     const avaPhotoMobile = isAuth
         ? <Avatar src={avaURL}/>
         : <NavLink to={PATHS.login}><Avatar/></NavLink>

@@ -12,7 +12,7 @@ import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
-import {login} from "../features/authSlice";
+import {loginThunk} from "../features/authSlice";
 
 const Login = () => {
     const [error, setError] = useState<string>('');
@@ -38,8 +38,7 @@ const Login = () => {
         } else if (!password) {
             setError('Полe password обязательно для заполнения')
         } else {
-            dispatch(login({email: email, password: password}));
-            //navigate(PATHS.description, {replace: true});
+            dispatch(loginThunk({email: email, password: password}));
         }
     }
 

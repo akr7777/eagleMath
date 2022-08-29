@@ -21,7 +21,7 @@ import {useSelector} from "react-redux";
 
 export default function PopoverWithAvatar() {
 
-    const avaPhoto = useSelector( (state: RootState) => state.auth.authPhoto);
+    const avaPhoto = useSelector( (state: RootState) => state.auth.user.photo);
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

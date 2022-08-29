@@ -63,3 +63,27 @@ export const CategoriesAPI = {
         return instance.get(`categories/getAllCategories`);
     },
 }
+
+export const authAPI = {
+    login: (email: string, password: string) => {
+        return instance.post(`users/login`, {email: email, password: password});
+    },
+}
+
+export const descriptionAPI = {
+    getDescription: () => {
+        return instance.get(`description/getDescription`);
+    },
+    setDescription: (title: string, photo: string, description: string) => {
+        return instance.post(`description/setDescription`, {title: title, photo: photo, description: description});
+    }
+}
+
+export const contactsAPI = {
+    getContacts: () => {
+        return instance.get(`contacts/getContacts`);
+    },
+    /*setDescription: (title: string, photo: string, description: string) => {
+        return instance.post(`description/setDescription`, {title: title, photo: photo, description: description});
+    }*/
+}

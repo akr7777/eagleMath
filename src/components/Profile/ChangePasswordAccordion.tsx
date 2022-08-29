@@ -13,7 +13,7 @@ import {ChangePasswordActionType, changeUserPassword} from './../features/authSl
 
 export default function ChangePasswordAccordion() {
     const dispatch = useAppDispatch();
-    const userEmail = useSelector((state: RootState) => state.auth.email);
+    const userEmail = useSelector((state: RootState) => state.auth.user.email);
 
     const [oldPass, setOldPass] = useState<string>('');
     const [newPass1, setNewPass1] = useState<string>('');

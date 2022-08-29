@@ -169,7 +169,7 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
     const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-    const isAdmin = useSelector( (state:RootState) => state.auth.isAdmin);
+    const isAdmin = useSelector( (state:RootState) => state.auth.user.isAdmin);
     return <div className={s.wrappedDiv}>
         {
             DrawTree({

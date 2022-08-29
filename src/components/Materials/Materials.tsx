@@ -47,7 +47,6 @@ const Materials = () => {
                         </Typography>
                     </div>
 
-                    Tree5:
                     <div className={s.someDiv1}>
                         <Tree5
                             categories={categories}

@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 
 export const Footer = () => {
     /*<div className={s.footerCSS}>*/
-    const useremail = useSelector((state: RootState) => state.auth.email);
+    const useremail = useSelector((state: RootState) => state.auth.user.email);
     return <div className={s.footerCSS}>
         userEmail:
         <Typography variant={'h5'}>{ useremail }</Typography>

@@ -51,7 +51,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                                }) => {
     const dispatch = useAppDispatch();
     const categories1 = categories.concat(materials);
-    const isAdmin = useSelector( (state:RootState) => state.auth.isAdmin);
+    const isAdmin = useSelector( (state:RootState) => state.auth.user.isAdmin);
 
     return <div className={s.treeLeaf}>
         {

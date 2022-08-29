@@ -1,14 +1,16 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
+import {contactsAPI, descriptionAPI} from "../api/api";
 
-export type ContactsType = {
-    title: string,
+export type ContactsType = ContactsDataType & {
+    /*title: string,
     description: string,
     phone: string,
     telegram: string,
     whatsapp: string,
     email: string,
-    skype: string,
+    skype: string,*/
+    isLoading: boolean,
 }
 let initialState: ContactsType = {
     title: 'Мои контакты:',
@@ -18,7 +20,29 @@ let initialState: ContactsType = {
     whatsapp: '',
     email: '',
     skype: '',
+    isLoading: false,
 }
+
+type ContactsDataType = {
+    title: string,
+    description: string,
+    phone: string,
+    telegram: string,
+    whatsapp: string,
+    email: string,
+    skype: string,
+}
+export const getContactsThunk = createAsyncThunk(
+    'contacts/getContactsThunk',
+    async (_, {rejectWithValue, dispatch}) => {
+        const res = await contactsAPI.getContacts();
+        if (res.data.resultCode === 0) {
+            return res.data;
+        } else
+            return 'ERROR from server';
+    }
+);
+
 export const contactsSlice = createSlice({
     name: 'contacts',
     initialState: initialState,
@@ -44,6 +68,24 @@ export const contactsSlice = createSlice({
         setSkypeAC: (state: ContactsType, action: PayloadAction<string>): void => {
             state.skype = action.payload;
         },
+    },
+    extraReducers: builder => {
+        builder.addCase(getContactsThunk.pending, (state:ContactsType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getContactsThunk.fulfilled, (state:ContactsType, action: PayloadAction<ContactsDataType>) => {
+            state.isLoading = false;
+            state.title = action.payload.title;
+            state.description = action.payload.description;
+            state.phone = action.payload.phone;
+            state.telegram = action.payload.telegram;
+            state.whatsapp = action.payload.whatsapp;
+            state.email = action.payload.email;
+            state.skype = action.payload.skype;
+        })
+        builder.addCase(getContactsThunk.rejected, (state:ContactsType) => {
+            state.isLoading = false;
+        })
     }
 })
 export const {setTitleAC, setDescriptionAC, setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} = contactsSlice.actions;

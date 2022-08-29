@@ -16,8 +16,8 @@ import {PATHS} from "../AppBar/AppBar";
 export default function Profile () {
     const dispatch = useAppDispatch();
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
-    const [emailValue, setEmailValue] = useState<string>(useSelector((state:RootState)=>state.auth.email));
-    const avaPhoto = useSelector((state:RootState)=>state.auth.authPhoto);
+    const [emailValue, setEmailValue] = useState<string>(useSelector((state:RootState)=>state.auth.user.email));
+    const avaPhoto = useSelector((state:RootState)=>state.auth.user.photo);
     const isAuth = useSelector((state:RootState) => state.auth.isAuth);
     const activatechangeEmailMode = () => {
         setEmailDisabled(false);

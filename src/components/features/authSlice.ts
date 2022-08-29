@@ -1,23 +1,30 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import oneUserAva from './../../assets/images/oneUserAva.jpeg';
 import adminAva from './../../assets/images/adminAva.jpeg';
+import {authAPI, MaterialsAPI} from "../api/api";
+import {CategoryType} from "./categoriesSlice";
 
-export type AuthType = {
-    authID: number,
+type UserType = {
+    id: number,
     email: string,
-    authPhoto: string,
-    isAuth: boolean,
-    serverError: string,
+    photo: string,
     isAdmin: boolean,
 }
-let initialState: AuthType = {
-    authID: 1,
-    email: '',
-    authPhoto: '',
+export type AuthStateType = {
+    user: UserType,
+    isAuth: boolean,
+    serverError: string,
+}
+let initialState: AuthStateType = {
+    user: {
+        id: 0,
+        email: '',
+        photo: '',
+        isAdmin: false,
+    },
     isAuth: false,
     serverError: '',
-    isAdmin: false,
 }
 type LoginActionType = {
     email: string,
@@ -28,19 +35,34 @@ export type ChangePasswordActionType = {
     oldPassword: string,
     newPassword: string,
 }
+
+type LoginDataType = {email:string, password: string}
+export const loginThunk = createAsyncThunk(
+    'auth/loginThunk',
+    async (loginData: LoginDataType, {rejectWithValue, dispatch}) => {
+        const {email, password} = loginData;
+        const res = await authAPI.login(email, password);
+        //console.log('loginThunk/ res.data=', res.data)
+        if (res.data.resultCode === 0) {
+            return res.data;
+        } else
+            return 'ERROR from server';
+    }
+);
+
 export const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
-        logout: (state: AuthType): void => {
+        logout: (state: AuthStateType): void => {
+            state.user.id = 0;
+            state.user.isAdmin = false;
+            state.user.email = '';
+            state.user.photo = '';
             state.isAuth = false;
-            state.authID = 0;
-            state.isAdmin = false;
-            state.email = '';
             state.serverError = '';
-            state.authPhoto = '';
         },
-        login: (state: AuthType, action: PayloadAction<LoginActionType>): void => {
+        /*login: (state: AuthType, action: PayloadAction<LoginActionType>): void => {
             if (action.payload.email === 'admin' && action.payload.password === '111') {
                 state.email = action.payload.email;
                 state.authID = 1;
@@ -58,16 +80,24 @@ export const authSlice = createSlice({
             } else {
                 state.serverError='Wrong email or password'
             }
-        },
-        saveNewEmail: (state: AuthType, action: PayloadAction<string>): void => {
+        },*/
+        saveNewEmail: (state: AuthStateType, action: PayloadAction<string>): void => {
             //сдклать асинхронный запрос, когда сервер будет готов
-            state.email = action.payload;
+            state.user.email = action.payload;
         },
-        changeUserPassword: (state: AuthType, action: PayloadAction<ChangePasswordActionType>):void => {
+        changeUserPassword: (state: AuthStateType, action: PayloadAction<ChangePasswordActionType>):void => {
             //Замена пароля для существующего пользователя с асинхронным запросом на сервер
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginThunk.fulfilled, (state:AuthStateType, action: PayloadAction<UserType>) => {
+            state.isAuth = true;
+            state.serverError = '';
+            state.user = {id: action.payload.id, email: action.payload.email, photo: action.payload.photo, isAdmin: action.payload.isAdmin}
+        })
+
     }
 })
-export const {login, logout, saveNewEmail, changeUserPassword} = authSlice.actions;
+export const {logout, saveNewEmail, changeUserPassword} = authSlice.actions;
 
 export default authSlice.reducer;

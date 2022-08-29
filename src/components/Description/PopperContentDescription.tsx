@@ -1,12 +1,13 @@
 import React from 'react';
 import {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store/store";
+import {useSelector} from "react-redux";
+import {RootState, useAppDispatch} from "../../store/store";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {setDescriptionAC, setPhotoURLAC, setTitleAC} from "../features/authorSlice";
+//import {setDescriptionAC, setPhotoURLAC, setTitleAC} from "../features/authorSlice";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import s from './description.module.css';
+import {getDescriptionThunk, setDescriptionThunk} from "../features/authorSlice";
 
 
 type PopperContentPropsType = {
@@ -15,21 +16,15 @@ type PopperContentPropsType = {
 const PopperContentDescription = (props: PopperContentPropsType) => {
 
     const [title, setTitle] = useState<string>(useSelector((state: RootState) => state.author.title));
-    const [photoURL, setPhotoURL] = useState<string>(useSelector((state: RootState) => state.author.photoURL));
+    const [photo, setPhoto] = useState<string>(useSelector((state: RootState) => state.author.photo));
     const [description, setDescription] = useState<string>(useSelector((state: RootState) => state.author.description));
 
-
-    const dispatch = useDispatch()
+    const isLoading = useSelector( (state: RootState) => state.author.isLoading)
+    const dispatch = useAppDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-        //let redactedDescription = description.replaceAll("\n", '<p></p>');
-        let redactedDescription = description
-        console.log('redactedDescription=', redactedDescription);
-        setDescription(redactedDescription);
-
-        dispatch(setTitleAC(title));
-        dispatch(setPhotoURLAC(photoURL));
-        dispatch(setDescriptionAC(redactedDescription));
+        dispatch(setDescriptionThunk({title: title, photo: photo, description: description}));
+        dispatch(getDescriptionThunk());
         props.handleClickClose(event);
     }
 
@@ -37,8 +32,8 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
         <h2> Here you can edit your contacts: </h2>
         <div><TextField id="outlined-title" label="Заголовок" variant="outlined" value={title}
                         onChange={(e) => setTitle(e.currentTarget.value)}/></div>
-        <div><TextField id="outlined-photoURL" label="URL фотографии" variant="outlined" value={photoURL}
-                        onChange={(e) => setPhotoURL(e.currentTarget.value)}/></div>
+        <div><TextField id="outlined-photoURL" label="URL фотографии" variant="outlined" value={photo}
+                        onChange={(e) => setPhoto(e.currentTarget.value)}/></div>
         {/*<div><TextField id="outlined-description" className={s.editDescriptionText} label="Описание" variant="outlined" value={description} onChange={ (e) => setDescription(e.currentTarget.value)}/></div>*/}
 
         <div>Описание:</div>
@@ -49,7 +44,7 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
                 style={{width: 400}}
                 maxRows={10}
                 value={description}
-                onChange={ (e) => setDescription(e.currentTarget.value)}
+                onChange={(e) => setDescription(e.currentTarget.value)}
             />
         </div>
         <div>
