@@ -42,10 +42,10 @@ export const MaterialsAPI = {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`materials/getAllMaterials`);
     },
-   /* getAllcategories: () => {
-        //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
-        return instance.get(`materials/getAllCategories`);
-    },*/
+    /* getAllcategories: () => {
+         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
+         return instance.get(`materials/getAllCategories`);
+     },*/
 }
 export const TasksAPI = {
     getAllTasks: () => {
@@ -83,7 +83,10 @@ export const contactsAPI = {
     getContacts: () => {
         return instance.get(`contacts/getContacts`);
     },
-    /*setDescription: (title: string, photo: string, description: string) => {
-        return instance.post(`description/setDescription`, {title: title, photo: photo, description: description});
-    }*/
+    setContacts: (title: string, description: string, phone: string, telegram: string, whatsapp: string, email: string, skype: string) => {
+        return instance.post(`contacts/setContacts`, {
+            title: title, description: description, phone: phone,
+            telegram: telegram, whatsapp: whatsapp, email: email, skype: skype
+        });
+    }
 }

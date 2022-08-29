@@ -19,7 +19,7 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
     const [photo, setPhoto] = useState<string>(useSelector((state: RootState) => state.author.photo));
     const [description, setDescription] = useState<string>(useSelector((state: RootState) => state.author.description));
 
-    const isLoading = useSelector( (state: RootState) => state.author.isLoading)
+    //const isLoading = useSelector( (state: RootState) => state.author.isLoading)
     const dispatch = useAppDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
