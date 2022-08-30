@@ -1,6 +1,8 @@
 import axios from "axios";
 import {IdFiledType} from "../features/categoriesSlice";
 
+const baseAppURL = 'https://dry-anchorage-96588.herokuapp.com/';
+
 const instance = axios.create({
     //withCredentials: true,
     /*headers: {
@@ -8,19 +10,18 @@ const instance = axios.create({
     },*/
     //baseURL: 'http://localhost:3001/',
     //baseURL: 'http://192.168.153.17:3001/'
-    baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
+    baseURL: baseAppURL,
 });
 
 export enum ResultCodesEnum {
     Success = 0,
     Error = 1,
 }
-
 export enum ResultCodeForCaptcha {
     CaptchaNeeded = 10
 }
 
-export const AuthAPI = {
+/*export const AuthAPI = {
     Login: (email: string, password: string, captcha?: string) => {
         return {
             resultCode: 0,
@@ -36,7 +37,7 @@ export const AuthAPI = {
             resultCode: 0
         };
     }
-}
+}*/
 
 export const MaterialsAPI = {
     getAllMaterials: () => {
@@ -71,15 +72,23 @@ export const authAPI = {
     },
 
     uploadAvatar: (file: any, id: IdFiledType) => {
-        console.log('authAPI.uploadAvatar / id=', id, 'file=', file);
-        const instance1 = axios.create({
+        //console.log('authAPI.uploadAvatar / id=', id, 'file=', file);
+        /*const instance1 = axios.create({
             headers: {
                 "Content-Type": "multipart/form-data"
             },
             baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
+        });*/
+        return instance.post(`users/uploadAvatar`, {file: file, id: id}, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
         });
-        return instance1.post(`users/uploadAvatar`, {file: file, id: id});
-    }
+    },
+
+    /*getAvatar: (id: IdFiledType) => {
+        return instance.get(`users/getAvatar?id=${id}`);
+    }*/
 }
 
 export const descriptionAPI = {

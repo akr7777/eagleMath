@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import {Navigate} from 'react-router-dom';
 import s from './profile.module.css';
 import Typography from "@mui/material/Typography";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import TextField from "@mui/material/TextField";
@@ -17,7 +17,14 @@ import Preloader from "../common/Preloader";
 export default function Profile() {
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
     const userID = useSelector((state: RootState) => state.auth.user.id);
+
     const dispatch = useAppDispatch();
+    /*useEffect(()=>{
+        if (String(userID) !== '0')
+            dispatch(getAvatar(userID));
+    },[])*/
+
+
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
     const avaPhoto = useSelector((state: RootState) => state.auth.user.photo);
