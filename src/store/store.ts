@@ -1,10 +1,9 @@
-import {combineReducers, configureStore, ThunkDispatch, AnyAction} from "@reduxjs/toolkit";
+import {configureStore, ThunkDispatch, AnyAction} from "@reduxjs/toolkit";
 import authorSlice from "../components/features/authorSlice";
 import authSlice from "../components/features/authSlice";
 import contactsSlice from "../components/features/contactsSlice";
 import tasksSlice from "../components/features/tasksSlice";
 import materialsSlice from "../components/features/materialsSlice";
-import postsSlice from "../components/features/postSlice";
 import {useDispatch} from "react-redux";
 import categoriesSlice from "../components/features/categoriesSlice";
 
@@ -16,7 +15,6 @@ export const store = configureStore({
         contacts: contactsSlice,
         tasks: tasksSlice,
         materials: materialsSlice,
-        posts: postsSlice,
         categories: categoriesSlice,
     },
 });

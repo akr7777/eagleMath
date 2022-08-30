@@ -3,7 +3,7 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import oneUserAva from './../../assets/images/oneUserAva.jpeg';
 import adminAva from './../../assets/images/adminAva.jpeg';
 import {authAPI, MaterialsAPI} from "../api/api";
-import {CategoryType} from "./categoriesSlice";
+import {CategoryType, IdFiledType} from "./categoriesSlice";
 
 type UserType = {
     id: number,
@@ -15,6 +15,7 @@ export type AuthStateType = {
     user: UserType,
     isAuth: boolean,
     serverError: string,
+    isLoading: boolean,
 }
 let initialState: AuthStateType = {
     user: {
@@ -25,11 +26,12 @@ let initialState: AuthStateType = {
     },
     isAuth: false,
     serverError: '',
+    isLoading: true,
 }
-type LoginActionType = {
+/*type LoginActionType = {
     email: string,
     password: string,
-}
+}*/
 export type ChangePasswordActionType = {
     email:string,
     oldPassword: string,
@@ -47,6 +49,25 @@ export const loginThunk = createAsyncThunk(
             return res.data;
         } else
             return 'ERROR from server';
+    }
+);
+
+type UploadAvatarType = {file: any, id: IdFiledType}
+export const uploadAvatarThunk = createAsyncThunk(
+    'auth/uploadAvatar',
+    async (uploadAvatarData:UploadAvatarType, {rejectWithValue, dispatch}) => {
+        try {
+            const {file, id} = uploadAvatarData;
+            const res = await authAPI.uploadAvatar(file, id);
+            if (res.data.resultCode === 0) {
+                return res.data;
+            } else
+                return 'ERROR from server';
+        } catch (e) {
+            console.log('!!!uploadAvatarThunk / error!!!=', e)
+        }
+
+
     }
 );
 
@@ -90,12 +111,29 @@ export const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
+        builder.addCase(loginThunk.pending, (state:AuthStateType) => {
+            state.isLoading = true;
+        })
         builder.addCase(loginThunk.fulfilled, (state:AuthStateType, action: PayloadAction<UserType>) => {
+            state.user = {id: action.payload.id, email: action.payload.email, photo: action.payload.photo, isAdmin: action.payload.isAdmin};
             state.isAuth = true;
             state.serverError = '';
-            state.user = {id: action.payload.id, email: action.payload.email, photo: action.payload.photo, isAdmin: action.payload.isAdmin}
+            state.isLoading = false;
+        })
+        builder.addCase(loginThunk.rejected, (state:AuthStateType) => {
+            state.isLoading = false;
         })
 
+        builder.addCase(uploadAvatarThunk.pending, (state: AuthStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(uploadAvatarThunk.fulfilled, (state: AuthStateType, action:PayloadAction<string>) => {
+            state.user.photo = action.payload;
+            state.isLoading = false;
+        })
+        builder.addCase(uploadAvatarThunk.rejected, (state:AuthStateType) => {
+            state.isLoading = false;
+        })
     }
 })
 export const {logout, saveNewEmail, changeUserPassword} = authSlice.actions;

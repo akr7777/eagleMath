@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {contactsAPI, descriptionAPI} from "../api/api";
+import {contactsAPI} from "../api/api";
 
 export type ContactsType = ContactsDataType & {
     /*title: string,
