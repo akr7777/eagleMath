@@ -2,21 +2,26 @@ import Container from '@mui/material/Container';
 import {Navigate} from 'react-router-dom';
 import s from './profile.module.css';
 import Typography from "@mui/material/Typography";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import TextField from "@mui/material/TextField";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import SaveIcon from '@mui/icons-material/Save';
-import {saveNewEmail, uploadAvatarThunk} from "../features/authSlice";
+import {
+    baseAvatarPhotoUrl,
+    updateEmailThunk, /*getAvatarThunk, saveNewEmail,*/
+    uploadAvatarThunk
+} from "../features/authSlice";
 import ChangePasswordAccordion from "./ChangePasswordAccordion";
 import Button from "@mui/material/Button";
 import {PATHS} from "../AppBar/AppBar";
 import Preloader from "../common/Preloader";
+import {IdFiledType} from "../features/categoriesSlice";
 
 export default function Profile() {
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
-    const userID = useSelector((state: RootState) => state.auth.user.id);
+    const userID:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
 
     const dispatch = useAppDispatch();
     /*useEffect(()=>{
@@ -27,7 +32,7 @@ export default function Profile() {
 
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
-    const avaPhoto = useSelector((state: RootState) => state.auth.user.photo);
+    const avaPhoto = baseAvatarPhotoUrl+userID;//useSelector((state: RootState) => state.auth.user.photo);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const activatechangeEmailMode = () => {
         setEmailDisabled(false);
@@ -36,13 +41,13 @@ export default function Profile() {
         setEmailValue(e.currentTarget.value);
     }
     const saveNewEmailValue = () => {
-        dispatch(saveNewEmail(emailValue));
+        dispatch(updateEmailThunk({id: userID, newEmail: emailValue}));
         setEmailDisabled(true);
     }
     const fileUploadInputChange = (f: any) => {
         if (f.target.files.length) {
-            //console.log('f.f.target.files[0]=', f.target.files[0])
             dispatch(uploadAvatarThunk({file: f.target.files[0], id: userID}))
+            //dispatch(getAvatarThunk(userID));
         }
     }
 
@@ -59,7 +64,7 @@ export default function Profile() {
                         </Typography>
                     </div>
                     <div className={s.someDiv2}>
-                        <img className={s.profile_ava_img} src={avaPhoto}></img>
+                        <img className={s.profile_ava_img} src={avaPhoto} alt={'Avatar'}></img>
 
                         {/*<ChangeCircleIcon></ChangeCircleIcon>*/}
                         <input

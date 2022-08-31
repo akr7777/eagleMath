@@ -21,6 +21,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
+import {baseAvatarPhotoUrl} from "../features/authSlice";
 
 interface Props {
     /**
@@ -77,7 +78,8 @@ export default function MyAppBar(props: Props) {
     };
 
     let isAuth = useSelector( (state: RootState) => state.auth.isAuth);
-    const avaURL = useSelector( (state: RootState) => state.auth.user.photo);
+    const userId = useSelector((state:RootState) => state.auth.user.id);
+    const avaURL = baseAvatarPhotoUrl + userId;//useSelector( (state: RootState) => state.auth.user.photo);
     const avaPhotoMobile = isAuth
         ? <Avatar src={avaURL}/>
         : <NavLink to={PATHS.login}><Avatar/></NavLink>

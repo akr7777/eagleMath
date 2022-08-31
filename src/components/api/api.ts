@@ -85,10 +85,12 @@ export const authAPI = {
             }
         });
     },
-
-    /*getAvatar: (id: IdFiledType) => {
-        return instance.get(`users/getAvatar?id=${id}`);
-    }*/
+    updateEmail: (id: IdFiledType, newEmail: string) => {
+        return instance.post('users/updateEmail', {id: id, newEmail: newEmail})
+    },
+    updatePassword: (id: IdFiledType, oldPass: string, newPass: string) => {
+        return instance.post('users/updatePassword', {id: id, oldPass: oldPass, newPass: newPass})
+    },
 }
 
 export const descriptionAPI = {
@@ -97,6 +99,16 @@ export const descriptionAPI = {
     },
     setDescription: (title: string, photo: string, description: string) => {
         return instance.post(`description/setDescription`, {title: title, photo: photo, description: description});
+    },
+    getDescriptionPhoto: ()=> {
+        return instance.get('description/getDescriptionPhoto');
+    },
+    setDescriptionPhoto: (file:any) => {
+        return instance.post(`description/setDescriptionPhoto`, {file: file}, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
     }
 }
 

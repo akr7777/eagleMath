@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import photoAutorDefaulted from './../../assets/images/adminAva.jpeg';
-import {authAPI, descriptionAPI} from "../api/api";
+import {descriptionAPI} from "../api/api";
+
+export const baseDescriptionPhotoUrl = 'https://dry-anchorage-96588.herokuapp.com/description/getDescriptionPhoto';
 
 /*export type AuthorType = {
     photoURL: string,
@@ -19,12 +20,9 @@ type InitAuthorContentType = {
     isLoading: boolean;
 }
 const initContent: InitAuthorContentType = {
-    title: 'This is description',
-    photo: photoAutorDefaulted,
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\n' +
-        '                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n' +
-        '                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\n' +
-        '                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    title: '',
+    photo: '',
+    description: '',
     isLoading: true
 }
 
@@ -53,6 +51,35 @@ export const setDescriptionThunk = createAsyncThunk(
     }
 );
 
+export const getDescriptionPhotoThunk = createAsyncThunk(
+    'author/getDescriptionPhoto',
+    async (_, {rejectWithValue, dispatch}) => {
+        const res = await descriptionAPI.getDescriptionPhoto();
+        if (res.data.resultCode === 0) {
+            return res.data;
+        } else
+            return 'ERROR from server';
+    }
+);
+type UploadDescriptionPhotoType = { file: any }
+export const setDescriptionPhotoThunk = createAsyncThunk(
+    'auth/uploadAvatar',
+    async (descrPhotoData: UploadDescriptionPhotoType, {rejectWithValue, dispatch}) => {
+        try {
+            const {file} = descrPhotoData;
+            const res = await descriptionAPI.setDescriptionPhoto(file);
+            if (res.data.resultCode === 0) {
+                return res.data;
+            } else
+                return 'ERROR from server';
+        } catch (e) {
+            console.log('!!!uploadAvatarThunk / error!!!=', e)
+        }
+    }
+);
+
+
+
 export const authorSlice = createSlice({
     name: 'author',
     initialState: initContent,
@@ -69,7 +96,7 @@ export const authorSlice = createSlice({
         })
         builder.addCase(getDescriptionThunk.fulfilled, (state: InitAuthorContentType, action: PayloadAction<DescriptionDataType>) => {
             state.title = action.payload.title;
-            state.photo = action.payload.photo;
+            state.photo = baseDescriptionPhotoUrl;//action.payload.photo;
             state.description = action.payload.description;
             state.isLoading = false;
         })
@@ -82,11 +109,22 @@ export const authorSlice = createSlice({
         })
         builder.addCase(setDescriptionThunk.fulfilled, (state: InitAuthorContentType, action: PayloadAction<DescriptionDataType>) => {
             state.title = action.payload.title;
-            state.photo = action.payload.photo;
+            //state.photo = action.payload.photo;
             state.description = action.payload.description;
             state.isLoading = false;
         })
         builder.addCase(setDescriptionThunk.rejected, (state: InitAuthorContentType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(getDescriptionPhotoThunk.pending, (state: InitAuthorContentType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getDescriptionPhotoThunk.fulfilled, (state: InitAuthorContentType, action:PayloadAction<string>) => {
+            state.photo = action.payload;
+            state.isLoading = false;
+        })
+        builder.addCase(getDescriptionPhotoThunk.rejected, (state: InitAuthorContentType) => {
             state.isLoading = false;
         })
     }

@@ -7,7 +7,11 @@ import Button from '@mui/material/Button';
 //import {setDescriptionAC, setPhotoURLAC, setTitleAC} from "../features/authorSlice";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import s from './description.module.css';
-import {getDescriptionThunk, setDescriptionThunk} from "../features/authorSlice";
+import {
+    getDescriptionPhotoThunk,
+    getDescriptionThunk, setDescriptionPhotoThunk,
+    setDescriptionThunk,
+} from "../features/authorSlice";
 
 
 type PopperContentPropsType = {
@@ -28,12 +32,36 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
         props.handleClickClose(event);
     }
 
+    const descrPhotoUploadInputChange = (f: any) => {
+        if (f.target.files.length) {
+            dispatch(setDescriptionPhotoThunk({file: f.target.files[0]}))
+            dispatch(getDescriptionPhotoThunk());
+        }
+    }
+
     return <div className={s.edit_description_div}>
         <h2> Here you can edit your contacts: </h2>
         <div><TextField id="outlined-title" label="Заголовок" variant="outlined" value={title}
                         onChange={(e) => setTitle(e.currentTarget.value)}/></div>
-        <div><TextField id="outlined-photoURL" label="URL фотографии" variant="outlined" value={photo}
-                        onChange={(e) => setPhoto(e.currentTarget.value)}/></div>
+        <div>
+            <TextField id="outlined-photoURL" label="URL фотографии" variant="outlined" value={photo}
+                        onChange={(e) => setPhoto(e.currentTarget.value)}
+            />
+            ИЛИ
+            <input
+                accept="image/*"
+                style={{display: 'none'}}
+                id="raised-button-file"
+                multiple
+                type="file"
+                onChange={(f) => descrPhotoUploadInputChange(f)}
+            />
+            <label htmlFor="raised-button-file">
+                <Button component="span">
+                    Сменить аватар
+                </Button>
+            </label>
+        </div>
         {/*<div><TextField id="outlined-description" className={s.editDescriptionText} label="Описание" variant="outlined" value={description} onChange={ (e) => setDescription(e.currentTarget.value)}/></div>*/}
 
         <div>Описание:</div>

@@ -18,10 +18,12 @@ import {PATHS} from "./AppBar";
 import s from './appbar.module.css';
 import {RootState} from "../../store/store";
 import {useSelector} from "react-redux";
+import {baseAvatarPhotoUrl} from "../features/authSlice";
 
 export default function PopoverWithAvatar() {
 
-    const avaPhoto = useSelector( (state: RootState) => state.auth.user.photo);
+    const userId = useSelector((state:RootState) => state.auth.user.id);
+    const avaPhoto = baseAvatarPhotoUrl+userId;//useSelector( (state: RootState) => state.auth.user.photo);
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
