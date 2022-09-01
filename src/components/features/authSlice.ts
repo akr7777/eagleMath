@@ -103,12 +103,13 @@ export const updatePasswordThunk = createAsyncThunk(
         try {
             const {id, oldPass, newPass} = newPassData;
             const res = await authAPI.updatePassword(id, oldPass, newPass);
-            if (res.data.resultCode === 0) {
+            return res.data;
+            /*if (res.data.resultCode === 0) {
                 return res.data;
             } else
-                return 'ERROR from server';
+                return 'ERROR from server';*/
         } catch (e) {
-            console.log('!!!!auth/updateEmailThunk, error=', e)
+            console.log('!!!!auth/updatePasswordThunk, error=', e)
         }
     }
 );
@@ -174,13 +175,6 @@ export const authSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(updatePasswordThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{resultCode: number}>) => {
-            alert('action.payload='+ action.payload+ ' / action.payload.resultCode=' + action.payload.resultCode)
-            if (action.payload.resultCode === 10)
-                alert('Старый пароль введен неверно!');
-            else if (action.payload.resultCode === 1)
-                alert('Какая-то ошибка на сервере. Попробуйте позже или напишите в тех. поддержку.');
-            else if (action.payload.resultCode === 0)
-                alert('Пароль успешно изменен!');
             state.changePasswordResultCode = action.payload.resultCode;
             state.isLoading = false;
         })

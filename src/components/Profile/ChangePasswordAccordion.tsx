@@ -55,8 +55,6 @@ export default function ChangePasswordAccordion() {
 
     return (
         <>
-
-
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon/>}
