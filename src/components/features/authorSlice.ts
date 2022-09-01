@@ -39,10 +39,10 @@ export const getDescriptionThunk = createAsyncThunk(
 );
 export const setDescriptionThunk = createAsyncThunk(
     'author/setDescription',
-    async (descriptionData: DescriptionDataType, {rejectWithValue, dispatch}) => {
+    async (descriptionData: /*DescriptionDataType*/{title:string, description: string}, {rejectWithValue, dispatch}) => {
         console.log('setDescriptionThunk/descriptionData', descriptionData)
-        const {title, photo, description} = descriptionData;
-        const res = await descriptionAPI.setDescription(title, photo, description);
+        const {title, /*photo, */description} = descriptionData;
+        const res = await descriptionAPI.setDescription(title,/* photo,*/ description);
         console.log('setDescriptionThunk/res=')
         if (res.data.resultCode === 0) {
             return res.data;

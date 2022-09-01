@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import {ChangeEvent, useState} from "react";
 import CustomColorButton from "../common/CustomColorButton";
 import {RootState, useAppDispatch} from "../../store/store";
-import {singUpThunk} from "../features/authSlice";
+import {resetSingUpResultCodeAC, singUpThunk} from "../features/authSlice";
 import Preloader from "../common/Preloader";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
@@ -29,8 +29,8 @@ const errorInitState: ErrorObjectType = {
 const SingUpPage = () => {
     const dispatch = useAppDispatch();
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
-    //const singUpResultCode = useSelector((state: RootState) => state.auth.singUpResultCode);
-    let singUpResultCode = 0;
+    const singUpResultCode = useSelector((state: RootState) => state.auth.singUpResultCode);
+    //let singUpResultCode = -1;
 
     const [error, setError] = useState<ErrorObjectType>(errorInitState);
     const [name, setName] = useState<string>('');
@@ -45,6 +45,7 @@ const SingUpPage = () => {
         if (fieldname === 'name') {
             setName(value);
         } else if (fieldname === "email") {
+            dispatch(resetSingUpResultCodeAC());
             setEmail(value);
         } else if (fieldname === "password1") {
             setPassword1(value);
@@ -93,6 +94,7 @@ const SingUpPage = () => {
                             </Alert>
                         </div>
                     }
+
                     {
                         singUpResultCode !== 0 && <div className={s.wrappedDiv}>
                             <Typography variant={'h4'}>
@@ -104,6 +106,14 @@ const SingUpPage = () => {
                                     <Alert severity="error">
                                         <AlertTitle>Ошибка</AlertTitle>
                                         <strong>Возникла серверная ошибка. Обратитесь в тех.поддержку.</strong>
+                                    </Alert>
+                                </div>
+                            }
+                            {
+                                singUpResultCode === 10 && <div>
+                                    <Alert severity="error">
+                                        <AlertTitle>Пользователь уже существует</AlertTitle>
+                                        <strong>Пользователь с адресом почты {email} уже существует.</strong>
                                     </Alert>
                                 </div>
                             }

@@ -135,6 +135,9 @@ export const authSlice = createSlice({
         resetLoginServerErrorAC: (state:AuthStateType): void => {
             state.loginServerError = '';
         },
+        resetSingUpResultCodeAC: (state: AuthStateType): void => {
+            state.singUpResultCode = -1;
+        },
         logout: (state: AuthStateType): void => {
             state.user.id = 0;
             state.user.isAdmin = false;
@@ -214,6 +217,6 @@ export const authSlice = createSlice({
         })
     }
 })
-export const {logout, changePasswordResultCodeAC, resetLoginServerErrorAC} = authSlice.actions;
+export const {logout, changePasswordResultCodeAC, resetLoginServerErrorAC, resetSingUpResultCodeAC} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -59,3 +59,9 @@
     width: 450px;
     height: 300px;
 }
+.changeDescrPhotoDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}

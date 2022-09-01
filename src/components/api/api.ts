@@ -92,8 +92,8 @@ export const descriptionAPI = {
     getDescription: () => {
         return instance.get(`description/getDescription`);
     },
-    setDescription: (title: string, photo: string, description: string) => {
-        return instance.post(`description/setDescription`, {title: title, photo: photo, description: description});
+    setDescription: (title: string,/* photo: string,*/ description: string) => {
+        return instance.post(`description/setDescription`, {title: title, /*photo: photo, */description: description});
     },
     getDescriptionPhoto: ()=> {
         return instance.get('description/getDescriptionPhoto');

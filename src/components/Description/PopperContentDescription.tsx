@@ -20,14 +20,15 @@ type PopperContentPropsType = {
 const PopperContentDescription = (props: PopperContentPropsType) => {
 
     const [title, setTitle] = useState<string>(useSelector((state: RootState) => state.author.title));
-    const [photo, setPhoto] = useState<string>(useSelector((state: RootState) => state.author.photo));
+    //const [photo, setPhoto] = useState<string>(useSelector((state: RootState) => state.author.photo));
+    //const [photo, setPhoto] = useState<string>('');
     const [description, setDescription] = useState<string>(useSelector((state: RootState) => state.author.description));
 
     //const isLoading = useSelector( (state: RootState) => state.author.isLoading)
     const dispatch = useAppDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-        dispatch(setDescriptionThunk({title: title, photo: photo, description: description}));
+        dispatch(setDescriptionThunk({title: title, /*photo: photo, */description: description}));
         dispatch(getDescriptionThunk());
         props.handleClickClose(event);
     }
@@ -43,24 +44,28 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
         <h2> Here you can edit your contacts: </h2>
         <div><TextField id="outlined-title" label="Заголовок" variant="outlined" value={title}
                         onChange={(e) => setTitle(e.currentTarget.value)}/></div>
-        <div>
-            <TextField id="outlined-photoURL" label="URL фотографии" variant="outlined" value={photo}
+        <div className={s.changeDescrPhotoDiv}>
+            {/*<div>
+                <TextField id="outlined-photoURL" label="URL фотографии" variant="outlined" value={photo}
                         onChange={(e) => setPhoto(e.currentTarget.value)}
             />
-            ИЛИ
-            <input
-                accept="image/*"
-                style={{display: 'none'}}
-                id="raised-button-file"
-                multiple
-                type="file"
-                onChange={(f) => descrPhotoUploadInputChange(f)}
-            />
-            <label htmlFor="raised-button-file">
-                <Button component="span">
-                    Сменить аватар
-                </Button>
-            </label>
+            </div>
+            <div>ИЛИ</div>*/}
+            <div>
+                <input
+                    accept="image/*"
+                    style={{display: 'none'}}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
+                    onChange={(f) => descrPhotoUploadInputChange(f)}
+                />
+                <label htmlFor="raised-button-file">
+                    <Button component="span">
+                        Сменить аватар
+                    </Button>
+                </label>
+            </div>
         </div>
         {/*<div><TextField id="outlined-description" className={s.editDescriptionText} label="Описание" variant="outlined" value={description} onChange={ (e) => setDescription(e.currentTarget.value)}/></div>*/}
 

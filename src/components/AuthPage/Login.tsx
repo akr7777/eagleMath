@@ -69,7 +69,7 @@ const Login = () => {
                         <NavLink to={PATHS.singup} className={s.navLink1}>
                             <CustomColorButton
                                 className={s.signUpButton}
-                            >Зарегистрироваться1</CustomColorButton>
+                            >Зарегистрироваться</CustomColorButton>
                         </NavLink>
                     </div>
 
