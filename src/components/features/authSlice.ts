@@ -8,13 +8,13 @@ export const baseAvatarPhotoUrl = 'https://dry-anchorage-96588.herokuapp.com/use
 type UserType = {
     id: number,
     email: string,
-    //photo: string,
+    name: string,
     isAdmin: boolean,
 }
 export type AuthStateType = {
     user: UserType,
     isAuth: boolean,
-    serverError: string,
+    loginServerError: string,
     isLoading: boolean,
     changePasswordResultCode: number,
 }
@@ -22,12 +22,12 @@ let initialState: AuthStateType = {
     user: {
         id: 0,
         email: '',
-        //photo: '',
+        name: '',
         isAdmin: false,
     },
     isAuth: false,
-    serverError: '',
-    isLoading: true,
+    loginServerError: '',
+    isLoading: false,
     changePasswordResultCode: -1,
 }
 
@@ -37,12 +37,7 @@ export const loginThunk = createAsyncThunk(
     async (loginData: LoginDataType, {rejectWithValue, dispatch}) => {
         const {email, password} = loginData;
         const res = await authAPI.login(email, password);
-        //console.log('loginThunk/ res.data=', res.data)
-        if (res.data.resultCode === 0) {
-            //return {id: res.data.id, email: res.data.email, isAdmin: res.data.isAdmin}
-            return res.data;
-        } else
-            return 'ERROR from server';
+        return res.data;
     }
 );
 
@@ -118,31 +113,38 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
+        changePasswordResultCodeAC: (state:AuthStateType, action: PayloadAction<number>): void => {
+            state.changePasswordResultCode = action.payload;
+        },
         logout: (state: AuthStateType): void => {
             state.user.id = 0;
             state.user.isAdmin = false;
             state.user.email = '';
             //state.user.photo = '';
             state.isAuth = false;
-            state.serverError = '';
+            state.loginServerError = '';
         },
     },
     extraReducers: (builder) => {
         builder.addCase(loginThunk.pending, (state: AuthStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(loginThunk.fulfilled, (state: AuthStateType, action: PayloadAction<UserType>) => {
+        builder.addCase(loginThunk.fulfilled, (state: AuthStateType, action: PayloadAction< UserType & {resultCode:number} >) => {
+            if (action.payload.resultCode === 0) {
+                state.user.id = action.payload.id;
+                state.user.email = action.payload.email;
+                state.user.name = action.payload.name;
+                //photo: action.payload.photo,
+                state.user.isAdmin = action.payload.isAdmin;
+                state.isAuth = true;
+                state.loginServerError = '';
+            } else if (action.payload.resultCode === 10)
+                state.loginServerError = 'Неверный email или пароль!';
 
-            //state.user.photo = baseAvatarPhotoUrl+action.payload.id;
-            state.user.id = action.payload.id;
-            state.user.email = action.payload.email;
-            //photo: action.payload.photo,
-            state.user.isAdmin = action.payload.isAdmin;
-            state.isAuth = true;
-            state.serverError = '';
             state.isLoading = false;
         })
         builder.addCase(loginThunk.rejected, (state: AuthStateType) => {
+            state.loginServerError = 'Ошибка на сервере';
             state.isLoading = false;
         })
 
@@ -150,7 +152,6 @@ export const authSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(uploadAvatarThunk.fulfilled, (state: AuthStateType, action: PayloadAction<string>) => {
-            //state.user.photo = action.payload;
             state.isLoading = false;
         })
         builder.addCase(uploadAvatarThunk.rejected, (state: AuthStateType) => {
@@ -183,6 +184,6 @@ export const authSlice = createSlice({
         })
     }
 })
-export const {logout} = authSlice.actions;
+export const {logout, changePasswordResultCodeAC} = authSlice.actions;
 
 export default authSlice.reducer;

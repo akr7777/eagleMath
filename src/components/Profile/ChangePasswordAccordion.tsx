@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -10,13 +10,19 @@ import Button from "@mui/material/Button";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
-import {updatePasswordThunk} from "../features/authSlice";
+import {changePasswordResultCodeAC, updatePasswordThunk} from "../features/authSlice";
 
 export default function ChangePasswordAccordion() {
     const dispatch = useAppDispatch();
     //const userEmail = useSelector((state: RootState) => state.auth.user.email);
     const userId = useSelector((state: RootState)=> state.auth.user.id);
+
     const changePasswordResultCode = useSelector((state: RootState) => state.auth.changePasswordResultCode);
+    useEffect(()=>{
+        return ()=>{
+            dispatch(changePasswordResultCodeAC(-1))
+        }
+    }, [])
 
     const [oldPass, setOldPass] = useState<string>('');
     const [newPass1, setNewPass1] = useState<string>('');
@@ -100,7 +106,6 @@ export default function ChangePasswordAccordion() {
                     </div>
                 </AccordionDetails>
             </Accordion>
-            {/*Oldpass: {oldPass}, Newpass1: {newPass1}, NewPass2: {newPass2}*/}
         </>
     );
 }
