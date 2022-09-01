@@ -17,6 +17,7 @@ export type AuthStateType = {
     loginServerError: string,
     isLoading: boolean,
     changePasswordResultCode: number,
+    singUpResultCode: number,
 }
 let initialState: AuthStateType = {
     user: {
@@ -29,6 +30,7 @@ let initialState: AuthStateType = {
     loginServerError: '',
     isLoading: false,
     changePasswordResultCode: -1,
+    singUpResultCode: -1,
 }
 
 type LoginDataType = { email: string, password: string }
@@ -37,6 +39,20 @@ export const loginThunk = createAsyncThunk(
     async (loginData: LoginDataType, {rejectWithValue, dispatch}) => {
         const {email, password} = loginData;
         const res = await authAPI.login(email, password);
+        return res.data;
+    }
+);
+
+type SingUpDataType = {
+    email: string,
+    name: string,
+    password: string,
+}
+export const singUpThunk = createAsyncThunk(
+    'auth/singUpThunk',
+    async (singUpData: SingUpDataType, {rejectWithValue, dispatch}) => {
+        const {name, email, password} = singUpData;
+        const res = await authAPI.singUpNewUser(name, email, password);
         return res.data;
     }
 );
@@ -116,6 +132,9 @@ export const authSlice = createSlice({
         changePasswordResultCodeAC: (state:AuthStateType, action: PayloadAction<number>): void => {
             state.changePasswordResultCode = action.payload;
         },
+        resetLoginServerErrorAC: (state:AuthStateType): void => {
+            state.loginServerError = '';
+        },
         logout: (state: AuthStateType): void => {
             state.user.id = 0;
             state.user.isAdmin = false;
@@ -182,8 +201,19 @@ export const authSlice = createSlice({
         builder.addCase(updatePasswordThunk.rejected, (state: AuthStateType) => {
             state.isLoading = false;
         })
+
+        builder.addCase(singUpThunk.pending, (state: AuthStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(singUpThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{resultCode: number}>) => {
+            state.singUpResultCode = action.payload.resultCode;
+            state.isLoading = false;
+        })
+        builder.addCase(singUpThunk.rejected, (state: AuthStateType) => {
+            state.isLoading = false;
+        })
     }
 })
-export const {logout, changePasswordResultCodeAC} = authSlice.actions;
+export const {logout, changePasswordResultCodeAC, resetLoginServerErrorAC} = authSlice.actions;
 
 export default authSlice.reducer;

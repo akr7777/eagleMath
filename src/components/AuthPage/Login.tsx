@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 
 import s from './authPage.module.css';
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import CustomColorButton from "../common/CustomColorButton";
 import {Navigate, NavLink, useNavigate} from "react-router-dom";
@@ -12,7 +12,7 @@ import {Navigate, NavLink, useNavigate} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
-import {loginThunk} from "../features/authSlice";
+import {loginThunk, resetLoginServerErrorAC} from "../features/authSlice";
 import Alert from "@mui/material/Alert";
 import Preloader from "../common/Preloader";
 
@@ -26,6 +26,12 @@ const Login = () => {
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
     //let navigate = useNavigate();
+
+    useEffect(()=>{
+        return ()=>{
+            dispatch(resetLoginServerErrorAC())
+        }
+    }, [])
 
     const emailChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setEmail(e.currentTarget.value);

@@ -70,15 +70,7 @@ export const authAPI = {
     login: (email: string, password: string) => {
         return instance.post(`users/login`, {email: email, password: password});
     },
-
     uploadAvatar: (file: any, id: IdFiledType) => {
-        //console.log('authAPI.uploadAvatar / id=', id, 'file=', file);
-        /*const instance1 = axios.create({
-            headers: {
-                "Content-Type": "multipart/form-data"
-            },
-            baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
-        });*/
         return instance.post(`users/uploadAvatar`, {file: file, id: id}, {
             headers: {
                 "Content-Type": "multipart/form-data"
@@ -90,6 +82,9 @@ export const authAPI = {
     },
     updatePassword: (id: IdFiledType, oldPass: string, newPass: string) => {
         return instance.post('users/updatePassword', {id: id, oldPass: oldPass, newPass: newPass})
+    },
+    singUpNewUser: (name: string, email: string, password: string) => {
+        return instance.post('users/singUpNewUser', {name: name, email: email, password: password})
     },
 }
 
