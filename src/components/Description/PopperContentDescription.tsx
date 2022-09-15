@@ -62,7 +62,7 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
                 />
                 <label htmlFor="raised-button-file">
                     <Button component="span">
-                        Сменить аватар
+                        Заменить фотографию на главной странице
                     </Button>
                 </label>
             </div>

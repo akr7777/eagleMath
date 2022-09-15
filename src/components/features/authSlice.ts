@@ -2,14 +2,17 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {authAPI} from "../api/api";
 import {IdFiledType} from "./categoriesSlice";
+import {ResultCodesEnum as resultCodes} from "./../utils/resultCodes";
+import {useAppDispatch} from "../../store/store";
 
 export const baseAvatarPhotoUrl = 'https://dry-anchorage-96588.herokuapp.com/users/getAvatar?id=';
 
 type UserType = {
-    id: number,
+    id: string,
     email: string,
     name: string,
     isAdmin: boolean,
+    isActivated: boolean,
 }
 export type AuthStateType = {
     user: UserType,
@@ -18,19 +21,22 @@ export type AuthStateType = {
     isLoading: boolean,
     changePasswordResultCode: number,
     singUpResultCode: number,
+    activationLink: string,
 }
 let initialState: AuthStateType = {
     user: {
-        id: 0,
+        id: '0',
         email: '',
         name: '',
         isAdmin: false,
+        isActivated: false,
     },
     isAuth: false,
     loginServerError: '',
     isLoading: false,
     changePasswordResultCode: -1,
     singUpResultCode: -1,
+    activationLink: 'http://'
 }
 
 type LoginDataType = { email: string, password: string }
@@ -42,6 +48,14 @@ export const loginThunk = createAsyncThunk(
         return res.data;
     }
 );
+
+export const logoutThunk = createAsyncThunk(
+    'auth/logoutThunk',
+    async (_, {rejectWithValue, dispatch}) => {
+        const res = await authAPI.logout();
+        return res.data;
+    }
+)
 
 type SingUpDataType = {
     email: string,
@@ -138,35 +152,70 @@ export const authSlice = createSlice({
         resetSingUpResultCodeAC: (state: AuthStateType): void => {
             state.singUpResultCode = -1;
         },
-        logout: (state: AuthStateType): void => {
-            state.user.id = 0;
+        /*logout: (state: AuthStateType): void => {
+            state.user.id = '0';
             state.user.isAdmin = false;
             state.user.email = '';
             //state.user.photo = '';
             state.isAuth = false;
             state.loginServerError = '';
-        },
+        },*/
     },
+
+
     extraReducers: (builder) => {
         builder.addCase(loginThunk.pending, (state: AuthStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(loginThunk.fulfilled, (state: AuthStateType, action: PayloadAction< UserType & {resultCode:number} >) => {
-            if (action.payload.resultCode === 0) {
-                state.user.id = action.payload.id;
-                state.user.email = action.payload.email;
-                state.user.name = action.payload.name;
-                //photo: action.payload.photo,
-                state.user.isAdmin = action.payload.isAdmin;
-                state.isAuth = true;
-                state.loginServerError = '';
-            } else if (action.payload.resultCode === 10)
-                state.loginServerError = 'Неверный email или пароль!';
-
+        builder.addCase(loginThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{
+            accessToken: string,
+            refreshToken: string,
+            userInfo: {
+                id: string,
+                name: string,
+                email: string,
+                isAdmin: boolean,
+            },
+            resultCode: number,
+            message?: string
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success) {
+                if (action.payload.accessToken) {
+                    localStorage.setItem("accessToken", action.payload.accessToken);
+                    //localStorage.setItem("refreshToken", action.payload.refreshToken);
+                    state.user.id = action.payload.userInfo.id;
+                    state.user.email = action.payload.userInfo.email;
+                    state.user.name = action.payload.userInfo.name;
+                    state.user.isAdmin = action.payload.userInfo.isAdmin;
+                    state.isAuth = true;
+                    state.loginServerError = '';
+                }
+            } else {
+                state.loginServerError = action.payload.message || 'Ошибка на сервере';
+            }
             state.isLoading = false;
         })
         builder.addCase(loginThunk.rejected, (state: AuthStateType) => {
             state.loginServerError = 'Ошибка на сервере';
+            state.isLoading = false;
+        })
+
+        builder.addCase(logoutThunk.pending, (state: AuthStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(logoutThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{token: any, resultCode: resultCodes}>) => {
+            if (action.payload.resultCode === resultCodes.Success) {
+                state.user.id = '0';
+                state.user.isAdmin = false;
+                state.user.email = '';
+                //state.user.photo = '';
+                state.isAuth = false;
+                state.loginServerError = '';
+
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(logoutThunk.rejected, (state: AuthStateType) => {
             state.isLoading = false;
         })
 
@@ -217,6 +266,6 @@ export const authSlice = createSlice({
         })
     }
 })
-export const {logout, changePasswordResultCodeAC, resetLoginServerErrorAC, resetSingUpResultCodeAC} = authSlice.actions;
+export const {changePasswordResultCodeAC, resetLoginServerErrorAC, resetSingUpResultCodeAC} = authSlice.actions;
 
 export default authSlice.reducer;

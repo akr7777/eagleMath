@@ -18,6 +18,7 @@ import Button from "@mui/material/Button";
 import {PATHS} from "../AppBar/AppBar";
 import Preloader from "../common/Preloader";
 import {IdFiledType} from "../features/categoriesSlice";
+import {NavLink} from "react-router-dom";
 
 export default function Profile() {
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
@@ -34,6 +35,9 @@ export default function Profile() {
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
     const avaPhoto = baseAvatarPhotoUrl+userID;//useSelector((state: RootState) => state.auth.user.photo);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    const isActivated = useSelector((state: RootState) => state.auth.user.isActivated);
+    const activationLink = useSelector((state: RootState) => state.auth.activationLink);
+
     const activatechangeEmailMode = () => {
         setEmailDisabled(false);
     }
@@ -82,6 +86,15 @@ export default function Profile() {
                         </label>
 
                     </div>
+
+                    {/*Если аккаунт не активирован, предлагаем ссылку для активации аккаунта*/}
+                    <div>
+                        {
+                            !isActivated && <Typography variant={'h5'} color={'red'}>Вам необходимо активировать аккаунт,
+                                    перейдя по данной <NavLink to={activationLink}>ссылке</NavLink>.</Typography>
+                        }
+                    </div>
+
                     <div className={s.someDiv}>
                         <label>e-mail:</label>
                         <TextField className={s.textFields} disabled={emailDisabled} value={emailValue}

@@ -1,16 +1,23 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 import {IdFiledType} from "../features/categoriesSlice";
 
-const baseAppURL = 'https://dry-anchorage-96588.herokuapp.com/';
+const accessToken = localStorage.getItem("accessToken") || "";
 
 const instance = axios.create({
-    //withCredentials: true,
+    withCredentials: true,
     /*headers: {
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        'Authorization': 'bearer ' + accessToken,
     },*/
-    //baseURL: 'http://localhost:3001/',
+    baseURL: 'http://localhost:4001/',
     //baseURL: 'http://192.168.153.17:3001/'
-    baseURL: baseAppURL,
+    //baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
+});
+
+instance.interceptors.request.use((config)=> {
+    if (config.headers)
+        config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
+    return config;
 });
 
 export enum ResultCodesEnum {
@@ -40,7 +47,7 @@ export enum ResultCodeForCaptcha {
 }*/
 
 export const MaterialsAPI = {
-    getAllMaterials: () => {
+    getAllMaterials: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`materials/getAllMaterials`);
     },
@@ -50,7 +57,7 @@ export const MaterialsAPI = {
      },*/
 }
 export const TasksAPI = {
-    getAllTasks: () => {
+    getAllTasks: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`tasks/getAllTasks`);
     },
@@ -60,45 +67,48 @@ export const TasksAPI = {
     },*/
 }
 export const CategoriesAPI = {
-    getAllcategories: () => {
+    getAllcategories: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
         return instance.get(`categories/getAllCategories`);
     },
 }
 
 export const authAPI = {
-    login: (email: string, password: string) => {
-        return instance.post(`users/login`, {email: email, password: password});
+    login: (email: string, password: string):Promise<AxiosResponse> => {
+        return instance.post(`auth/login`, {email: email, password: password});
     },
-    uploadAvatar: (file: any, id: IdFiledType) => {
+    logout: ():Promise<AxiosResponse> => {
+        return instance.post('auth/logout', {});
+    },
+    uploadAvatar: (file: any, id: IdFiledType):Promise<AxiosResponse> => {
         return instance.post(`users/uploadAvatar`, {file: file, id: id}, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
     },
-    updateEmail: (id: IdFiledType, newEmail: string) => {
+    updateEmail: (id: IdFiledType, newEmail: string):Promise<AxiosResponse> => {
         return instance.post('users/updateEmail', {id: id, newEmail: newEmail})
     },
-    updatePassword: (id: IdFiledType, oldPass: string, newPass: string) => {
+    updatePassword: (id: IdFiledType, oldPass: string, newPass: string):Promise<AxiosResponse> => {
         return instance.post('users/updatePassword', {id: id, oldPass: oldPass, newPass: newPass})
     },
-    singUpNewUser: (name: string, email: string, password: string) => {
+    singUpNewUser: (name: string, email: string, password: string):Promise<AxiosResponse> => {
         return instance.post('users/singUpNewUser', {name: name, email: email, password: password})
     },
 }
 
 export const descriptionAPI = {
-    getDescription: () => {
+    getDescription: ():Promise<any> => {
         return instance.get(`description/getDescription`);
     },
-    setDescription: (title: string,/* photo: string,*/ description: string) => {
+    setDescription: (title: string,/* photo: string,*/ description: string):Promise<AxiosResponse> => {
         return instance.post(`description/setDescription`, {title: title, /*photo: photo, */description: description});
     },
-    getDescriptionPhoto: ()=> {
+    getDescriptionPhoto: ():Promise<any> => {
         return instance.get('description/getDescriptionPhoto');
     },
-    setDescriptionPhoto: (file:any) => {
+    setDescriptionPhoto: (file:any):Promise<AxiosResponse> => {
         return instance.post(`description/setDescriptionPhoto`, {file: file}, {
             headers: {
                 "Content-Type": "multipart/form-data"
