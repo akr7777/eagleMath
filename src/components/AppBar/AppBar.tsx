@@ -78,6 +78,7 @@ export default function MyAppBar(props: Props) {
     };
 
     let isAuth = useSelector( (state: RootState) => state.auth.isAuth);
+
     const userId = useSelector((state:RootState) => state.auth.user.id);
     const avaURL = baseAvatarPhotoUrl + userId;//useSelector( (state: RootState) => state.auth.user.photo);
     const avaPhotoMobile = isAuth

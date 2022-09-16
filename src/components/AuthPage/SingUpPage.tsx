@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import {ChangeEvent, useState} from "react";
 import CustomColorButton from "../common/CustomColorButton";
 import {RootState, useAppDispatch} from "../../store/store";
-import {resetSingUpResultCodeAC, singUpThunk} from "../features/authSlice";
+import {resetSingUpResultCodeAC, registrationThunk} from "../features/authSlice";
 import Preloader from "../common/Preloader";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
@@ -13,6 +13,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import {NavLink} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import Button from "@mui/material/Button";
+import {ResultCodesEnum} from "../utils/resultCodes";
 
 type ErrorObjectType = {
     name: string,
@@ -74,7 +75,7 @@ const SingUpPage = () => {
             error.password = 'Пароль должен быть больше 5-ти символов'
             setError(error);
         } else {
-            dispatch(singUpThunk({name: name, email: email, password: password1}));
+            dispatch(registrationThunk({name: name, email: email, password: password1}));
         }
     }
 
@@ -84,7 +85,7 @@ const SingUpPage = () => {
                 ? <Preloader/>
                 : <Container>
                     {
-                        singUpResultCode === 0 && <div className={s.successDiv}>
+                        singUpResultCode === ResultCodesEnum.Success && <div className={s.successDiv}>
                             <Alert severity="success">
                                 <AlertTitle>Новый пользователь успешно зарегистрирован!</AlertTitle>
                                 <div className={s.successDiv}>
@@ -96,13 +97,13 @@ const SingUpPage = () => {
                     }
 
                     {
-                        singUpResultCode !== 0 && <div className={s.wrappedDiv}>
+                        singUpResultCode !== ResultCodesEnum.Success && <div className={s.wrappedDiv}>
                             <Typography variant={'h4'}>
                                 Регистрация:
                             </Typography>
 
                             {
-                                singUpResultCode === 1 && <div>
+                                singUpResultCode === ResultCodesEnum.Error && <div>
                                     <Alert severity="error">
                                         <AlertTitle>Ошибка</AlertTitle>
                                         <strong>Возникла серверная ошибка. Обратитесь в тех.поддержку.</strong>
@@ -110,7 +111,7 @@ const SingUpPage = () => {
                                 </div>
                             }
                             {
-                                singUpResultCode === 10 && <div>
+                                singUpResultCode === ResultCodesEnum.userAlreadyExists && <div>
                                     <Alert severity="error">
                                         <AlertTitle>Пользователь уже существует</AlertTitle>
                                         <strong>Пользователь с адресом почты {email} уже существует.</strong>

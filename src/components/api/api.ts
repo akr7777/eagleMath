@@ -20,31 +20,6 @@ instance.interceptors.request.use((config)=> {
     return config;
 });
 
-export enum ResultCodesEnum {
-    Success = 0,
-    Error = 1,
-}
-export enum ResultCodeForCaptcha {
-    CaptchaNeeded = 10
-}
-
-/*export const AuthAPI = {
-    Login: (email: string, password: string, captcha?: string) => {
-        return {
-            resultCode: 0,
-            data: {
-                authID: 1,
-                email: 'myEmailInAPI_Auth@app.com',
-                name: 'admin'
-            }
-        }
-    },
-    logout: (id: number) => {
-        return {
-            resultCode: 0
-        };
-    }
-}*/
 
 export const MaterialsAPI = {
     getAllMaterials: ():Promise<AxiosResponse> => {
@@ -80,6 +55,9 @@ export const authAPI = {
     logout: ():Promise<AxiosResponse> => {
         return instance.post('auth/logout', {});
     },
+    refresh: () => {
+        return instance.get('auth/refresh');
+    },
     uploadAvatar: (file: any, id: IdFiledType):Promise<AxiosResponse> => {
         return instance.post(`users/uploadAvatar`, {file: file, id: id}, {
             headers: {
@@ -93,8 +71,8 @@ export const authAPI = {
     updatePassword: (id: IdFiledType, oldPass: string, newPass: string):Promise<AxiosResponse> => {
         return instance.post('users/updatePassword', {id: id, oldPass: oldPass, newPass: newPass})
     },
-    singUpNewUser: (name: string, email: string, password: string):Promise<AxiosResponse> => {
-        return instance.post('users/singUpNewUser', {name: name, email: email, password: password})
+    registration: (name: string, email: string, password: string):Promise<AxiosResponse> => {
+        return instance.post('auth/registration', {name: name, email: email, password: password})
     },
 }
 

@@ -30,6 +30,7 @@ export default function Profile() {
             dispatch(getAvatar(userID));
     },[])*/
 
+    console.log('Profile.tsx state.auth.user=', useSelector((state: RootState) => state.auth.user));
 
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
@@ -37,6 +38,7 @@ export default function Profile() {
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isActivated = useSelector((state: RootState) => state.auth.user.isActivated);
     const activationLink = useSelector((state: RootState) => state.auth.activationLink);
+    const userName = useSelector((state: RootState) => state.auth.user.name);
 
     const activatechangeEmailMode = () => {
         setEmailDisabled(false);
@@ -94,6 +96,11 @@ export default function Profile() {
                                     перейдя по данной <NavLink to={activationLink}>ссылке</NavLink>.</Typography>
                         }
                     </div>
+
+                    {   userName && <div>
+                            <Typography variant={'h5'}>Имя: {userName}</Typography>
+                        </div>
+                    }
 
                     <div className={s.someDiv}>
                         <label>e-mail:</label>

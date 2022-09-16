@@ -14,8 +14,7 @@ import Profile from "./components/Profile/Profile";
 
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
-import {useAppDispatch} from "./store/store";
-import {getAllMaterials} from "./components/features/materialsSlice";
+import InitializeApp from "./components/utils/initializeApp";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -33,6 +32,7 @@ function App() {
     //initializeApp
     /*let dispatch = useAppDispatch();
     dispatch(getAllMaterials());*/
+    InitializeApp();
     //
 
     return (<>
