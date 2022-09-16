@@ -1,7 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {CategoriesAPI, TasksAPI} from "../api/api";
-import {CategoryType} from "./categoriesSlice";
+import {ContentAPI} from "../api/api";
+import {addMaterialToFavoritesThunk, deleteMaterialFromFavoritesThunk} from "./materialsSlice";
+//import {CategoryType} from "./categoriesSlice";
 
 export type IdFiledType = string | number;
 export type TaskType = {
@@ -23,10 +24,10 @@ let initialState: InitStateTasksType = {
     isLoading: true,
 }
 
-export const getAllTasks = createAsyncThunk(
+export const getAllTasksThunk = createAsyncThunk(
     'tasks/getAllTasks',
     async (_, {rejectWithValue, dispatch}) => {
-        const res = await TasksAPI.getAllTasks();
+        const res = await ContentAPI.getAllTasks();
         if (res.data) {
             return res.data;
             /*const result: CategoryType[] = [];
@@ -38,11 +39,35 @@ export const getAllTasks = createAsyncThunk(
     }
 );
 
+export const getFavoritesThunk = createAsyncThunk(
+    'materials/getFavoritesThunk',
+    async (userId:IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.getFavoriteContent(userId);
+        return res.data;
+    }
+);
+export const addTaskToFavoritesThunk = createAsyncThunk(
+    'tasks/addTaskToFavoritesThunk',
+    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = content;
+        const res = await ContentAPI.addToFavorites(userId, contentId);
+        return res.data; //возывращает массив id Array<IdFieldType>
+    }
+);
+export const deleteTaskFromFavoritesThunk = createAsyncThunk(
+    'tasks/deleteTaskFromFavoritesThunk',
+    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = content;
+        const res = await ContentAPI.deleteFromFavorites(userId, contentId);
+        return res.data; //возывращает массив id Array<IdFieldType>
+    }
+);
+
 export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        setAllTasksAC: (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
+        /*setAllTasksAC: (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
             state.tasks = action.payload;
         },
         addIdToFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
@@ -50,29 +75,61 @@ export const tasksSlice = createSlice({
         },
         deleteIdFromFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
             state.favoriteTasksIds = state.favoriteTasksIds.filter(el => String(el) !== String(action.payload))
-        }
-
+        }*/
     },
     extraReducers: (builder) => {
-        builder.addCase(getAllTasks.pending, (state: InitStateTasksType) => {
+        builder.addCase(getAllTasksThunk.pending, (state: InitStateTasksType) => {
             state.isLoading = true;
         })
-        builder.addCase(getAllTasks.fulfilled, (state: InitStateTasksType, action: PayloadAction<any>) => {
+        builder.addCase(getAllTasksThunk.fulfilled, (state: InitStateTasksType, action: PayloadAction<any>) => {
             //console.log('TasksSlice / getAllTasks.fulfilled / action.payload=', action.payload)
             state.tasks = action.payload;
             state.isLoading = false;
         })
-        builder.addCase(getAllTasks.rejected, (state: InitStateTasksType) => {
+        builder.addCase(getAllTasksThunk.rejected, (state: InitStateTasksType) => {
             state.isLoading = false;
             console.log('extraReducers / getAllMaterials.rejected');
+        })
+
+        builder.addCase(getFavoritesThunk.pending, (state: InitStateTasksType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getFavoritesThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<Array<IdFiledType>>) => {
+            state.favoriteTasksIds = action.payload;
+            state.isLoading = false;
+        })
+        builder.addCase(getFavoritesThunk.rejected, (state: InitStateTasksType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(addTaskToFavoritesThunk.pending, (state:InitStateTasksType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(addTaskToFavoritesThunk.fulfilled, (state:InitStateTasksType, action:PayloadAction<Array<IdFiledType>>) => {
+            state.favoriteTasksIds = action.payload;
+            state.isLoading = false;
+        })
+        builder.addCase(addTaskToFavoritesThunk.rejected, (state:InitStateTasksType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(deleteTaskFromFavoritesThunk.pending, (state: InitStateTasksType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(deleteTaskFromFavoritesThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<Array<IdFiledType>>) => {
+            state.favoriteTasksIds = action.payload;
+            state.isLoading = false;
+        })
+        builder.addCase(deleteTaskFromFavoritesThunk.rejected, (state: InitStateTasksType) => {
+            state.isLoading = false;
         })
     },
 })
 
 export const {
-    setAllTasksAC,
+    /*setAllTasksAC,
     addIdToFavoritesTasksAC,
-    deleteIdFromFavoritesTasksAC
+    deleteIdFromFavoritesTasksAC*/
 } = tasksSlice.actions;
 
 

@@ -1,7 +1,5 @@
 import s from './tree5.module.css';
 import {
-    addIdToFavoritesMaterialsAC,
-    deleteIdFromFavoritesMaterialsAC,
     IdFiledType,
     MaterialType
 } from "../../features/materialsSlice";

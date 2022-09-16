@@ -28,7 +28,7 @@ let initialState: InitStatecategoryType = {
     isLoading: false,
 }
 
-export const getAllCategories = createAsyncThunk(
+export const getAllCategoriesThunk = createAsyncThunk(
     'materials/getAllCategories',
     async (_, {rejectWithValue, dispatch}) => {
         const res = await CategoriesAPI.getAllcategories();
@@ -59,15 +59,15 @@ export const categoriesSlice = createSlice({
 
     },
     extraReducers: (builder) => {
-        builder.addCase(getAllCategories.fulfilled, (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
+        builder.addCase(getAllCategoriesThunk.fulfilled, (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
             state.isLoading = false;
             state.categories = action.payload;
         })
-        builder.addCase(getAllCategories.rejected, (state: InitStatecategoryType)=>{
+        builder.addCase(getAllCategoriesThunk.rejected, (state: InitStatecategoryType)=>{
             state.isLoading = false;
             //console.log('extraReducers / getAllMaterials.rejected');
         })
-        builder.addCase(getAllCategories.pending, (state: InitStatecategoryType)=>{
+        builder.addCase(getAllCategoriesThunk.pending, (state: InitStatecategoryType)=>{
             state.isLoading = true;
         })
     },

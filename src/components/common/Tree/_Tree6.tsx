@@ -1,6 +1,4 @@
 import {
-    addIdToFavoritesMaterialsAC,
-    deleteIdFromFavoritesMaterialsAC,
     IdFiledType,
     MaterialType
 } from "../../features/materialsSlice";
@@ -86,8 +84,8 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                         {
                             isAuth && isMaterial
                                 ? favoritesIds.some(el => String(el) === String(cat.id))
-                                    ? <StarIcon onClick={() => dispatch(deleteIdFromFavoritesMaterialsAC(cat.id))}/>
-                                    : <StarOutlineIcon onClick={() => dispatch(addIdToFavoritesMaterialsAC(cat.id))}/>
+                                    ? <StarIcon onClick={() => {}/*dispatch(deleteIdFromFavoritesMaterialsAC(cat.id))*/}/>
+                                    : <StarOutlineIcon onClick={() => {}/*dispatch(addIdToFavoritesMaterialsAC(cat.id))}*/}/>
                                 : ""
                         }
 
@@ -126,7 +124,7 @@ type TreePropsType = {
     categories: Array<CategoryType>,
     materials: Array<MaterialType> | Array<TaskType>,
 }
-export const Tree6: React.FC<TreePropsType> = (props) => {
+export const _Tree6: React.FC<TreePropsType> = (props) => {
 
     const [isShowArr, setIsShowArr] = useState<Array<IdFiledType>>([]);
     const plusIconClick = (id: IdFiledType) => {

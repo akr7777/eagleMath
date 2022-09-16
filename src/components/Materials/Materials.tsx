@@ -3,34 +3,38 @@ import s from "../common/commonCSS.module.css";
 import Typography from "@mui/material/Typography";
 import {RootState, useAppDispatch} from "../../store/store";
 import {
-    addIdToFavoritesMaterialsAC,
-    deleteIdFromFavoritesMaterialsAC,/*getAllCategories,*/
-    getAllMaterials
+    addMaterialToFavoritesThunk,
+    deleteMaterialFromFavoritesThunk,
+    getAllMaterialsThunk, getFavoritesThunk
 } from "../features/materialsSlice";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Tree5} from "../common/Tree/Tree5";
-import {Tree6} from "../common/Tree/Tree6";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
-import {getAllCategories, IdFiledType} from "../features/categoriesSlice";
+import {getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
 
 const Materials = () => {
 
+    const userId = useSelector((state: RootState) => state.auth.user.id);
     const isLoading = useSelector((state: RootState) => state.materials.isLoading);
     let dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getAllCategories());
-        dispatch(getAllMaterials());
+        dispatch(getAllCategoriesThunk());
+        dispatch(getAllMaterialsThunk());
+        if (userId !== '0') dispatch(getFavoritesThunk(userId))
     }, []);
 
     const categories = [...useSelector((state: RootState) => state.categories.categories)];
     const materials = [...useSelector((state: RootState) => state.materials.materials)];
 
-    const addToFavorite = (id: IdFiledType) => {
-        dispatch(addIdToFavoritesMaterialsAC(id));
+    const addToFavorite = (contentId: IdFiledType) => {
+        //dispatch(addIdToFavoritesMaterialsAC(userId, contentId));
+        dispatch(addMaterialToFavoritesThunk({userId, contentId}))
     }
-    const deleteFromFavorite = (id: IdFiledType) => {
-        dispatch(deleteIdFromFavoritesMaterialsAC(id))
+    const deleteFromFavorite = (contentId: IdFiledType) => {
+        //dispatch(deleteIdFromFavoritesMaterialsAC(userId, contentId))
+        dispatch(deleteMaterialFromFavoritesThunk({userId, contentId}))
+
     }
 
     return <>

@@ -21,18 +21,27 @@ instance.interceptors.request.use((config)=> {
 });
 
 
-export const MaterialsAPI = {
+export const ContentAPI = {
     getAllMaterials: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`content/getAllMaterials`);
-    }
-}
-export const TasksAPI = {
+    },
     getAllTasks: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
         return instance.get(`content/getAllTasks`);
+    },
+
+    getFavoriteContent: (userId: IdFiledType): Promise<AxiosResponse> => {
+        return instance.post(`content/getFavorites`, {userId: userId});
+    },
+    addToFavorites: (userId: IdFiledType, contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/addContentToFavorites', {userId: userId, contentId: contentId});
+    },
+    deleteFromFavorites: (userId: IdFiledType, contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/deleteContentFromFavorites', {userId: userId, contentId: contentId});
     }
 }
+
 export const CategoriesAPI = {
     getAllcategories: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))

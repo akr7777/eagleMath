@@ -5,31 +5,39 @@ import {Typography} from '@mui/material';
 import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
-import {Tree6} from "../common/Tree/Tree6";
-//import {CategoryType, } from "../features/materialsSlice";
-import {addIdToFavoritesTasksAC, deleteIdFromFavoritesTasksAC, getAllTasks, TaskType} from "../features/tasksSlice";
-import {CategoryType, getAllCategories, IdFiledType} from "../features/categoriesSlice";
+import {
+    addTaskToFavoritesThunk,
+    deleteTaskFromFavoritesThunk,
+    getAllTasksThunk,
+    getFavoritesThunk,
+    TaskType
+} from "../features/tasksSlice";
+import {CategoryType, getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
 import Preloader from "../common/Preloader";
 
 export const Tasks = () => {
 
-    const isLoading = useSelector((state: RootState) => state.tasks.isLoading)
+    const isLoading = useSelector((state: RootState) => state.tasks.isLoading);
+    const userId = useSelector((state: RootState) => state.auth.user.id);
 
     let dispatch = useAppDispatch();
     useEffect(() => {
-        dispatch(getAllTasks());
-        dispatch(getAllCategories());
+        dispatch(getAllTasksThunk());
+        dispatch(getAllCategoriesThunk());
+        if (userId !== '0') dispatch(getFavoritesThunk(userId))
     }, []);
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
     const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
     const tasks: TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
 
-    const addToFavorite = (id: IdFiledType) => {
-        dispatch(addIdToFavoritesTasksAC(id));
+    const addToFavorite = (contentId: IdFiledType) => {
+        dispatch(addTaskToFavoritesThunk({userId, contentId}))
+        //dispatch(addIdToFavoritesTasksAC(id));
     }
-    const deleteFromFavorite = (id: IdFiledType) => {
-        dispatch(deleteIdFromFavoritesTasksAC(id));
+    const deleteFromFavorite = (contentId: IdFiledType) => {
+        dispatch(deleteTaskFromFavoritesThunk({userId, contentId}))
+        //dispatch(deleteIdFromFavoritesTasksAC(id));
     }
 
     return <>
