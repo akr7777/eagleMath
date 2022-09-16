@@ -44,7 +44,7 @@ export const TasksAPI = {
 export const CategoriesAPI = {
     getAllcategories: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
-        return instance.get(`categories/getAllCategories`);
+        return instance.get(`content/getAllCategories`);
     },
 }
 

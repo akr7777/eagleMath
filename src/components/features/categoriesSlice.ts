@@ -35,9 +35,7 @@ export const getAllCategories = createAsyncThunk(
         if (res.data) {
             const result:CategoryType[] = [];
             for (let i=0; i<res.data.length; i++)
-                //result.push({id: 0, parentId: 0, label: '000', items: []});
-                result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
-            //return res.data;
+                result.push({id: res.data[i]._id, label: res.data[i].label, parentId: res.data[i].parentId});
             return result;
         } else
             return [];
@@ -63,12 +61,11 @@ export const categoriesSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getAllCategories.fulfilled, (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
             state.isLoading = false;
-            //console.log('categoriesSlice / extraReducers / extraReducers actionPayload=', action.payload);
             state.categories = action.payload;
         })
         builder.addCase(getAllCategories.rejected, (state: InitStatecategoryType)=>{
             state.isLoading = false;
-            console.log('extraReducers / getAllMaterials.rejected');
+            //console.log('extraReducers / getAllMaterials.rejected');
         })
         builder.addCase(getAllCategories.pending, (state: InitStatecategoryType)=>{
             state.isLoading = true;
