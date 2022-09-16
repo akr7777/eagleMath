@@ -27,10 +27,11 @@ export const getAllMaterials = createAsyncThunk(
     async (_, {rejectWithValue, dispatch}) => {
         const res = await MaterialsAPI.getAllMaterials();
         if (res.data) {
-            const result:CategoryType[] = [];
+            return res.data;
+            /*const result:CategoryType[] = [];
             for (let i=0; i<res.data.length; i++)
                 result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
-            return result;
+            return result;*/
         } else
             return [];
     }
@@ -57,6 +58,7 @@ export const materialsSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(getAllMaterials.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
+            //console.log('MaterialSlice / getAllMaterials.fulfilled / action.payload=', action.payload)
             state.materials = action.payload;
             state.isLoading = false;
         })

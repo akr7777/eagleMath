@@ -28,10 +28,11 @@ export const getAllTasks = createAsyncThunk(
     async (_, {rejectWithValue, dispatch}) => {
         const res = await TasksAPI.getAllTasks();
         if (res.data) {
-            const result: CategoryType[] = [];
+            return res.data;
+            /*const result: CategoryType[] = [];
             for (let i = 0; i < res.data.length; i++)
                 result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
-            return result;
+            return result;*/
         } else
             return [];
     }
@@ -56,7 +57,8 @@ export const tasksSlice = createSlice({
         builder.addCase(getAllTasks.pending, (state: InitStateTasksType) => {
             state.isLoading = true;
         })
-        builder.addCase(getAllTasks.fulfilled, (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
+        builder.addCase(getAllTasks.fulfilled, (state: InitStateTasksType, action: PayloadAction<any>) => {
+            //console.log('TasksSlice / getAllTasks.fulfilled / action.payload=', action.payload)
             state.tasks = action.payload;
             state.isLoading = false;
         })

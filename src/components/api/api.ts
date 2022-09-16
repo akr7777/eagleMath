@@ -24,22 +24,14 @@ instance.interceptors.request.use((config)=> {
 export const MaterialsAPI = {
     getAllMaterials: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
-        return instance.get(`materials/getAllMaterials`);
-    },
-    /* getAllcategories: () => {
-         //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
-         return instance.get(`materials/getAllCategories`);
-     },*/
+        return instance.get(`content/getAllMaterials`);
+    }
 }
 export const TasksAPI = {
     getAllTasks: ():Promise<AxiosResponse> => {
         //console.log('MaterialsAPI / getAllMaterials / instance.get(`materials/getAllMaterials`)= ', instance.get(`materials/getAllMaterials`));
-        return instance.get(`tasks/getAllTasks`);
-    },
-    /*getAllcategories: () => {
-        //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
-        return instance.get(`tasks/getAllCategories`);
-    },*/
+        return instance.get(`content/getAllTasks`);
+    }
 }
 export const CategoriesAPI = {
     getAllcategories: ():Promise<AxiosResponse> => {
