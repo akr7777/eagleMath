@@ -26,6 +26,7 @@ const Materials = () => {
 
     const categories = [...useSelector((state: RootState) => state.categories.categories)];
     const materials = [...useSelector((state: RootState) => state.materials.materials)];
+    const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
 
     const addToFavorite = (contentId: IdFiledType) => {
         //dispatch(addIdToFavoritesMaterialsAC(userId, contentId));
@@ -57,6 +58,7 @@ const Materials = () => {
                             materials={materials}
                             addToFavorite={addToFavorite}
                             deleteFromFavorite={deleteFromFavorite}
+                            favoritesIds={favoritesIds}
                         />
                     </div>
 

@@ -8,6 +8,10 @@ import {Tree5} from "../common/Tree/Tree5";
 import {
     addTaskToFavoritesThunk,
     deleteTaskFromFavoritesThunk,
+
+    addIdToFavoritesTasksAC,
+    deleteIdFromFavoritesTasksAC,
+
     getAllTasksThunk,
     getFavoritesThunk,
     TaskType
@@ -21,23 +25,27 @@ export const Tasks = () => {
     const userId = useSelector((state: RootState) => state.auth.user.id);
 
     let dispatch = useAppDispatch();
+    //dispatch(getFavoritesThunk(userId));
     useEffect(() => {
+        console.log('USE EFFECT')
         dispatch(getAllTasksThunk());
         dispatch(getAllCategoriesThunk());
-        if (userId !== '0') dispatch(getFavoritesThunk(userId))
-    }, []);
+        /*if (userId !== '0') */dispatch(getFavoritesThunk(userId));
+    }, [userId]);
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
     const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
     const tasks: TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
+    const favoritesIds = useSelector((state: RootState) => state.tasks.favoriteTasksIds);
+
 
     const addToFavorite = (contentId: IdFiledType) => {
+        //dispatch(addIdToFavoritesTasksAC(contentId));
         dispatch(addTaskToFavoritesThunk({userId, contentId}))
-        //dispatch(addIdToFavoritesTasksAC(id));
     }
     const deleteFromFavorite = (contentId: IdFiledType) => {
+        //dispatch(deleteIdFromFavoritesTasksAC(contentId));
         dispatch(deleteTaskFromFavoritesThunk({userId, contentId}))
-        //dispatch(deleteIdFromFavoritesTasksAC(id));
     }
 
     return <>
@@ -60,6 +68,7 @@ export const Tasks = () => {
                             materials={tasks}
                             addToFavorite={addToFavorite}
                             deleteFromFavorite={deleteFromFavorite}
+                            favoritesIds={favoritesIds}
                         />
                     </div>
 

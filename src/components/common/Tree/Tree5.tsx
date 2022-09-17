@@ -16,8 +16,8 @@ import {NavLink} from "react-router-dom";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import {TaskType} from "../../features/tasksSlice";
+import {addToShownCats, deleteFromShownCats} from "../../features/categoriesSlice";
 import {CategoryType} from "../../features/categoriesSlice";
-import materials from "../../Materials/Materials";
 
 type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
 
@@ -74,7 +74,6 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                                    isAuth, isAdmin,
                                                    addToFavorite, deleteFromFavorite,
                                                }) => {
-    const dispatch = useAppDispatch();
 
     return <div className={s.treeLeaf}>
         {
@@ -150,22 +149,26 @@ type TreePropsType = {
     materials: Array<MaterialType>,
     addToFavorite: (id: IdFiledType) => void,
     deleteFromFavorite: (id: IdFiledType) => void,
+    favoritesIds: Array<IdFiledType>,
 }
 export const Tree5: React.FC<TreePropsType> = (props) => {
+    const dispatch = useAppDispatch();
     const nodeData0 = dataMutation({
         materials: props.materials,
         categories: props.categories,
     });
-    const [isShowArr, setIsShowArr] = useState<Array<IdFiledType>>([]);
-    const plusIconClick = (id: number | string) => {
-        setIsShowArr([...isShowArr, id])
+    //const [isShowArr, setIsShowArr] = useState<Array<IdFiledType>>([]);
+    const isShowArr = useSelector((state: RootState) => state.categories.isShownCats);
+    const plusIconClick = (id: IdFiledType) => {
+        dispatch(addToShownCats(id))
+        //setIsShowArr([...isShowArr, id])
     }
     const minusIconClick = (id: IdFiledType) => {
-        setIsShowArr(isShowArr.filter(s => s !== id))
+        dispatch(deleteFromShownCats(id))
+        //setIsShowArr(isShowArr.filter(s => s !== id))
     }
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
-    const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isAdmin = useSelector( (state:RootState) => state.auth.user.isAdmin);
     return <div className={s.wrappedDiv}>
@@ -178,7 +181,7 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
                 plusIconClick: plusIconClick,
                 minusIconClick: minusIconClick,
                 setSelected: setSelectedId,
-                favoritesIds: favoritesIds,
+                favoritesIds: props.favoritesIds,
                 isAuth: isAuth,
                 isAdmin: isAdmin,
                 addToFavorite: props.addToFavorite,

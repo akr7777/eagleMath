@@ -16,6 +16,7 @@ type InitStatecategoryType = {
     categories: Array<CategoryType>,
     favoriteCategoryIds: Array<IdFiledType>,
     isLoading: boolean,
+    isShownCats: Array<IdFiledType>,
 }
 let initialState: InitStatecategoryType = {
     categories: [
@@ -26,6 +27,7 @@ let initialState: InitStatecategoryType = {
     ],
     favoriteCategoryIds: [],
     isLoading: false,
+    isShownCats:[],
 }
 
 export const getAllCategoriesThunk = createAsyncThunk(
@@ -55,8 +57,13 @@ export const categoriesSlice = createSlice({
         },
         deleteIdFromFavoritesCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
             state.favoriteCategoryIds = state.favoriteCategoryIds.filter(el => String(el) !== String(action.payload))
+        },
+        addToShownCats: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
+            state.isShownCats.push(action.payload);
+        },
+        deleteFromShownCats: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
+            state.isShownCats = state.isShownCats.filter(item => item !== action.payload)
         }
-
     },
     extraReducers: (builder) => {
         builder.addCase(getAllCategoriesThunk.fulfilled, (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
@@ -75,7 +82,9 @@ export const categoriesSlice = createSlice({
 
 export const {
     addIdToFavoritesCategoriesAC,
-    deleteIdFromFavoritesCategoriesAC
+    deleteIdFromFavoritesCategoriesAC,
+    addToShownCats,
+    deleteFromShownCats
 } = categoriesSlice.actions;
 
 
