@@ -79,16 +79,16 @@ export const authAPI = {
 
 export const descriptionAPI = {
     getDescription: ():Promise<any> => {
-        return instance.get(`description/getDescription`);
+        return instance.get(`content/getDescription`);
     },
     setDescription: (title: string,/* photo: string,*/ description: string):Promise<AxiosResponse> => {
-        return instance.post(`description/setDescription`, {title: title, /*photo: photo, */description: description});
+        return instance.post(`content/setDescription`, {title: title, /*photo: photo, */description: description});
     },
     getDescriptionPhoto: ():Promise<any> => {
-        return instance.get('description/getDescriptionPhoto');
+        return instance.get('content/getDescriptionPhoto');
     },
     setDescriptionPhoto: (file:any):Promise<AxiosResponse> => {
-        return instance.post(`description/setDescriptionPhoto`, {file: file}, {
+        return instance.post(`content/setDescriptionPhoto`, {file: file}, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -98,10 +98,10 @@ export const descriptionAPI = {
 
 export const contactsAPI = {
     getContacts: () => {
-        return instance.get(`contacts/getContacts`);
+        return instance.get(`content/getContacts`);
     },
     setContacts: (title: string, description: string, phone: string, telegram: string, whatsapp: string, email: string, skype: string) => {
-        return instance.post(`contacts/setContacts`, {
+        return instance.post(`content/setContacts`, {
             title: title, description: description, phone: phone,
             telegram: telegram, whatsapp: whatsapp, email: email, skype: skype
         });

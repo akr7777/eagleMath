@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {descriptionAPI} from "../api/api";
 
-export const baseDescriptionPhotoUrl = 'https://dry-anchorage-96588.herokuapp.com/description/getDescriptionPhoto';
+export const baseDescriptionPhotoUrl = 'http://localhost:4001/content/getDescriptionPhoto';
 
 /*export type AuthorType = {
     photoURL: string,

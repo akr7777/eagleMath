@@ -29,7 +29,7 @@ const PopperContentDescription = (props: PopperContentPropsType) => {
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
         dispatch(setDescriptionThunk({title: title, /*photo: photo, */description: description}));
-        dispatch(getDescriptionThunk());
+        //dispatch(getDescriptionThunk());
         props.handleClickClose(event);
     }
 

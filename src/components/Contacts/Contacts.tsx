@@ -58,28 +58,28 @@ export const Contacts = () => {
 
                         {!!phone && <div>
                             <Typography variant="h5">
-                                Телефон: <a className={s.alink} href={"tel:" + phone}>{phoneFormat(phone)}</a>
+                                Телефон: <a className={s1.alink} href={"tel:" + phone}>{phoneFormat(phone)}</a>
                             </Typography>
                         </div>}
                         {!!telegram && <div>
                             <Typography variant="h5">
-                                Telegram: <a className={s.alink} href={"https://t.me/" + telegram}>{telegram}</a>
+                                Telegram: <a className={s1.alink} href={"https://t.me/" + telegram}>{telegram}</a>
                             </Typography>
                         </div>}
                         {!!whatsapp && <div>
                             <Typography variant="h5">
-                                What's app: <a className={s.alink}
+                                What's app: <a className={s1.alink}
                                                href={'https://api.whatsapp.com/send?phone=' + whatsapp.slice(1, whatsapp.length)}>{whatsapp}</a>
                             </Typography>
                         </div>}
                         {!!email && <div>
                             <Typography variant="h5">
-                                e-mail: <a className={s.alink} href={'mailto:' + email}>{email}</a>
+                                e-mail: <a className={s1.alink} href={'mailto:' + email}>{email}</a>
                             </Typography>
                         </div>}
                         {!!skype && <div>
                             <Typography variant="h5">
-                                Skype: <a className={s.alink} href={"skype:" + skype + "?chat"}>{skype}</a>
+                                Skype: <a className={s1.alink} href={"skype:" + skype + "?chat"}>{skype}</a>
                             </Typography>
                         </div>}
                     </div>
