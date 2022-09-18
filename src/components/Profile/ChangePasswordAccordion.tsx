@@ -11,6 +11,7 @@ import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
 import {changePasswordResultCodeAC, updatePasswordThunk} from "../features/authSlice";
+import {ResultCodesEnum} from "../utils/resultCodes";
 
 export default function ChangePasswordAccordion() {
     const dispatch = useAppDispatch();
@@ -70,9 +71,10 @@ export default function ChangePasswordAccordion() {
                     <div className={s.someDiv2}>
                         <Typography>Сменить пароль</Typography>
 
-                        { changePasswordResultCode === 0 && <div><Alert severity="success">Пароль успешно изменен!</Alert></div>}
-                        { changePasswordResultCode === 10 && <div><Alert severity="error">Старый пароль введен неверно.</Alert></div>}
-                        { changePasswordResultCode === 1 && <div><Alert severity="error">Ошибка на сервере. Напишите в техподдержку.</Alert></div>}
+                        { changePasswordResultCode === ResultCodesEnum.Success && <div><Alert severity="success">Пароль успешно изменен!</Alert></div>}
+                        { changePasswordResultCode === ResultCodesEnum.userDoesNotExistsCode && <div><Alert severity="error">Ошибка! Пользователь не найден! Обратитесь в поддержку.</Alert></div>}
+                        { changePasswordResultCode === ResultCodesEnum.oldUserPassIsIncorrect && <div><Alert severity="error">Старый пароль введен неверно.</Alert></div>}
+                        { changePasswordResultCode === ResultCodesEnum.Error && <div><Alert severity="error">Ошибка на сервере. Напишите в техподдержку.</Alert></div>}
                     </div>
                 </AccordionSummary>
                 <AccordionDetails>

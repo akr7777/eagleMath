@@ -70,7 +70,7 @@ export const authAPI = {
         return instance.post('users/updateEmail', {id: id, newEmail: newEmail})
     },
     updatePassword: (id: IdFiledType, oldPass: string, newPass: string):Promise<AxiosResponse> => {
-        return instance.post('users/updatePassword', {id: id, oldPass: oldPass, newPass: newPass})
+        return instance.post('auth/updatePassword', {id: id, oldPass: oldPass, newPass: newPass})
     },
     registration: (name: string, email: string, password: string):Promise<AxiosResponse> => {
         return instance.post('auth/registration', {name: name, email: email, password: password})
