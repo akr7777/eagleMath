@@ -22,7 +22,7 @@ export type AuthStateType = {
     singUpResultCode: number,
     activationLink: string,
 }
-let initialState: AuthStateType = {
+const initialState: AuthStateType = {
     user: {
         id: '0',
         email: '',
@@ -212,7 +212,14 @@ export const authSlice = createSlice({
         builder.addCase(logoutThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{token: any, resultCode: resultCodes}>) => {
             if (action.payload.resultCode === resultCodes.Success) {
                 localStorage.removeItem("accessToken");
-                state = {...initialState}
+                state.isAuth = false;
+                state.activationLink = '';
+                state.user.email = '';
+                state.user.name = '';
+                state.user.id = '0';
+                state.user.isActivated = false;
+                state.user.isAdmin = false;
+                state.isLoading = false;
             }
             state.isLoading = false;
         })

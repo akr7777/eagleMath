@@ -78,8 +78,8 @@ const Login = () => {
                             className={s.login_textFields}
                             error={!!error}
                             label="e-mail"
-                            id="outlined-error-helper-text"
-                            defaultValue=""
+                            id="outlined-error-helper-text-1"
+                            //defaultValue=""
                             value={email}
                             onChange={(e) => emailChangeHandler(e)}
                         />
@@ -87,8 +87,8 @@ const Login = () => {
                             className={s.login_textFields}
                             error={!!error}
                             label="password"
-                            id="outlined-error-helper-text"
-                            defaultValue=""
+                            id="outlined-error-helper-text-2"
+                            //defaultValue=""
                             type={'password'}
                             value={password}
                             onChange={(e) => passwordChangeHandler(e)}

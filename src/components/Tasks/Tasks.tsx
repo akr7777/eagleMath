@@ -27,7 +27,7 @@ export const Tasks = () => {
     let dispatch = useAppDispatch();
     //dispatch(getFavoritesThunk(userId));
     useEffect(() => {
-        console.log('USE EFFECT')
+        //console.log('USE EFFECT')
         dispatch(getAllTasksThunk());
         dispatch(getAllCategoriesThunk());
         /*if (userId !== '0') */dispatch(getFavoritesThunk(userId));
