@@ -60,7 +60,7 @@ export const authAPI = {
         return instance.get('auth/refresh');
     },
     uploadAvatar: (file: any, id: IdFiledType):Promise<AxiosResponse> => {
-        return instance.post(`users/uploadAvatar`, {file: file, id: id}, {
+        return instance.post(`auth/uploadAvatar`, {file: file, id: id}, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }

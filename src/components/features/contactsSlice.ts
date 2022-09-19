@@ -105,7 +105,6 @@ export const contactsSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(setContactsThunk.fulfilled, (state:ContactsType, action: PayloadAction<ContactsDataType>) => {
-            state.isLoading = false;
             state.title = action.payload.title;
             state.description = action.payload.description;
             state.phone = action.payload.phone;
@@ -113,6 +112,7 @@ export const contactsSlice = createSlice({
             state.whatsapp = action.payload.whatsapp;
             state.email = action.payload.email;
             state.skype = action.payload.skype;
+            state.isLoading = false;
         })
         builder.addCase(setContactsThunk.rejected, (state:ContactsType) => {
             state.isLoading = false;

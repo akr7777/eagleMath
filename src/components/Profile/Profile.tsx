@@ -30,7 +30,7 @@ export default function Profile() {
             dispatch(getAvatar(userID));
     },[])*/
 
-    console.log('Profile.tsx state.auth.user=', useSelector((state: RootState) => state.auth.user));
+    //console.log('Profile.tsx state.auth.user=', useSelector((state: RootState) => state.auth.user));
 
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
