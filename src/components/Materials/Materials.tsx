@@ -2,16 +2,12 @@ import Container from "@mui/material/Container";
 import s from "../common/commonCSS.module.css";
 import Typography from "@mui/material/Typography";
 import {RootState, useAppDispatch} from "../../store/store";
-import {
-    addMaterialToFavoritesThunk,
-    deleteMaterialFromFavoritesThunk,
-    getAllMaterialsThunk, getFavoritesThunk
-} from "../features/materialsSlice";
+import {getAllMaterialsThunk, getFavoritesThunk} from "../features/materialsSlice";
 import React, {useEffect} from "react";
 import {Tree5} from "../common/Tree/Tree5";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
-import {getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
+import {addToFavoritesThunk, deleteFromFavoritesThunk, getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
 
 const Materials = () => {
 
@@ -26,15 +22,16 @@ const Materials = () => {
 
     const categories = [...useSelector((state: RootState) => state.categories.categories)];
     const materials = [...useSelector((state: RootState) => state.materials.materials)];
-    const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
+    //const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
+    const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
     const addToFavorite = (contentId: IdFiledType) => {
         //dispatch(addIdToFavoritesMaterialsAC(userId, contentId));
-        dispatch(addMaterialToFavoritesThunk({userId, contentId}))
+        dispatch(addToFavoritesThunk({userId, contentId}))
     }
     const deleteFromFavorite = (contentId: IdFiledType) => {
         //dispatch(deleteIdFromFavoritesMaterialsAC(userId, contentId))
-        dispatch(deleteMaterialFromFavoritesThunk({userId, contentId}))
+        dispatch(deleteFromFavoritesThunk({userId, contentId}))
 
     }
 
@@ -56,9 +53,9 @@ const Materials = () => {
                         <Tree5
                             categories={categories}
                             materials={materials}
-                            addToFavorite={addToFavorite}
-                            deleteFromFavorite={deleteFromFavorite}
-                            favoritesIds={favoritesIds}
+                            //addToFavorite={addToFavorite}
+                            //deleteFromFavorite={deleteFromFavorite}
+                            //favoritesIds={favoritesIds}
                         />
                     </div>
 

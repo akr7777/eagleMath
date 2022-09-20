@@ -34,7 +34,8 @@ export const Tasks = () => {
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
     const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
     const tasks: TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
-    const favoritesIds = useSelector((state: RootState) => state.tasks.favoriteTasksIds);
+    //const favoritesIds = useSelector((state: RootState) => state.tasks.favoriteTasksIds);
+    const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
 
     const addToFavorite = (contentId: IdFiledType) => {
@@ -64,9 +65,9 @@ export const Tasks = () => {
                         <Tree5
                             categories={categories}
                             materials={tasks}
-                            addToFavorite={addToFavorite}
-                            deleteFromFavorite={deleteFromFavorite}
-                            favoritesIds={favoritesIds}
+                            //addToFavorite={addToFavorite}
+                            //deleteFromFavorite={deleteFromFavorite}
+                            //favoritesIds={favoritesIds}
                         />
                     </div>
 

@@ -44,7 +44,7 @@ export const getFavoritesThunk = createAsyncThunk(
         return res.data;
     }
 );
-export const addMaterialToFavoritesThunk = createAsyncThunk(
+/*export const addMaterialToFavoritesThunk = createAsyncThunk(
     'materials/addMaterialToFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
         const {userId, contentId} = content;
@@ -59,7 +59,7 @@ export const deleteMaterialFromFavoritesThunk = createAsyncThunk(
         const res = await ContentAPI.deleteFromFavorites(userId, contentId);
         return res.data; //возывращает массив id Array<IdFieldType>
     }
-);
+);*/
 
 
 export const materialsSlice = createSlice({
@@ -90,7 +90,7 @@ export const materialsSlice = createSlice({
             console.log('extraReducers / getAllMaterials.rejected');
         })
 
-        builder.addCase(getFavoritesThunk.pending, (state: InitStateMaterialsType) => {
+        /*builder.addCase(getFavoritesThunk.pending, (state: InitStateMaterialsType) => {
             state.isLoading = true;
         })
         builder.addCase(getFavoritesThunk.fulfilled, (state: InitStateMaterialsType, action:PayloadAction<Array<IdFiledType>>) => {
@@ -99,9 +99,9 @@ export const materialsSlice = createSlice({
         })
         builder.addCase(getFavoritesThunk.rejected, (state: InitStateMaterialsType) => {
             state.isLoading = false;
-        })
+        })*/
 
-        builder.addCase(addMaterialToFavoritesThunk.pending, (state:InitStateMaterialsType) => {
+        /*builder.addCase(addMaterialToFavoritesThunk.pending, (state:InitStateMaterialsType) => {
             state.isLoading = true;
         })
         builder.addCase(addMaterialToFavoritesThunk.fulfilled, (state:InitStateMaterialsType, action:PayloadAction<Array<IdFiledType>>) => {
@@ -121,7 +121,7 @@ export const materialsSlice = createSlice({
         })
         builder.addCase(deleteMaterialFromFavoritesThunk.rejected, (state: InitStateMaterialsType) => {
             state.isLoading = false;
-        })
+        })*/
     },
 })
 

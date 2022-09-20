@@ -13,6 +13,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Accordion from "@mui/material/Accordion";
 import IconMaterial from '@mui/icons-material/AutoStories';
 import IconTask from '@mui/icons-material/AppRegistration';
+import Line from "../../utils/line";
 
 const FavoriteMaterials = () => {
 
@@ -53,15 +54,25 @@ const FavoriteMaterials = () => {
                                             {item.type === "M" && <IconMaterial/>}
                                             {item.type === "T" && <IconTask/>}
 
-                                            <Typography variant={'subtitle1'}>{item.label}</Typography>
-
                                             <Typography variant={'overline'}>{item.path}</Typography>
+
+                                            {/*<Typography variant={'subtitle1'}>{item.label}</Typography>*/}
+
+                                            <Line
+                                                contentId={item.contentId}
+                                                label={item.label}
+                                                isMaterial={true}
+                                                //favoritesIds={[]}
+                                                //addToFavorite={addToFavorite}
+                                                //deleteFromFavorite={deleteFromFavorite}
+                                            />
+
                                         </div>
 
-                                        {/*Праввая часть строки*/}
+                                        {/*Праввая часть строки
                                         <div className={s1.sdiv_right}>
                                             Porps
-                                        </div>
+                                        </div>*/}
                                     </div>
                             </>
                         })

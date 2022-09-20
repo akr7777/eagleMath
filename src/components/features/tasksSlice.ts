@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {ContentAPI} from "../api/api";
-import {addMaterialToFavoritesThunk, deleteMaterialFromFavoritesThunk} from "./materialsSlice";
+//import {addMaterialToFavoritesThunk, deleteMaterialFromFavoritesThunk} from "./materialsSlice";
 import {useAppDispatch} from "../../store/store";
 //import {CategoryType} from "./categoriesSlice";
 

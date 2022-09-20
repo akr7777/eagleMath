@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {CategoriesAPI} from "../api/api";
-import {MaterialType} from "./materialsSlice";
+import {CategoriesAPI, ContentAPI} from "../api/api";
+import {getFavoritesThunk, MaterialType} from "./materialsSlice";
 import {TaskType} from "./tasksSlice";
 
 export type IdFiledType = string | number;
@@ -14,18 +14,18 @@ export type CategoryType = {
 
 type InitStatecategoryType = {
     categories: Array<CategoryType>,
-    favoriteCategoryIds: Array<IdFiledType>,
     isLoading: boolean,
     isShownCats: Array<IdFiledType>,
+    favoriteIds: Array<IdFiledType>,
 }
 let initialState: InitStatecategoryType = {
     categories: [
         /*{id: '12345678', parentId: '0', label: "My parent node 12345678"},
         {id: '123', parentId: '0', label: 'dsa'}*/
     ],
-    favoriteCategoryIds: [],
     isLoading: false,
     isShownCats:[],
+    favoriteIds:[],
 }
 
 export const getAllCategoriesThunk = createAsyncThunk(
@@ -42,6 +42,23 @@ export const getAllCategoriesThunk = createAsyncThunk(
     }
 );
 
+export const addToFavoritesThunk = createAsyncThunk(
+    'materials/addMaterialToFavoritesThunk',
+    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = content;
+        const res = await ContentAPI.addToFavorites(userId, contentId);
+        return res.data; //возывращает массив id Array<IdFieldType>
+    }
+);
+export const deleteFromFavoritesThunk = createAsyncThunk(
+    'materials/deleteMaterialFromFavoritesThunk',
+    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = content;
+        const res = await ContentAPI.deleteFromFavorites(userId, contentId);
+        return res.data; //возывращает массив id Array<IdFieldType>
+    }
+);
+
 
 export const categoriesSlice = createSlice({
     name: 'categories',
@@ -51,10 +68,10 @@ export const categoriesSlice = createSlice({
             state.categories = action.payload;
         },
         addIdToFavoritesCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteCategoryIds = [...state.favoriteCategoryIds, action.payload]
+            state.favoriteIds = [...state.favoriteIds, action.payload]
         },
         deleteIdFromFavoritesCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteCategoryIds = state.favoriteCategoryIds.filter(el => String(el) !== String(action.payload))
+            state.favoriteIds = state.favoriteIds.filter(el => String(el) !== String(action.payload))
         },
         addToShownCats: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
             state.isShownCats.push(action.payload);
@@ -74,6 +91,41 @@ export const categoriesSlice = createSlice({
         })
         builder.addCase(getAllCategoriesThunk.pending, (state: InitStatecategoryType)=>{
             state.isLoading = true;
+        })
+
+
+
+        builder.addCase(getFavoritesThunk.pending, (state: InitStatecategoryType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getFavoritesThunk.fulfilled, (state: InitStatecategoryType, action:PayloadAction<Array<IdFiledType>>) => {
+            state.favoriteIds = [...action.payload];
+            state.isLoading = false;
+        })
+        builder.addCase(getFavoritesThunk.rejected, (state: InitStatecategoryType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(addToFavoritesThunk.pending, (state:InitStatecategoryType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(addToFavoritesThunk.fulfilled, (state:InitStatecategoryType, action:PayloadAction<Array<IdFiledType>>) => {
+            state.favoriteIds = [...action.payload];
+            state.isLoading = false;
+        })
+        builder.addCase(addToFavoritesThunk.rejected, (state:InitStatecategoryType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(deleteFromFavoritesThunk.pending, (state: InitStatecategoryType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(deleteFromFavoritesThunk.fulfilled, (state: InitStatecategoryType, action:PayloadAction<Array<IdFiledType>>) => {
+            state.favoriteIds = [...action.payload];
+            state.isLoading = false;
+        })
+        builder.addCase(deleteFromFavoritesThunk.rejected, (state: InitStatecategoryType) => {
+            state.isLoading = false;
         })
     },
 })

@@ -3,9 +3,10 @@ import {MaterialType} from "../../features/materialsSlice";
 import {TaskType} from "../../features/tasksSlice";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/store";
+import {ContentTypes} from "../../features/dashboardSlice";
 
 export type FavoriteContentOutputType = {
-    type: "C" | "M" | "T",
+    type: ContentTypes,
     path: Array<string>,
     contentId: IdFiledType,
     label: string,

@@ -1,9 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import {CategoryType, IdFiledType} from "./categoriesSlice";
+import {IdFiledType} from "./categoriesSlice";
 import {ContentAPI} from "../api/api";
-import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk, TaskType} from "./tasksSlice";
-import {MaterialType} from "./materialsSlice";
+import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
+
+export type ContentTypes = "C" | "M" | "T";
 
 type DashboardStateType = {
     favoriteContent: Array<IdFiledType>,
