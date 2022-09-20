@@ -13,6 +13,7 @@ import {PATHS} from "../AppBar/AppBar";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {FavoriteContent} from "./utils/utils";
+import s1 from './styles.module.css';
 
 const Dashboard = () => {
     //const isLoading = useSelector((state: RootState) => state.dashboard.isLoading);
@@ -31,45 +32,12 @@ const Dashboard = () => {
                     <Typography variant="h4">Панель управления</Typography>
 
                     <div className={s.someDiv1}>
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon/>}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <Typography>Избранные материалы</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <FavoriteMaterials/>
-                            </AccordionDetails>
-                        </Accordion>
+                        <FavoriteMaterials/>
                     </div>
 
-
-                    {/*<Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon/>}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography>Accordion 2</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                malesuada lacus ex, sit amet blandit leo lobortis eget.
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion disabled>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon/>}
-                            aria-controls="panel3a-content"
-                            id="panel3a-header"
-                        >
-                            <Typography>Disabled Accordion</Typography>
-                        </AccordionSummary>
-                    </Accordion>*/}
+                    {/*<div className={s.someDiv1}>
+                        <Plans/>
+                    </div>*/}
                 </Container>
         }
     </>

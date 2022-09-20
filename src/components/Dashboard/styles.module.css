@@ -1,0 +1,39 @@
+.accordion {
+    width: 100%;
+}
+.lineDiv {
+    margin: 5px 0 5px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    vertical-align: center;
+    align-items: center;
+    width: 100%;
+    min-height: 20px;
+    gap: 10px;
+    padding-left: 10px;
+}
+.lineDiv_selected {
+    background-color: cornflowerblue;
+    min-height: 35px;
+}
+.sdiv_left {
+    /*margin: 5px 0 5px 0;*/
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+    align-items: center;
+    width: 100%;
+    min-height: 20px;
+    gap: 10px;
+    padding-left: 10px;
+}
+.sdiv_right {
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+    align-items: center;
+    gap: 10px;
+    padding-right: 20px;
+}

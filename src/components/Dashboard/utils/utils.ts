@@ -7,6 +7,7 @@ import {RootState} from "../../../store/store";
 export type FavoriteContentOutputType = {
     type: "C" | "M" | "T",
     path: Array<string>,
+    contentId: IdFiledType,
     label: string,
 }
 export const FavoriteContent = (/*categories: CategoryType, materials: MaterialType, tasks: TaskType*/):Array<FavoriteContentOutputType> => {
@@ -23,6 +24,7 @@ export const FavoriteContent = (/*categories: CategoryType, materials: MaterialT
             if (favoriteIds.some(f => f === c.id))
                 result.push({
                     type: "C",
+                    contentId: c.id,
                     path: getParents(c.parentId, categories),
                     label: c.label,
                 });
@@ -32,6 +34,7 @@ export const FavoriteContent = (/*categories: CategoryType, materials: MaterialT
             if (favoriteIds.some(f => f === m.id))
                 result.push({
                     type: "M",
+                    contentId: m.id,
                     path: getParents(m.parentId, categories),
                     label: m.label,
                 });
@@ -41,6 +44,7 @@ export const FavoriteContent = (/*categories: CategoryType, materials: MaterialT
             if (favoriteIds.some(f => f === t.id))
                 result.push({
                     type: "T",
+                    contentId: t.id,
                     path: getParents(t.parentId, categories),
                     label: t.label,
                 });

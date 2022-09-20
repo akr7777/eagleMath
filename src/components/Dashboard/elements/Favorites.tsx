@@ -1,11 +1,18 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {getAllTasksThunk, getFavoritesThunk} from "../../features/tasksSlice";
-import {getAllCategoriesThunk} from "../../features/categoriesSlice";
+import {getAllCategoriesThunk, IdFiledType} from "../../features/categoriesSlice";
 import {FavoriteContent, FavoriteContentOutputType} from "../utils/utils";
 import {getAllMaterialsThunk} from "../../features/materialsSlice";
+import s1 from '../styles.module.css';
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Accordion from "@mui/material/Accordion";
+import IconMaterial from '@mui/icons-material/AutoStories';
+import IconTask from '@mui/icons-material/AppRegistration';
 
 const FavoriteMaterials = () => {
 
@@ -18,28 +25,51 @@ const FavoriteMaterials = () => {
         dispatch(getFavoritesThunk(userId));
     }, [userId]);
 
-    /*const favoriteIds = useSelector((state: RootState) => state.dashboard.favoriteContent);
-    const categories = useSelector((state:RootState) => state.categories.categories);
-    const tasks = useSelector((state:RootState) => state.materials.materials);
-    const materials = useSelector((state:RootState) => state.tasks.tasks);*/
     const list:Array<FavoriteContentOutputType> = FavoriteContent();
 
-    console.log('FavoriteMaterials / list=', list)
+    const [selectedId, setSelectedId] = useState<IdFiledType>('');
+
 
     return <>
-        <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-            {
-                list.map(item => {
-                    return <>
-                        <div>
-                            {item.type} --- {item.path} --- {item.label}
-                        </div>
-                    </>
-                })
-            }
-        </Typography>
+        <Accordion className={s1.accordion}>
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon/>}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+            >
+                <Typography variant={'h5'}>Избранные материалы</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <Typography>
+                    {
+                        list.map(item => {
+                            return <>
+                                    <div key={item.contentId}
+                                         onClick={() => setSelectedId(item.contentId)}
+                                         className={String(item.contentId) === String(selectedId) ? (s1.lineDiv + ' ' + s1.lineDiv_selected) : s1.lineDiv}
+                                    >
+                                        {/*Левая часть строки*/}
+                                        <div className={s1.sdiv_left}>
+                                            {item.type === "M" && <IconMaterial/>}
+                                            {item.type === "T" && <IconTask/>}
+
+                                            <Typography variant={'subtitle1'}>{item.label}</Typography>
+
+                                            <Typography variant={'overline'}>{item.path}</Typography>
+                                        </div>
+
+                                        {/*Праввая часть строки*/}
+                                        <div className={s1.sdiv_right}>
+                                            Porps
+                                        </div>
+                                    </div>
+                            </>
+                        })
+                    }
+                </Typography>
+            </AccordionDetails>
+        </Accordion>
+
     </>
 }
 
