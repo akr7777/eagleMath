@@ -11,6 +11,7 @@ import {Tasks} from "./components/Tasks/Tasks";
 import Materials from "./components/Materials/Materials";
 import Login from "./components/AuthPage/Login";
 import Profile from "./components/Profile/Profile";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
@@ -45,6 +46,7 @@ function App() {
                 <Route path={PATHS.login} element={<Login/>}/>
                 <Route path={PATHS.logout} element={<Logout/>}/>
                 <Route path={PATHS.profile} element={<Profile/>}/>
+                <Route path={PATHS.dashboard} element={<Dashboard/>}/>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 

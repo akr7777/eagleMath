@@ -43,7 +43,7 @@ export const PATHS = {
     logout: '/logout',
     singup: '/singup',
 
-    posts: '/posts',
+    dashboard: '/dashboard'
 }
 
 const logoText = "Eagle's Math"
@@ -52,12 +52,15 @@ const navItemsDesctop = [
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.materials}>Материалы</NavLink>,
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.tasks}>Задачи</NavLink>,
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.contacts}>Контакты</NavLink>,
+    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>,
 ];
+
 const navItemsMobile = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.description}>Главная страница</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.materials}>Материалы</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Задачи</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.contacts}>Контакты</NavLink>,
+    <NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>,
 ];
 const navItemsMobileExtra = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.profile}>
@@ -78,6 +81,10 @@ export default function MyAppBar(props: Props) {
     };
 
     let isAuth = useSelector( (state: RootState) => state.auth.isAuth);
+   /* if (isAuth) {
+        navItemsDesctop.push(<NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>);
+        navItemsMobile.push(<NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>);
+    }*/
 
     const userId = useSelector((state:RootState) => state.auth.user.id);
     const avaURL = baseAvatarPhotoUrl + userId;//useSelector( (state: RootState) => state.auth.user.photo);

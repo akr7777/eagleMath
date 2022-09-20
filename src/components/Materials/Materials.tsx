@@ -21,8 +21,8 @@ const Materials = () => {
     useEffect(() => {
         dispatch(getAllCategoriesThunk());
         dispatch(getAllMaterialsThunk());
-        if (userId !== '0') dispatch(getFavoritesThunk(userId))
-    }, []);
+        /*if (userId !== '0') */dispatch(getFavoritesThunk(userId))
+    }, [userId]);
 
     const categories = [...useSelector((state: RootState) => state.categories.categories)];
     const materials = [...useSelector((state: RootState) => state.materials.materials)];

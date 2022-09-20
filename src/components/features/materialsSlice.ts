@@ -16,7 +16,7 @@ type InitStateMaterialsType = {
 }
 let initialState: InitStateMaterialsType = {
     materials: [
-        {id: 12380, parentId: 12345678, label: "My parent node 12380"},
+        /*{id: '', parentId: '', label: ""},*/
     ],
     favoriteMaterialIds: [],
     isLoading: true,
@@ -82,7 +82,7 @@ export const materialsSlice = createSlice({
         })
         builder.addCase(getAllMaterialsThunk.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
             //console.log('MaterialSlice / getAllMaterials.fulfilled / action.payload=', action.payload)
-            state.materials = action.payload;
+            state.materials = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(getAllMaterialsThunk.rejected, (state: InitStateMaterialsType)=>{
@@ -94,7 +94,7 @@ export const materialsSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(getFavoritesThunk.fulfilled, (state: InitStateMaterialsType, action:PayloadAction<Array<IdFiledType>>) => {
-            state.favoriteMaterialIds = action.payload;
+            state.favoriteMaterialIds = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(getFavoritesThunk.rejected, (state: InitStateMaterialsType) => {
@@ -105,7 +105,7 @@ export const materialsSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(addMaterialToFavoritesThunk.fulfilled, (state:InitStateMaterialsType, action:PayloadAction<Array<IdFiledType>>) => {
-            state.favoriteMaterialIds = action.payload;
+            state.favoriteMaterialIds = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(addMaterialToFavoritesThunk.rejected, (state:InitStateMaterialsType) => {
@@ -116,7 +116,7 @@ export const materialsSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(deleteMaterialFromFavoritesThunk.fulfilled, (state: InitStateMaterialsType, action:PayloadAction<Array<IdFiledType>>) => {
-            state.favoriteMaterialIds = action.payload;
+            state.favoriteMaterialIds = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(deleteMaterialFromFavoritesThunk.rejected, (state: InitStateMaterialsType) => {

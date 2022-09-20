@@ -25,12 +25,10 @@ export const Tasks = () => {
     const userId = useSelector((state: RootState) => state.auth.user.id);
 
     let dispatch = useAppDispatch();
-    //dispatch(getFavoritesThunk(userId));
     useEffect(() => {
-        //console.log('USE EFFECT')
         dispatch(getAllTasksThunk());
         dispatch(getAllCategoriesThunk());
-        /*if (userId !== '0') */dispatch(getFavoritesThunk(userId));
+        dispatch(getFavoritesThunk(userId));
     }, [userId]);
 
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);

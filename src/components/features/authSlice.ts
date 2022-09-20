@@ -78,22 +78,6 @@ export const registrationThunk = createAsyncThunk(
     }
 );
 
-/*export const getAvatarThunk = createAsyncThunk(
-    'auth/getAvatar',
-    async (id: IdFiledType, {rejectWithValue, dispatch}) => {
-        try {
-            const res = await authAPI.getAvatar(id);
-            console.log('auth/getAvatar, res=', res)
-            if (res) {
-                return res;
-            } else
-                return 'ERROR from server';
-        }catch (e) {
-            console.log('authSlice / getAvatar, error=', e)
-        }
-    }
-)*/
-
 type UploadAvatarType = { file: any, id: IdFiledType }
 export const uploadAvatarThunk = createAsyncThunk(
     'auth/uploadAvatar',
@@ -231,8 +215,6 @@ export const authSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(refreshThunk.fulfilled, (state: AuthStateType, action: PayloadAction<any>) => {
-            //console.log('refreshThunk fullfilled action.payload.user =', action.payload.user)
-            //console.log('refreshThunk fullfilled action.payload.user.isActivated =', action.payload.user.isActivated)
             if (action.payload.resultCode === resultCodes.Success) {
                 state.isAuth = true;
                 state.activationLink = action.payload.user.activationLink;

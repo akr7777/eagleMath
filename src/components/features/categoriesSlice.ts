@@ -20,10 +20,8 @@ type InitStatecategoryType = {
 }
 let initialState: InitStatecategoryType = {
     categories: [
-       /* {id: '12345678', parentId: '0', label: "My parent node 12345678", items: []},
-        {id: '123', parentId: '0', label: 'dsa', items: []}*/
-        {id: '12345678', parentId: '0', label: "My parent node 12345678"},
-        {id: '123', parentId: '0', label: 'dsa'}
+        /*{id: '12345678', parentId: '0', label: "My parent node 12345678"},
+        {id: '123', parentId: '0', label: 'dsa'}*/
     ],
     favoriteCategoryIds: [],
     isLoading: false,

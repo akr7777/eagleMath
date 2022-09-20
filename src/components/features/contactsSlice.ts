@@ -46,10 +46,8 @@ export const getContactsThunk = createAsyncThunk(
 export const setContactsThunk = createAsyncThunk(
     'contacts/setContactsThunk',
     async (contactsData: ContactsDataType, {rejectWithValue, dispatch}) => {
-        console.log('setContactsThunk/contactsData', contactsData)
         const {title, description, phone, telegram, whatsapp, email, skype} = contactsData;
         const res = await contactsAPI.setContacts(title, description, phone, telegram, whatsapp, email, skype);
-        console.log('setContactsThunk/res=')
         if (res.data.resultCode === 0) {
             return res.data;
         } else

@@ -6,6 +6,7 @@ import tasksSlice from "../components/features/tasksSlice";
 import materialsSlice from "../components/features/materialsSlice";
 import {useDispatch} from "react-redux";
 import categoriesSlice from "../components/features/categoriesSlice";
+import dashboardSlice from "../components/features/dashboardSlice";
 
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
         tasks: tasksSlice,
         materials: materialsSlice,
         categories: categoriesSlice,
+        dashboard: dashboardSlice,
     },
 });
 

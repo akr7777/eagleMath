@@ -20,7 +20,7 @@ type InitStateTasksType = {
 }
 let initialState: InitStateTasksType = {
     tasks: [
-        {id: 12380, parentId: 12345678, label: "My parent node 12380"},
+        /*{id: '', parentId: '', label: ""},*/
     ],
     favoriteTasksIds: [],
     isLoading: true,
@@ -52,7 +52,6 @@ export const addTaskToFavoritesThunk = createAsyncThunk(
     'tasks/addTaskToFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
         const {userId, contentId} = content;
-        //dispatch(addIdToFavoritesTasksAC(contentId));
         const res = await ContentAPI.addToFavorites(userId, contentId);
         return res.data; //возывращает массив id Array<IdFieldType>
     }
@@ -89,7 +88,7 @@ export const tasksSlice = createSlice({
         })
         builder.addCase(getAllTasksThunk.fulfilled, (state: InitStateTasksType, action: PayloadAction<any>) => {
             //console.log('TasksSlice / getAllTasks.fulfilled / action.payload=', action.payload)
-            state.tasks = action.payload;
+            state.tasks = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(getAllTasksThunk.rejected, (state: InitStateTasksType) => {
@@ -101,7 +100,7 @@ export const tasksSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(getFavoritesThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<Array<IdFiledType>>) => {
-            state.favoriteTasksIds = action.payload;
+            state.favoriteTasksIds = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(getFavoritesThunk.rejected, (state: InitStateTasksType) => {
