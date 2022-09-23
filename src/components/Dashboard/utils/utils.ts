@@ -85,7 +85,6 @@ export const FavoriteContent = (/*categories: CategoryType, materials: MaterialT
 }
 
 const getParents = (parentId: IdFiledType, categories:CategoryType[]):Array<string> => {
-
     const result:Array<string> = [];
     const parentCategory = categories.find(c => c.id === parentId);
     if (parentCategory)

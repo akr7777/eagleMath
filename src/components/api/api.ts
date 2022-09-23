@@ -107,3 +107,9 @@ export const contactsAPI = {
         });
     }
 }
+
+export const contentAPI = {
+    getContent: (contentId: IdFiledType) => {
+        return instance.get('content/getContent/'+contentId);
+    }
+}

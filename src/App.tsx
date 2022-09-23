@@ -16,6 +16,7 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
 import InitializeApp from "./components/utils/initializeApp";
+import Content from "./components/common/content/Content";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -47,6 +48,9 @@ function App() {
                 <Route path={PATHS.logout} element={<Logout/>}/>
                 <Route path={PATHS.profile} element={<Profile/>}/>
                 <Route path={PATHS.dashboard} element={<Dashboard/>}/>
+                <Route path={PATHS.content} element={<Content/>}>
+                    <Route path={PATHS.content+'/:contentId'} element={<Content/>}/>
+                </Route>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 

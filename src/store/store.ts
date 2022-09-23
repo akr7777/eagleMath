@@ -7,6 +7,7 @@ import materialsSlice from "../components/features/materialsSlice";
 import {useDispatch} from "react-redux";
 import categoriesSlice from "../components/features/categoriesSlice";
 import dashboardSlice from "../components/features/dashboardSlice";
+import contentSlice from "../components/features/contentSlice";
 
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
         materials: materialsSlice,
         categories: categoriesSlice,
         dashboard: dashboardSlice,
+        content: contentSlice,
     },
 });
 

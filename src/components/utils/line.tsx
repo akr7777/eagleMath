@@ -39,7 +39,7 @@ const Line = (props: LinePropsType) => {
         {/*Read this material ICON*/}
         {
             props.isMaterial &&
-            <NavLink to={'/materials/' + props.contentId} className={s.navLink}>
+            <NavLink to={'/content/' + props.contentId} className={s.navLink}>
                 <ReadThisMaterial/>
             </NavLink>
         }

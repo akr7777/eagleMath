@@ -42,6 +42,7 @@ export const PATHS = {
     profile: '/profile',
     logout: '/logout',
     singup: '/singup',
+    content: '/content',
 
     dashboard: '/dashboard'
 }
