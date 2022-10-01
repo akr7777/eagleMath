@@ -16,7 +16,6 @@ import s from "../common/commonCSS.module.css";
 import s1 from "../Content/content.module.css";
 import {Typography} from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 import {changeNewChapterIndex} from "../features/contentSlice";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -65,10 +64,10 @@ const Content = () => {
         }
     }
 
-    function saveContent() {
+    /*function saveContent() {
         if (contentId)
             dispatch(setContentThunk({content: content, contentId: contentId}));
-    }
+    }*/
 
     return <>
         {

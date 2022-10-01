@@ -112,7 +112,6 @@ export const contentSlice = createSlice({
             content: Array<ContentType>,
             resultCode: ResultCodesEnum,
         }>) => {
-            //debugger
             state.content = [...action.payload.content];
             state.isLoading = false;
         })

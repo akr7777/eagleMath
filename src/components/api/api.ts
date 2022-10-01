@@ -48,7 +48,6 @@ export const ContentAPI = {
         return instance.post('content/setContent', {content: content, contentId: contentId})
     },
     uploadContentImage: (file: any, fileName: string):Promise<AxiosResponse> => {
-        //console.log('api / uploadContentImage / file=', file)
         return instance.post('content/setContentImage', {file: file, fileName: fileName}, {
             headers: {
                 "Content-Type": "multipart/form-data"
