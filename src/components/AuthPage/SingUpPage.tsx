@@ -13,7 +13,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import {NavLink} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import Button from "@mui/material/Button";
-import {ResultCodesEnum} from "../utils/resultCodes";
+import {ResultCodesEnum} from "../common/resultCodes";
 
 type ErrorObjectType = {
     name: string,

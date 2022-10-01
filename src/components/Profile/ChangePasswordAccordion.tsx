@@ -11,7 +11,7 @@ import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
 import {changePasswordResultCodeAC, updatePasswordThunk} from "../features/authSlice";
-import {ResultCodesEnum} from "../utils/resultCodes";
+import {ResultCodesEnum} from "../common/resultCodes";
 
 export default function ChangePasswordAccordion() {
     const dispatch = useAppDispatch();

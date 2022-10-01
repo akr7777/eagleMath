@@ -1,6 +1,6 @@
 //В данном файле находится рендеринг отрисовки линии (выбора) для материалов, задач, избранного
 
-import s from "../common/Tree/tree5.module.css";
+import s from "./Tree/tree5.module.css";
 /*import PlusIcon from "@mui/icons-material/ControlPoint";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import MinusIcon from "@mui/icons-material/RemoveCircleOutline";*/
@@ -39,7 +39,7 @@ const Line = (props: LinePropsType) => {
         {/*Read this material ICON*/}
         {
             props.isMaterial &&
-            <NavLink to={'/content/' + props.contentId} className={s.navLink}>
+            <NavLink to={'/Content/' + props.contentId} className={s.navLink}>
                 <ReadThisMaterial/>
             </NavLink>
         }

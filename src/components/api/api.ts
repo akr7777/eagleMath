@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {IdFiledType} from "../features/categoriesSlice";
+import {ContentType} from "../features/contentSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
 
@@ -111,5 +112,8 @@ export const contactsAPI = {
 export const contentAPI = {
     getContent: (contentId: IdFiledType) => {
         return instance.get('content/getContent/'+contentId);
+    },
+    setContent: (content: ContentType[], contentId: IdFiledType) => {
+        return instance.post('content/setContent/', {content: content, contentId: contentId})
     }
 }

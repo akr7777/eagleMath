@@ -46,16 +46,16 @@ export const getFavoritesThunk = createAsyncThunk(
 );
 /*export const addMaterialToFavoritesThunk = createAsyncThunk(
     'materials/addMaterialToFavoritesThunk',
-    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
-        const {userId, contentId} = content;
+    async (Content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = Content;
         const res = await ContentAPI.addToFavorites(userId, contentId);
         return res.data; //возывращает массив id Array<IdFieldType>
     }
 );
 export const deleteMaterialFromFavoritesThunk = createAsyncThunk(
     'materials/deleteMaterialFromFavoritesThunk',
-    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
-        const {userId, contentId} = content;
+    async (Content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = Content;
         const res = await ContentAPI.deleteFromFavorites(userId, contentId);
         return res.data; //возывращает массив id Array<IdFieldType>
     }

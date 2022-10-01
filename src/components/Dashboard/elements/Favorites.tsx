@@ -13,7 +13,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Accordion from "@mui/material/Accordion";
 import IconMaterial from '@mui/icons-material/AutoStories';
 import IconTask from '@mui/icons-material/AppRegistration';
-import Line from "../../utils/line";
+import Line from "../../common/line";
 
 const FavoriteMaterials = () => {
 
@@ -44,8 +44,7 @@ const FavoriteMaterials = () => {
                 <Typography>
                     {
                         list.map(item => {
-                            return <>
-                                    <div key={item.contentId}
+                            return <div key={item.contentId}
                                          onClick={() => setSelectedId(item.contentId)}
                                          className={String(item.contentId) === String(selectedId) ? (s1.lineDiv + ' ' + s1.lineDiv_selected) : s1.lineDiv}
                                     >
@@ -74,7 +73,6 @@ const FavoriteMaterials = () => {
                                             Porps
                                         </div>*/}
                                     </div>
-                            </>
                         })
                     }
                 </Typography>

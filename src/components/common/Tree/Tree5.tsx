@@ -18,7 +18,7 @@ import {useSelector} from "react-redux";
 import {TaskType} from "../../features/tasksSlice";
 import {addToShownCats, deleteFromShownCats} from "../../features/categoriesSlice";
 import {CategoryType} from "../../features/categoriesSlice";
-import Line from "../../utils/line";
+import Line from "../line";
 
 type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
 

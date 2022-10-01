@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {authAPI} from "../api/api";
 import {IdFiledType} from "./categoriesSlice";
-import {ResultCodesEnum as resultCodes} from "./../utils/resultCodes";
+import {ResultCodesEnum as resultCodes} from "../common/resultCodes";
 
 export const baseAvatarPhotoUrl = 'http://localhost:4001/auth/getAvatar?id=';
 

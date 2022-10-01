@@ -2,16 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {contactsAPI} from "../api/api";
 
-export type ContactsType = ContactsDataType & {
-    /*title: string,
-    description: string,
-    phone: string,
-    telegram: string,
-    whatsapp: string,
-    email: string,
-    skype: string,*/
-    isLoading: boolean,
-}
+export type ContactsType = ContactsDataType & { isLoading: boolean }
 let initialState: ContactsType = {
     title: ':',
     description: ':',
