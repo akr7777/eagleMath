@@ -12,10 +12,34 @@
     width: 100%;
 }
 
+.someDiv2 {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
 .text_field {
     width: 100%;
 }
 .title_field {
     width: 50%;
     min-width: 300px;
+}
+
+.myIconMinus:hover {
+    color: red;
+    /*border-radius: 50%;*/
+}
+.myIconPlus:hover {
+    color: green;
+    /*border-radius: 50%;*/
+}
+
+.plus_minus {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 }

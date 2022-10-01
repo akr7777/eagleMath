@@ -40,12 +40,25 @@ export const ContentAPI = {
     },
     deleteFromFavorites: (userId: IdFiledType, contentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/deleteContentFromFavorites', {userId: userId, contentId: contentId});
+    },
+    getContent: (contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.get('content/getContent/'+contentId);
+    },
+    setContent: (content: ContentType[], contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/setContent', {content: content, contentId: contentId})
+    },
+    uploadContentImage: (file: any, fileName: string):Promise<AxiosResponse> => {
+        //console.log('api / uploadContentImage / file=', file)
+        return instance.post('content/setContentImage', {file: file, fileName: fileName}, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
     }
 }
 
 export const CategoriesAPI = {
     getAllcategories: ():Promise<AxiosResponse> => {
-        //console.log('MaterialsAPI / getAllcategories / instance.get(`materials/getAllCategories`)=', instance.get(`materials/getAllCategories`))
         return instance.get(`content/getAllCategories`);
     },
 }
@@ -109,11 +122,3 @@ export const contactsAPI = {
     }
 }
 
-export const contentAPI = {
-    getContent: (contentId: IdFiledType) => {
-        return instance.get('content/getContent/'+contentId);
-    },
-    setContent: (content: ContentType[], contentId: IdFiledType) => {
-        return instance.post('content/setContent/', {content: content, contentId: contentId})
-    }
-}

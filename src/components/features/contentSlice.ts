@@ -1,7 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {contentAPI} from "../api/api";
+import {ContentAPI} from "../api/api";
 import {IdFiledType} from "./categoriesSlice";
 import {ResultCodesEnum} from "../common/resultCodes";
+
+export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
 
 export type ContentType = {
     contentId: string,
@@ -35,7 +37,7 @@ const contentInitState:ContentInitStateType = {
 export const getContentThunk = createAsyncThunk(
     'Content/getContent',
     async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await contentAPI.getContent(contentId);
+        const res = await ContentAPI.getContent(contentId);
         return res.data;
     }
 );
@@ -43,8 +45,25 @@ export const getContentThunk = createAsyncThunk(
 export const setContentThunk = createAsyncThunk(
     'Content/setContent',
     async (data: SetContentDataType, {rejectWithValue, dispatch}) => {
-        const res = await contentAPI.setContent(data.content, data.contentId);
+        const res = await ContentAPI.setContent(data.content, data.contentId);
         return res.data;
+    }
+);
+
+type UploadContentImage = { file: any, fileName: string }
+export const uploadContentImage = createAsyncThunk(
+    'content/uploadContentImage',
+    async (dataSend: UploadContentImage, {rejectWithValue, dispatch}) => {
+        try {
+            const {file, fileName} = dataSend;
+            const res = await ContentAPI.uploadContentImage(file, fileName);
+            if (res.data.resultCode === 0) {
+                return res.data;
+            } else
+                return 'ERROR from server';
+        } catch (e) {
+            console.log('!!!uploadAvatarThunk / error!!!=', e)
+        }
     }
 );
 

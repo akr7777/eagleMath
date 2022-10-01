@@ -1,7 +1,14 @@
 import React, {useEffect} from 'react';
 import Container from "@mui/material/Container";
 import {RootState, useAppDispatch} from "../../store/store";
-import {changeContent, ContentType, getContentThunk, newChapterChange, setContentThunk} from "../features/contentSlice";
+import {
+    baseContentImageUrl,
+    changeContent,
+    ContentType,
+    getContentThunk,
+    newChapterChange,
+    setContentThunk
+} from "../features/contentSlice";
 import {Navigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
@@ -10,12 +17,9 @@ import s1 from "../Content/content.module.css";
 import {Typography} from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Button from '@mui/material/Button';
-import NewChapterTypeOptions from "./elements/new-chapter-type";
-import NewChapterTitle from "./elements/new-chapter-title";
-import NewChapterText from "./elements/new-chapter-text";
-import NewChapterImage from "./elements/new-chapter-image";
 import {useNavigate} from "react-router-dom";
 import {changeNewChapterIndex} from "../features/contentSlice";
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 export const initNewChapter: ContentType = {
     contentId: '',
@@ -30,7 +34,7 @@ const Content = () => {
     const content: Array<ContentType> = useSelector((state: RootState) => state.content.content);
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.user.isAdmin);
     const navigate = useNavigate();
-    const newchapterIndex = useSelector((state: RootState) => state.content.newChapterIndex);
+    const newChapterIndex = useSelector((state: RootState) => state.content.newChapterIndex);
 
     useEffect(() => {
         if (content.length === 0)
@@ -49,19 +53,29 @@ const Content = () => {
         return navigate("/change_content/" + contentId);
     }
 
+    const deleteChapter = (index: number) => {
+        if (content.length === 1 && contentId) {
+            dispatch(setContentThunk({content: [], contentId: contentId}));
+        } else if (content.length > 1 && contentId) {
+            const arr: ContentType[] = [
+                ...content.slice(0, index),
+                ...content.slice(index + 1, content.length)
+            ];
+            dispatch(setContentThunk({content: arr, contentId: contentId}));
+        }
+    }
+
     function saveContent() {
         if (contentId)
             dispatch(setContentThunk({content: content, contentId: contentId}));
     }
-
-    //console.log('CONTENT=', ...content)
 
     return <>
         {
             isLoading
                 ? <Preloader/>
                 : <Container className={s.wrapped_div}>
-                    <Typography variant={'h4'}>Содержание:</Typography>
+                    {/*<Typography variant={'h4'}>Содержание:</Typography>*/}
                     {
                         content.map((el, indexArr) => {
                             return <div key={indexArr} className={s1.someDiv}>
@@ -71,20 +85,25 @@ const Content = () => {
                                 {/*Если уже есть контент*/}
                                 {el.type === "Title" && <Typography variant={'h4'}>{el.content}</Typography>}
                                 {el.type === "Text" && <Typography>{el.content}</Typography>}
-                                {el.type === "Image" && <img src={el.content} className={s1.imageClass}/>}
-
-                                {/*Задаем тип новой главы
-                                {el.type === "New" && newChapter.type === "New" && <NewChapterTypeOptions/>}
-                                Задаем содержание новой главы
-                                {newChapter.type === "Title" && <NewChapterTitle/>}
-                                {newChapter.type === "Text" && <NewChapterText/>}
-                                {newChapter.type === "Image" && <NewChapterImage/>}*/}
+                                {el.type === "Image" && <img src={baseContentImageUrl+el.content} className={s1.imageClass}/>}
 
                                 {isAdmin &&
+                                    <div className={s1.plus_minus}>
+                                        <RemoveCircleOutlineIcon
+                                            className={s1.myIconMinus}
+                                            onClick={() => deleteChapter(indexArr)}
+                                        />
+                                        <AddCircleOutlineIcon
+                                            className={s1.myIconPlus}
+                                            onClick={() => addChapterInside(indexArr)}
+                                        />
+                                    </div>
+                                }
+                                {/*{isAdmin &&
                                     <div>
                                         <AddCircleOutlineIcon onClick={() => addChapterInside(indexArr)}/>
                                     </div>
-                                }
+                                }*/}
 
                             </div>
                         })
@@ -95,17 +114,17 @@ const Content = () => {
                     </div>
                     }
 
-                    <div className={s1.someDiv}
+                    {/*<div className={s1.someDiv}
                     >
                         {isAdmin && <Button
-                                        variant="contained"
-                                        disabled={newchapterIndex === -1}
-                                        onClick={() => saveContent()}
+                            variant="contained"
+                            disabled={newChapterIndex === -1}
+                            onClick={() => saveContent()}
                         >
-                                Сохранить
-                            </Button>
+                            Сохранить
+                        </Button>
                         }
-                    </div>
+                    </div>*/}
                 </Container>
         }
     </>

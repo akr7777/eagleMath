@@ -1,14 +1,20 @@
 import s1 from "../content.module.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import {changeContent, changeNewChapterContent, ContentType, newChapterChange} from "../../features/contentSlice";
+import {
+    changeContent,
+    changeNewChapterContent,
+    ContentType,
+    newChapterChange,
+    setContentThunk
+} from "../../features/contentSlice";
 import React, {ChangeEvent} from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import CancelButton2 from "./cancel-button-2";
 import {initNewChapter} from "../Content";
 import {PATHS} from "../../AppBar/AppBar";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import reassignContentIndexes from "./reassign-content-indexes";
 
 const NewChapterText = () => {
@@ -18,6 +24,7 @@ const NewChapterText = () => {
     const contentId = newChapter.contentId;
     const navigate = useNavigate();
     const index = useSelector((state: RootState) => state.content.newChapterIndex)
+    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
 
     function changeNewContent (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
         dispatch(changeNewChapterContent(e.currentTarget.value));
@@ -25,12 +32,14 @@ const NewChapterText = () => {
 
     function addToContent() {
         //dispatch(changeContent([...reassignContentIndexes(content, newChapter.index), newChapter]));
-        dispatch(changeContent(reassignContentIndexes(content, newChapter, index)));
+        //dispatch(changeContent(reassignContentIndexes(content, newChapter, index)));
+        dispatch(setContentThunk({content: reassignContentIndexes(content, newChapter, index), contentId: contentId}));
         dispatch(newChapterChange(initNewChapter));
         navigate(PATHS.content + "/" + contentId);
     }
 
     return <div className={s1.someDiv}>
+        {!isAdmin && <Navigate to={PATHS.content + "/" + contentId}/>}
         {/*<Typography>Введите заголовок:</Typography>*/}
         <TextField label={'Текст'}
                    variant={'outlined'}
