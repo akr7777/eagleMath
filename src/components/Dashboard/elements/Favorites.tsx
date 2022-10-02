@@ -41,7 +41,6 @@ const FavoriteMaterials = () => {
                 <Typography variant={'h5'}>Избранные материалы</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <Typography>
                     {
                         list.map(item => {
                             return <div key={item.contentId}
@@ -75,7 +74,6 @@ const FavoriteMaterials = () => {
                                     </div>
                         })
                     }
-                </Typography>
             </AccordionDetails>
         </Accordion>
 

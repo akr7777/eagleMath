@@ -121,3 +121,18 @@ export const contactsAPI = {
     }
 }
 
+export const usersAPI = {
+    getUsers: () => {
+        return instance.get(`users/getUsers`);
+    },
+    getOneUser: (userId: IdFiledType) => {
+        return instance.post('users/getOneUser', {userId});
+    },
+    /*setContacts: (title: string, description: string, phone: string, telegram: string, whatsapp: string, email: string, skype: string) => {
+        return instance.post(`content/setContacts`, {
+            title: title, description: description, phone: phone,
+            telegram: telegram, whatsapp: whatsapp, email: email, skype: skype
+        });
+    }*/
+}
+

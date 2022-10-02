@@ -18,6 +18,7 @@ import Logout from "./components/AuthPage/Logout";
 import InitializeApp from "./components/common/initializeApp";
 import Content from "./components/Content/Content";
 import ChangeContent from "./components/Content/elements/ChangeContent";
+import UserInfo from "./components/Dashboard/elements/user-info";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -53,6 +54,8 @@ function App() {
                     <Route path={PATHS.content+'/:contentId'} element={<Content/>}/>
                 </Route>
                 <Route path={PATHS.changeContent+'/:contentId'} element={<ChangeContent/>}/>
+
+                <Route path={PATHS.user+'/:userId'} element={<UserInfo/>}/>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 

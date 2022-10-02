@@ -14,6 +14,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import {FavoriteContent} from "./utils/utils";
 import s1 from './styles.module.css';
+import Users from "./elements/users";
 
 
 const Dashboard = () => {
@@ -23,6 +24,7 @@ const Dashboard = () => {
     }, [])
     const isLoading = false;
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
 
     return <>
         {/*{!isAuth && <Navigate to={PATHS.login}/>}*/}
@@ -37,8 +39,15 @@ const Dashboard = () => {
                     </div>
 
                     {/*<div className={s.someDiv1}>
-                        <Plans/>
+                        <Notes/>
                     </div>*/}
+
+                    { isAdmin && <div className={s.someDiv1}>
+                            <Users/>
+                        </div>
+                    }
+
+
                 </Container>
         }
     </>
