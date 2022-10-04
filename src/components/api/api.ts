@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {IdFiledType} from "../features/categoriesSlice";
+import {changeParentIdThunk, IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
@@ -53,6 +53,12 @@ export const ContentAPI = {
                 "Content-Type": "multipart/form-data"
             }
         });
+    },
+    renameMaterial: (contentId: IdFiledType, newName: string):Promise<AxiosResponse> => {
+        return instance.post('content/renameContent', {contentId, newName});
+    },
+    changeParentId: (contentId: IdFiledType, newParentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/changeParentId', {contentId, newParentId});
     }
 }
 

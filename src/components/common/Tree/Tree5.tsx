@@ -6,13 +6,7 @@ import {
 import PlusIcon from '@mui/icons-material/ControlPoint';
 import MinusIcon from '@mui/icons-material/RemoveCircleOutline';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
-/*import StarIcon from '@mui/icons-material/Star';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import ReadThisMaterial from '@mui/icons-material/AutoStories';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';*/
 import React, {useState} from "react";
-/*import Typography from "@mui/material/Typography";
-import {NavLink} from "react-router-dom";*/
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import {TaskType} from "../../features/tasksSlice";
@@ -20,14 +14,14 @@ import {addToShownCats, deleteFromShownCats} from "../../features/categoriesSlic
 import {CategoryType} from "../../features/categoriesSlice";
 import Line from "../line";
 
-type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
+export type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
 
 type DataMutationPropsType = {
     categories: Array<CategoryType>,
     materials: Array<MaterialType> | Array<TaskType>,
 }
 
-function dataMutation(props: DataMutationPropsType) {
+export function dataMutation(props: DataMutationPropsType):CategoryLongType[] {
     //add items to every category
     let categories1:Array<CategoryLongType> = [];
     [...props.categories].forEach(c => {
@@ -57,22 +51,12 @@ type DrawTreePropsType = {
 
     plusIconClick: (id: IdFiledType) => void,
     minusIconClick: (id: IdFiledType) => void,
-
-    //favoritesIds: Array<IdFiledType>,
-    //isAuth: boolean,
-    //isAdmin: boolean,
-
-    //addToFavorite: (id: IdFiledType) => void,
-    //deleteFromFavorite: (id: IdFiledType) => void,
 }
 const DrawTree: React.FC<DrawTreePropsType> = ({
                                                    items, isShowArr,
                                                    selectedId, setSelected,
                                                    materialsIds,
                                                    plusIconClick, minusIconClick,
-                                                   //favoritesIds,
-                                                   //isAuth, isAdmin,
-                                                   /*addToFavorite, deleteFromFavorite,*/
                                                }) => {
 
     return <div className={s.treeLeaf}>
@@ -95,38 +79,11 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                     : <MinusIcon onClick={() => minusIconClick(item.id)}/>
                         }
 
-                        {/*Label
-                        <Typography>{item.label}</Typography>
 
-                        Read this material ICON
-                        {
-                            isMaterial &&
-                            <NavLink to={'/materials/' + item.id} className={s.navLink}>
-                                <ReadThisMaterial/>
-                            </NavLink>
-                        }
-
-                        Add to favorite this material
-                        {
-                            isAuth && isMaterial
-                                ? favoritesIds.some(el => String(el) === String(item.id))
-                                    ? <StarIcon onClick={() => deleteFromFavorite(item.id)}/>
-                                    : <StarOutlineIcon onClick={() => addToFavorite(item.id)}/>
-                                : ""
-                        }
-
-                        Edit this material. For admin only
-                        {
-                            isAdmin && <ModeEditIcon/>
-                        }*/}
                         <Line
                             contentId={item.id}
                             label={item.label}
-
                             isMaterial={isMaterial}
-                            //favoritesIds={favoritesIds}
-                            //addToFavorite={addToFavorite}
-                            //deleteFromFavorite={deleteFromFavorite}
                         />
 
                     </div>
@@ -137,14 +94,9 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                 isShowArr: isShowArr,
                                 selectedId: selectedId,
                                 materialsIds: materialsIds,
-                                //favoritesIds: favoritesIds,
                                 plusIconClick: plusIconClick,
                                 minusIconClick: minusIconClick,
                                 setSelected: setSelected,
-                                //isAuth: isAuth,
-                                //isAdmin: isAdmin,
-                                //addToFavorite: addToFavorite,
-                                //deleteFromFavorite: deleteFromFavorite,
                             })
                         }
                     </div>
@@ -157,9 +109,6 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
 type TreePropsType = {
     categories: Array<CategoryType>,
     materials: Array<MaterialType>,
-    //addToFavorite: (id: IdFiledType) => void,
-    //deleteFromFavorite: (id: IdFiledType) => void,
-    //favoritesIds: Array<IdFiledType>,
 }
 export const Tree5: React.FC<TreePropsType> = (props) => {
     const dispatch = useAppDispatch();
@@ -167,20 +116,16 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
         materials: props.materials,
         categories: props.categories,
     });
-    //const [isShowArr, setIsShowArr] = useState<Array<IdFiledType>>([]);
     const isShowArr = useSelector((state: RootState) => state.categories.isShownCats);
     const plusIconClick = (id: IdFiledType) => {
         dispatch(addToShownCats(id))
-        //setIsShowArr([...isShowArr, id])
     }
     const minusIconClick = (id: IdFiledType) => {
         dispatch(deleteFromShownCats(id))
-        //setIsShowArr(isShowArr.filter(s => s !== id))
     }
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
-    //const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-    //const isAdmin = useSelector( (state:RootState) => state.auth.user.isAdmin);
+
     return <div className={s.wrappedDiv}>
         {
             DrawTree({
@@ -191,11 +136,6 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
                 plusIconClick: plusIconClick,
                 minusIconClick: minusIconClick,
                 setSelected: setSelectedId,
-                //favoritesIds: props.favoritesIds,
-                //isAuth: isAuth,
-                //isAdmin: isAdmin,
-                //addToFavorite: props.addToFavorite,
-                //deleteFromFavorite: props.deleteFromFavorite,
             })
         }
     </div>

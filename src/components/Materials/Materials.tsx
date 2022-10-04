@@ -17,23 +17,11 @@ const Materials = () => {
     useEffect(() => {
         dispatch(getAllCategoriesThunk());
         dispatch(getAllMaterialsThunk());
-        /*if (userId !== '0') */dispatch(getFavoritesThunk(userId))
+        dispatch(getFavoritesThunk(userId))
     }, [userId]);
 
     const categories = [...useSelector((state: RootState) => state.categories.categories)];
     const materials = [...useSelector((state: RootState) => state.materials.materials)];
-    //const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
-    const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
-
-    const addToFavorite = (contentId: IdFiledType) => {
-        //dispatch(addIdToFavoritesMaterialsAC(userId, contentId));
-        dispatch(addToFavoritesThunk({userId, contentId}))
-    }
-    const deleteFromFavorite = (contentId: IdFiledType) => {
-        //dispatch(deleteIdFromFavoritesMaterialsAC(userId, contentId))
-        dispatch(deleteFromFavoritesThunk({userId, contentId}))
-
-    }
 
     return <>
         {
@@ -53,9 +41,6 @@ const Materials = () => {
                         <Tree5
                             categories={categories}
                             materials={materials}
-                            //addToFavorite={addToFavorite}
-                            //deleteFromFavorite={deleteFromFavorite}
-                            //favoritesIds={favoritesIds}
                         />
                     </div>
 

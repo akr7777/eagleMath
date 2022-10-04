@@ -1,0 +1,27 @@
+.treeLeaf {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+    text-align: start;
+    width: 100%;
+
+    padding-left: 20px;/* Расстояние для каждого нового листа*/
+}
+.treeLine {
+    margin: 5px 0 5px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 20px;
+    gap: 10px;
+    padding-left: 15px;
+}
+.selectedLine {
+    width: 100%;
+    background-color: cornflowerblue;
+    min-height: 35px;
+    justify-content: center;
+    /*padding: 0 10px 0 10px;*/
+}

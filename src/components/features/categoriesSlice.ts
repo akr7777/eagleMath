@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {CategoriesAPI, ContentAPI} from "../api/api";
-import {getFavoritesThunk, MaterialType} from "./materialsSlice";
-import {TaskType} from "./tasksSlice";
+import {getAllMaterialsThunk, getFavoritesThunk, MaterialType} from "./materialsSlice";
+import {getAllTasksThunk, TaskType} from "./tasksSlice";
 
 export type IdFiledType = string | number;
 export type CategoryType = {
@@ -29,7 +29,7 @@ let initialState: InitStatecategoryType = {
 }
 
 export const getAllCategoriesThunk = createAsyncThunk(
-    'materials/getAllCategories',
+    'categories/getAllCategories',
     async (_, {rejectWithValue, dispatch}) => {
         const res = await CategoriesAPI.getAllcategories();
         if (res.data) {
@@ -43,7 +43,7 @@ export const getAllCategoriesThunk = createAsyncThunk(
 );
 
 export const addToFavoritesThunk = createAsyncThunk(
-    'materials/addMaterialToFavoritesThunk',
+    'categories/addMaterialToFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
         const {userId, contentId} = content;
         const res = await ContentAPI.addToFavorites(userId, contentId);
@@ -51,7 +51,7 @@ export const addToFavoritesThunk = createAsyncThunk(
     }
 );
 export const deleteFromFavoritesThunk = createAsyncThunk(
-    'materials/deleteMaterialFromFavoritesThunk',
+    'categories/deleteMaterialFromFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
         const {userId, contentId} = content;
         const res = await ContentAPI.deleteFromFavorites(userId, contentId);
@@ -59,6 +59,18 @@ export const deleteFromFavoritesThunk = createAsyncThunk(
     }
 );
 
+type ChangeParentIdType = {contentId: IdFiledType, newParentId: IdFiledType}
+export const changeParentIdThunk = createAsyncThunk(
+    'categories/changeParentIdThunk',
+    async (data: ChangeParentIdType, {rejectWithValue, dispatch}) => {
+        const {contentId, newParentId} = data;
+        const res = await ContentAPI.changeParentId(contentId, newParentId);
+        dispatch(getAllCategoriesThunk());
+        dispatch(getAllMaterialsThunk());
+        dispatch(getAllTasksThunk());
+        return res.data;
+    }
+);
 
 export const categoriesSlice = createSlice({
     name: 'categories',
@@ -94,7 +106,6 @@ export const categoriesSlice = createSlice({
         })
 
 
-
         builder.addCase(getFavoritesThunk.pending, (state: InitStatecategoryType) => {
             state.isLoading = true;
         })
@@ -125,6 +136,17 @@ export const categoriesSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(deleteFromFavoritesThunk.rejected, (state: InitStatecategoryType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(changeParentIdThunk.pending, (state: InitStatecategoryType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(changeParentIdThunk.fulfilled, (state: InitStatecategoryType) => {
+            //state.favoriteIds = [...action.payload];
+            state.isLoading = false;
+        })
+        builder.addCase(changeParentIdThunk.rejected, (state: InitStatecategoryType) => {
             state.isLoading = false;
         })
     },

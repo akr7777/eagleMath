@@ -30,7 +30,8 @@ const Users = () => {
     const isLoading: boolean = useSelector((state: RootState) => state.users.isLoading);
     const searchField: string = useSelector((state: RootState) => state.users.searchField);
     const users: UserType[] = useSelector((state: RootState) => state.users.users)
-        .filter(user => user.name.includes(searchField) || user.email.includes(searchField));
+        .filter(user => user.name.toLowerCase().includes(searchField.toLowerCase())
+            || user.email.toLowerCase().includes(searchField.toLowerCase()));
 
     const onSearchFieldChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(searchFieldChange(e.currentTarget.value))
