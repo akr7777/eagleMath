@@ -33,10 +33,10 @@ const Content = () => {
     const content: Array<ContentType> = useSelector((state: RootState) => state.content.content);
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.user.isAdmin);
     const navigate = useNavigate();
-    const newChapterIndex = useSelector((state: RootState) => state.content.newChapterIndex);
+    //const newChapterIndex = useSelector((state: RootState) => state.content.newChapterIndex);
 
     useEffect(() => {
-        if (content.length === 0)
+        //if (content.length === 0)
             dispatch(getContentThunk(contentId || ""));
     }, []);
 

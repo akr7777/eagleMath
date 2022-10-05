@@ -77,7 +77,10 @@ const Users = () => {
                                             {user.email}
                                         </div>
                                         <div>
-                                            <LibraryBooksIcon onClick={() => navigate('/user/'+user.userId)}/>
+                                            <LibraryBooksIcon
+                                                cursor={'pointer'}
+                                                onClick={() => navigate('/user/'+user.userId)}
+                                            />
                                         </div>
                                     </div>
                                     {/*<div>

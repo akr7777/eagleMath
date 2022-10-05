@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {changeParentIdThunk, IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
+import {makeUserAsUser} from "../features/usersSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
 
@@ -116,10 +117,10 @@ export const descriptionAPI = {
 }
 
 export const contactsAPI = {
-    getContacts: () => {
+    getContacts: ():Promise<AxiosResponse> => {
         return instance.get(`content/getContacts`);
     },
-    setContacts: (title: string, description: string, phone: string, telegram: string, whatsapp: string, email: string, skype: string) => {
+    setContacts: (title: string, description: string, phone: string, telegram: string, whatsapp: string, email: string, skype: string):Promise<AxiosResponse> => {
         return instance.post(`content/setContacts`, {
             title: title, description: description, phone: phone,
             telegram: telegram, whatsapp: whatsapp, email: email, skype: skype
@@ -131,14 +132,17 @@ export const usersAPI = {
     getUsers: () => {
         return instance.get(`users/getUsers`);
     },
-    getOneUser: (userId: IdFiledType) => {
+    getOneUser: (userId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('users/getOneUser', {userId});
     },
-    /*setContacts: (title: string, description: string, phone: string, telegram: string, whatsapp: string, email: string, skype: string) => {
-        return instance.post(`content/setContacts`, {
-            title: title, description: description, phone: phone,
-            telegram: telegram, whatsapp: whatsapp, email: email, skype: skype
-        });
-    }*/
+    deleteUser: (userId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('users/deleteUser', {userId});
+    },
+    makeUserAdmin: (userId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('users/makeUserAdmin', {userId})
+    },
+    makeUserAsUser: (userId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('users/makeUserAsUser', {userId})
+    }
 }
 

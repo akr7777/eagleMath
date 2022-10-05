@@ -7,7 +7,7 @@ import NewspaperIcon from "@mui/icons-material/Newspaper";
 import MinusIcon from "@mui/icons-material/RemoveCircleOutline";*/
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
-import {NavLink} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import ReadThisMaterial from "@mui/icons-material/AutoStories";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -19,7 +19,6 @@ import {RootState, useAppDispatch} from "../../store/store";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {renameMaterialThunk} from "../features/materialsSlice";
-import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
 import DraggableDialog from "./change-parent";
 
 type LinePropsType = {
