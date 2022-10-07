@@ -41,6 +41,9 @@
 .searchField {
     width: 80%;
 }
+.max_width {
+    width: 100%;
+}
 .search_div {
     margin-bottom: 20px;
 }

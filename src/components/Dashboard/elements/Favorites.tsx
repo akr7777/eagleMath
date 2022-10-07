@@ -14,24 +14,26 @@ import Accordion from "@mui/material/Accordion";
 import IconMaterial from '@mui/icons-material/AutoStories';
 import IconTask from '@mui/icons-material/AppRegistration';
 import Line from "../../common/line";
+import s2 from "./elements.module.css"
 
-const FavoriteMaterials = () => {
+type FavoriteMaterialsPropsType = {userId: IdFiledType}
+const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
 
     const dispatch = useAppDispatch();
-    const userId = useSelector((state: RootState) => state.auth.user.id);
+    //const userId = useSelector((state: RootState) => state.auth.user.id);
     useEffect(() => {
         dispatch(getAllTasksThunk());
         dispatch(getAllMaterialsThunk());
         dispatch(getAllCategoriesThunk());
-        dispatch(getFavoritesThunk(userId));
-    }, [userId]);
+        dispatch(getFavoritesThunk(props.userId));
+    }, [props.userId]);
 
     const list:Array<FavoriteContentOutputType> = FavoriteContent();
 
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
 
 
-    return <>
+    return <div className={s2.div1}>
         <Accordion className={s1.accordion}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon/>}
@@ -47,37 +49,24 @@ const FavoriteMaterials = () => {
                                          onClick={() => setSelectedId(item.contentId)}
                                          className={String(item.contentId) === String(selectedId) ? (s1.lineDiv + ' ' + s1.lineDiv_selected) : s1.lineDiv}
                                     >
-                                        {/*Левая часть строки*/}
                                         <div className={s1.sdiv_left}>
                                             {item.type === "M" && <IconMaterial/>}
                                             {item.type === "T" && <IconTask/>}
-
                                             <Typography variant={'overline'}>{item.path}</Typography>
-
-                                            {/*<Typography variant={'subtitle1'}>{item.label}</Typography>*/}
-
                                             <Line
                                                 contentId={item.contentId}
                                                 label={item.label}
                                                 isMaterial={true}
-                                                //favoritesIds={[]}
-                                                //addToFavorite={addToFavorite}
-                                                //deleteFromFavorite={deleteFromFavorite}
                                             />
 
                                         </div>
-
-                                        {/*Праввая часть строки
-                                        <div className={s1.sdiv_right}>
-                                            Porps
-                                        </div>*/}
                                     </div>
                         })
                     }
             </AccordionDetails>
         </Accordion>
 
-    </>
+    </div>
 }
 
 export default FavoriteMaterials;

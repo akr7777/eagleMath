@@ -3,26 +3,52 @@ import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
 import {ContentAPI} from "../api/api";
 import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
+import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 
 export type ContentTypes = "C" | "M" | "T";
+export type NoteType = {
+    noteId: string,
+    title: string,
+    text: string,
+    isActive: boolean,
+}
 
 type DashboardStateType = {
     favoriteContent: Array<IdFiledType>,
+    notes: Array<NoteType>
     isLoading: boolean,
 }
 const dashboardInitialState:DashboardStateType = {
     favoriteContent: [],
     isLoading: false,
+    notes: [],
 }
 
 export const getFavoritesThunk = createAsyncThunk(
-    'materials/getFavoritesThunk',
+    'dashboard/getFavoritesThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.getFavoriteContent(userId);
         return res.data;
     }
 );
-export const addMaterialToFavoritesThunk = createAsyncThunk(
+
+export const getNotesThunk = createAsyncThunk(
+    'dashboard/getNotes',
+    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.getNotes(userId);
+        return res.data;
+    }
+);
+
+type SetNotesDataType = {userId: IdFiledType, notes: NoteType[]}
+export const setNotesThunk = createAsyncThunk(
+    'dashboard/setNotes',
+    async (data: SetNotesDataType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.setNotes(data.userId, data.notes);
+        return res.data;
+    }
+);
+/*export const addMaterialToFavoritesThunk = createAsyncThunk(
     'materials/addMaterialToFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
         const {userId, contentId} = content;
@@ -37,7 +63,7 @@ export const deleteMaterialFromFavoritesThunk = createAsyncThunk(
         const res = await ContentAPI.deleteFromFavorites(userId, contentId);
         return res.data; //возывращает массив id Array<IdFieldType>
     }
-);
+);*/
 
 export const dashboardSlice = createSlice({
     name: 'dashboard',
@@ -45,6 +71,9 @@ export const dashboardSlice = createSlice({
     reducers: {
         setFavoriteContent: (state:DashboardStateType, action: PayloadAction<Array<IdFiledType>>): void => {
             state.favoriteContent = action.payload;
+        },
+        addNote: (state: DashboardStateType, action: PayloadAction<NoteType>): void => {
+            state.notes.push(action.payload);
         },
     },
     extraReducers: builder => {
@@ -81,8 +110,40 @@ export const dashboardSlice = createSlice({
             state.isLoading = false;
         })
 
+        builder.addCase(getNotesThunk.pending, (state: DashboardStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getNotesThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            notes: Array<NoteType>,
+            resultCode: number
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success && action.payload.notes.length > 0) {
+                state.notes = [...action.payload.notes];
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(getNotesThunk.rejected, (state: DashboardStateType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(setNotesThunk.pending, (state: DashboardStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(setNotesThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            notes: Array<NoteType>,
+            resultCode: number
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success && action.payload.notes.length > 0) {
+                state.notes = [...action.payload.notes];
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(setNotesThunk.rejected, (state: DashboardStateType) => {
+            state.isLoading = false;
+        })
+
     }
 })
-export const {setFavoriteContent} = dashboardSlice.actions;
+export const {setFavoriteContent, addNote} = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

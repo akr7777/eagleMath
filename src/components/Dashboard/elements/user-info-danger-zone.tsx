@@ -36,7 +36,7 @@ const UserInfoDangerZone = () => {
         }
     }
 
-    return <>
+    return <div className={s1.div1}>
         <div className={s1.dzMainDiv1}>
             <Typography variant={'h4'} className={s1.dzLabel}>Danger Zone</Typography>
             <div className={s1.dzMainDiv2}>
@@ -78,7 +78,7 @@ const UserInfoDangerZone = () => {
                 </Button>
             </div>
         </div>
-    </>
+    </div>
 }
 
 export default UserInfoDangerZone;

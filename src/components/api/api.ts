@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {changeParentIdThunk, IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
 import {makeUserAsUser} from "../features/usersSlice";
+import {NoteType} from "../features/dashboardSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
 
@@ -60,7 +61,16 @@ export const ContentAPI = {
     },
     changeParentId: (contentId: IdFiledType, newParentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/changeParentId', {contentId, newParentId});
-    }
+    },
+
+    setNotes: (userId: IdFiledType, notes: NoteType[]):Promise<AxiosResponse> => {
+        console.log('api / setNotes / userId=', userId)
+        return instance.post('notes/setNotes', {userId, notes});
+    },
+    getNotes: (userId: IdFiledType):Promise<AxiosResponse> => {
+        console.log('api / getNotes / userId=', userId)
+        return instance.post('notes/getNotes', {userId});
+    },
 }
 
 export const CategoriesAPI = {

@@ -15,10 +15,14 @@ import {RootState} from "../../store/store";
 import {FavoriteContent} from "./utils/utils";
 import s1 from './styles.module.css';
 import Users from "./elements/users";
+import Notes from "./elements/user-info-notes";
 
 
 const Dashboard = () => {
     //const isLoading = useSelector((state: RootState) => state.dashboard.isLoading);
+    const userId = useSelector((state: RootState) => state.auth.user.id);
+    console.log()
+
     useEffect(() => {
 
     }, [])
@@ -34,18 +38,11 @@ const Dashboard = () => {
                 : <Container className={s.wrapped_div}>
                     <Typography variant="h4">Панель управления</Typography>
 
-                    <div className={s.someDiv1}>
-                        <FavoriteMaterials/>
-                    </div>
+                    <FavoriteMaterials userId={userId}/>
 
-                    {/*<div className={s.someDiv1}>
-                        <Notes/>
-                    </div>*/}
+                    <Notes userId={userId}/>
 
-                    { isAdmin && <div className={s.someDiv1}>
-                            <Users/>
-                        </div>
-                    }
+                    <Users/>
 
 
                 </Container>

@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import Accordion from "@mui/material/Accordion";
 import s1 from "../styles.module.css";
+import s2 from "./elements.module.css";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Typography} from "@mui/material";
@@ -41,7 +42,8 @@ const Users = () => {
         {
             isLoading
                 ? <Preloader/>
-                : <Accordion className={s1.accordion}>
+                : <div className={s2.div1}>
+                    <Accordion className={s1.accordion}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon/>}
                         aria-controls="panel1a-content"
@@ -91,6 +93,7 @@ const Users = () => {
                         }
                     </AccordionDetails>
                 </Accordion>
+                </div>
         }
 
 

@@ -9,6 +9,8 @@ import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {getOneUser, UserType} from "../../features/usersSlice";
 import UserInfoDangerZone from "./user-info-danger-zone";
+import FavoriteMaterials from "./Favorites";
+import UserInfoTitle from "./user-info-title";
 
 const UserInfo = () => {
     const {userId} = useParams();
@@ -28,14 +30,14 @@ const UserInfo = () => {
             isLoading
                 ? <Preloader/>
                 : <Container className={s.wrapped_div}>
-                    <Typography variant="h4">Карточка студента</Typography>
+                    {/*<Typography variant="h4">Карточка студента</Typography>
                     <div className={s1.div1}>
                         <div className={s1.div2}>
                             <div><label>Имя:</label></div>
                             <div><Typography variant={'h5'}>{user.name}</Typography></div>
                         </div>
                         <div className={s1.div2}>
-                            <label>Элеутронная почта:</label>
+                            <label>Электронная почта:</label>
                             <Typography variant={'h5'}>{user.email}</Typography>
                         </div>
                         <div className={s1.div2}>
@@ -43,9 +45,17 @@ const UserInfo = () => {
                             {user.isAdmin && <Typography variant={'h5'} color={'red'}>Да</Typography>}
                             {!user.isAdmin && <Typography variant={'h5'} color={'green'}>Нет</Typography>}
                         </div>
-                    </div>
+                    </div>*/}
 
-                    <UserInfoDangerZone/>
+                    <UserInfoTitle/>
+
+
+                        <FavoriteMaterials userId={userId || ""}/>
+
+
+                    {/*<div className={s1.div1}>*/}
+                        <UserInfoDangerZone/>
+                   {/* </div>*/}
 
                 </Container>
         }
