@@ -6,6 +6,7 @@ import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlic
 import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 
 export type ContentTypes = "C" | "M" | "T";
+export type NotesStatusType = "All" | "Active" | "Completed";
 export type NoteType = {
     noteId: string,
     title: string,
@@ -15,13 +16,17 @@ export type NoteType = {
 
 type DashboardStateType = {
     favoriteContent: Array<IdFiledType>,
-    notes: Array<NoteType>
+    notes: Array<NoteType>,
+    searchNotesField: string,
     isLoading: boolean,
+    notesStatus: NotesStatusType,
 }
 const dashboardInitialState:DashboardStateType = {
     favoriteContent: [],
     isLoading: false,
     notes: [],
+    searchNotesField: '',
+    notesStatus: "All",
 }
 
 export const getFavoritesThunk = createAsyncThunk(
@@ -69,11 +74,17 @@ export const dashboardSlice = createSlice({
     name: 'dashboard',
     initialState: dashboardInitialState,
     reducers: {
-        setFavoriteContent: (state:DashboardStateType, action: PayloadAction<Array<IdFiledType>>): void => {
+       /* setFavoriteContent: (state:DashboardStateType, action: PayloadAction<Array<IdFiledType>>): void => {
             state.favoriteContent = action.payload;
         },
         addNote: (state: DashboardStateType, action: PayloadAction<NoteType>): void => {
             state.notes.push(action.payload);
+        },*/
+        changeSearchText: (state: DashboardStateType, action: PayloadAction<string>): void => {
+            state.searchNotesField = action.payload;
+        },
+        changeNotesFilterStatus: (state: DashboardStateType, action: PayloadAction<NotesStatusType>): void => {
+            state.notesStatus = action.payload;
         },
     },
     extraReducers: builder => {
@@ -144,6 +155,6 @@ export const dashboardSlice = createSlice({
 
     }
 })
-export const {setFavoriteContent, addNote} = dashboardSlice.actions;
+export const {/*setFavoriteContent, addNote, */changeSearchText, changeNotesFilterStatus} = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

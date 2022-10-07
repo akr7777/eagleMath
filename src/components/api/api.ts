@@ -64,11 +64,9 @@ export const ContentAPI = {
     },
 
     setNotes: (userId: IdFiledType, notes: NoteType[]):Promise<AxiosResponse> => {
-        console.log('api / setNotes / userId=', userId)
         return instance.post('notes/setNotes', {userId, notes});
     },
     getNotes: (userId: IdFiledType):Promise<AxiosResponse> => {
-        console.log('api / getNotes / userId=', userId)
         return instance.post('notes/getNotes', {userId});
     },
 }

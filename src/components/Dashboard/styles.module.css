@@ -39,11 +39,16 @@
 }
 
 .searchField {
-    width: 80%;
+    width: 60%;
 }
 .max_width {
     width: 100%;
 }
 .search_div {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
     margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
 }

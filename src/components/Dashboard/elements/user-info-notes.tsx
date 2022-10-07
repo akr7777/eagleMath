@@ -8,27 +8,37 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import TextField from '@mui/material/TextField';
 import Accordion from "@mui/material/Accordion";
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {IdFiledType} from "../../features/categoriesSlice";
-import {getNotesThunk, NoteType, setNotesThunk} from "../../features/dashboardSlice";
+import {changeSearchText, getNotesThunk, NoteType, setNotesThunk} from "../../features/dashboardSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {v4} from "uuid";
 import Button from "@mui/material/Button";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import UserInfoNotesFilters from "./user-info-notes-filters";
 
 type NotesPropsType = { userId: IdFiledType }
 
 const Notes = (props: NotesPropsType) => {
     const dispatch = useAppDispatch();
-
     useEffect(() => {
         dispatch(getNotesThunk(props.userId));
     }, [props.userId])
 
+    const searchText = useSelector((state: RootState) => state.dashboard.searchNotesField);
+    let notes: Array<NoteType> = useSelector((state: RootState) => state.dashboard.notes)
+        .filter(note => note.title.toLowerCase().includes(searchText.toLowerCase())
+        || note.text.toLowerCase().includes(searchText.toLowerCase()));
 
-    const notes: Array<NoteType> = useSelector((state: RootState) => state.dashboard.notes);
+    const notesStatus = useSelector((state: RootState) => state.dashboard.notesStatus);
+    if (notesStatus === "Active")
+        notes = notes.filter(note => note.isActive);
+    if (notesStatus === "Completed")
+        notes = notes.filter(note => !note.isActive);
+
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
+
 
     const [showAdd, setShowAdd] = useState<boolean>(false);
     const [addTitle, setAddTitle] = useState('');
@@ -62,6 +72,23 @@ const Notes = (props: NotesPropsType) => {
                 <Typography variant={'h5'}>Заметки</Typography>
             </AccordionSummary>
             <AccordionDetails>
+
+                <div className={s2.search_div}>
+                    <TextField
+                        label="Поиск"
+                        variant="standard"
+                        value={searchText}
+                        onChange={(e) => dispatch(changeSearchText(e.currentTarget.value))}
+                        className={s2.searchField}
+                    />
+
+
+                    <UserInfoNotesFilters/>
+
+                </div>
+
+
+
                 <div className={s1.div2_1}>
                     {
                         notes.map(note => {
@@ -85,6 +112,7 @@ const Notes = (props: NotesPropsType) => {
                             </div>
                         })
                     }
+
 
                     {!showAdd && <div className={s1.div3}>
                             <AddIcon onClick={() => setShowAdd(true)} cursor={'pointer'}/>

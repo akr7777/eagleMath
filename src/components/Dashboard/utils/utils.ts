@@ -19,37 +19,40 @@ export const FavoriteContent = (/*categories: CategoryType, materials: MaterialT
 
     const result:Array<FavoriteContentOutputType> = [];
 
-    if (favoriteIds.length > 0 && categories.length > 0 && materials.length > 0 && tasks.length > 0) {
+    if (favoriteIds.length > 0) {
 
-        categories.forEach(c => {
-            if (favoriteIds.some(f => f === c.id))
-                result.push({
-                    type: "C",
-                    contentId: c.id,
-                    path: getParents(c.parentId, categories),
-                    label: c.label,
-                });
-        });
+        if (categories.length > 0)
+            categories.forEach(c => {
+                if (favoriteIds.some(f => f === c.id))
+                    result.push({
+                        type: "C",
+                        contentId: c.id,
+                        path: getParents(c.parentId, categories),
+                        label: c.label,
+                    });
+            });
 
-        materials.forEach(m => {
-            if (favoriteIds.some(f => f === m.id))
-                result.push({
-                    type: "M",
-                    contentId: m.id,
-                    path: getParents(m.parentId, categories),
-                    label: m.label,
-                });
-        });
+        if (materials.length > 0)
+            materials.forEach(m => {
+                if (favoriteIds.some(f => f === m.id))
+                    result.push({
+                        type: "M",
+                        contentId: m.id,
+                        path: getParents(m.parentId, categories),
+                        label: m.label,
+                    });
+            });
 
-        tasks.forEach(t => {
-            if (favoriteIds.some(f => f === t.id))
-                result.push({
-                    type: "T",
-                    contentId: t.id,
-                    path: getParents(t.parentId, categories),
-                    label: t.label,
-                });
-        });
+        if (tasks.length > 0)
+            tasks.forEach(t => {
+                if (favoriteIds.some(f => f === t.id))
+                    result.push({
+                        type: "T",
+                        contentId: t.id,
+                        path: getParents(t.parentId, categories),
+                        label: t.label,
+                    });
+            });
     }
 
     /*categories.forEach(c => {

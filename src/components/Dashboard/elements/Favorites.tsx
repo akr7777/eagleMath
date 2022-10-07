@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
-import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "../../../store/store";
-import {getAllTasksThunk, getFavoritesThunk} from "../../features/tasksSlice";
+import {useAppDispatch} from "../../../store/store";
+import {getAllTasksThunk} from "../../features/tasksSlice";
 import {getAllCategoriesThunk, IdFiledType} from "../../features/categoriesSlice";
 import {FavoriteContent, FavoriteContentOutputType} from "../utils/utils";
 import {getAllMaterialsThunk} from "../../features/materialsSlice";
@@ -15,6 +14,7 @@ import IconMaterial from '@mui/icons-material/AutoStories';
 import IconTask from '@mui/icons-material/AppRegistration';
 import Line from "../../common/line";
 import s2 from "./elements.module.css"
+import {getFavoritesThunk} from "../../features/dashboardSlice";
 
 type FavoriteMaterialsPropsType = {userId: IdFiledType}
 const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
@@ -29,9 +29,7 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
     }, [props.userId]);
 
     const list:Array<FavoriteContentOutputType> = FavoriteContent();
-
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
-
 
     return <div className={s2.div1}>
         <Accordion className={s1.accordion}>
