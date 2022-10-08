@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
 import {ContentAPI, NotesAPI} from "../api/api";
-import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
+//import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
 import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 
 export type ContentTypes = "C" | "M" | "T";
@@ -34,6 +34,23 @@ export const getFavoritesThunk = createAsyncThunk(
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.getFavoriteContent(userId);
         return res.data;
+    }
+);
+
+export const addToFavoritesThunk = createAsyncThunk(
+    'categories/addMaterialToFavoritesThunk',
+    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = content;
+        const res = await ContentAPI.addToFavorites(userId, contentId);
+        return res.data; //возывращает массив id Array<IdFieldType>
+    }
+);
+export const deleteFromFavoritesThunk = createAsyncThunk(
+    'categories/deleteMaterialFromFavoritesThunk',
+    async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
+        const {userId, contentId} = content;
+        const res = await ContentAPI.deleteFromFavorites(userId, contentId);
+        return res.data; //возывращает массив id Array<IdFieldType>
     }
 );
 
@@ -83,6 +100,9 @@ export const changeNoteTextOrTitleThunk = createAsyncThunk(
     }
 );
 
+
+
+
 export const dashboardSlice = createSlice({
     name: 'dashboard',
     initialState: dashboardInitialState,
@@ -112,25 +132,25 @@ export const dashboardSlice = createSlice({
             state.isLoading = false;
         })
 
-        builder.addCase(addTaskToFavoritesThunk.pending, (state:DashboardStateType) => {
+        builder.addCase(addToFavoritesThunk.pending, (state:DashboardStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(addTaskToFavoritesThunk.fulfilled, (state:DashboardStateType, action:PayloadAction<Array<IdFiledType>>) => {
+        builder.addCase(addToFavoritesThunk.fulfilled, (state:DashboardStateType, action:PayloadAction<Array<IdFiledType>>) => {
             state.favoriteContent = [...action.payload];
             state.isLoading = false;
         })
-        builder.addCase(addTaskToFavoritesThunk.rejected, (state:DashboardStateType) => {
+        builder.addCase(addToFavoritesThunk.rejected, (state:DashboardStateType) => {
             state.isLoading = false;
         })
 
-        builder.addCase(deleteTaskFromFavoritesThunk.pending, (state: DashboardStateType) => {
+        builder.addCase(deleteFromFavoritesThunk.pending, (state: DashboardStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(deleteTaskFromFavoritesThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<Array<IdFiledType>>) => {
+        builder.addCase(deleteFromFavoritesThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<Array<IdFiledType>>) => {
             state.favoriteContent = [...action.payload];
             state.isLoading = false;
         })
-        builder.addCase(deleteTaskFromFavoritesThunk.rejected, (state: DashboardStateType) => {
+        builder.addCase(deleteFromFavoritesThunk.rejected, (state: DashboardStateType) => {
             state.isLoading = false;
         })
 

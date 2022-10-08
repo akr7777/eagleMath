@@ -2,6 +2,8 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ContentAPI} from "../api/api";
 import {IdFiledType} from "./categoriesSlice";
 import {ResultCodesEnum} from "../common/resultCodes";
+import {useNavigate} from "react-router-dom";
+import {PATHS} from "../AppBar/AppBar";
 
 export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
 
@@ -46,6 +48,14 @@ export const setContentThunk = createAsyncThunk(
     'Content/setContent',
     async (data: SetContentDataType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.setContent(data.content, data.contentId);
+        return res.data;
+    }
+);
+
+export const deleteContentThunk = createAsyncThunk(
+    'Content/deleteContentThunk',
+    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.deleteContent(contentId);
         return res.data;
     }
 );
@@ -116,6 +126,20 @@ export const contentSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(setContentThunk.rejected, (state: ContentInitStateType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(deleteContentThunk.pending, (state: ContentInitStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(deleteContentThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+            //content: Array<ContentType>,
+            resultCode: ResultCodesEnum,
+        }>) => {
+            //state.content = [...action.payload.content];
+            state.isLoading = false;
+        })
+        builder.addCase(deleteContentThunk.rejected, (state: ContentInitStateType) => {
             state.isLoading = false;
         })
     }

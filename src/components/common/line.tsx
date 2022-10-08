@@ -111,6 +111,9 @@ const Line = (props: LinePropsType) => {
         }*/}
         { isAdmin && <DraggableDialog contentId={props.contentId}/> }
 
+        { isAdmin && !props.isMaterial && <Typography>DELETE CATEGORY!!!!!</Typography>}
+        { isAdmin && !props.isMaterial && <Typography>ADD CONTENT!!!!!</Typography>}
+
     </>
 }
 
