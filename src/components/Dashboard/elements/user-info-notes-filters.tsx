@@ -45,43 +45,6 @@ const UserInfoNotesFilters = () => {
                     <FormControlLabel value={notesStatusFilterValues.completedStatus} control={<Radio />} label={notesStatusFilterValues.completedTitle} />
                 </RadioGroup>
             </FormControl>
-            {/*<FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
-                <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    value={age}
-                    onChange={handleChange}
-                    label="Age"
-                    defaultValue={'Ten'}
-                >
-                    <MenuItem value="">
-                        <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-            </FormControl>*/}
-            {/*<FormControl sx={{m: 1, minWidth: 170}} size="small" variant="standard">
-                <InputLabel id="demo-simple-select-label">{selectValue}</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={selectValue}
-                    label={selectValue}
-                    onChange={handleSelectChange}
-                    //className={elementCSS.selectClass}
-                    defaultValue={selectValue}
-                >
-                    <MenuItem
-                        value={notesStatusFilterValues.allStatus as NotesStatusType}>{notesStatusFilterValues.allTitle}</MenuItem>
-                    <MenuItem
-                        value={notesStatusFilterValues.activeStatus as NotesStatusType}>{notesStatusFilterValues.activeTitle}</MenuItem>
-                    <MenuItem
-                        value={notesStatusFilterValues.completedStatus as NotesStatusType}>{notesStatusFilterValues.completedTitle}</MenuItem>
-                </Select>
-            </FormControl>*/}
         </div>
 
     </>

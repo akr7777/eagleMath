@@ -57,3 +57,34 @@
 .selectClass {
     min-width: 100px;
 }
+
+.table_body{
+    overflow: scroll;
+    width: 100%;
+    min-width: 450px;
+}
+
+.td_selected {
+    background-color: #abbee3;
+}
+.col1_small {
+    width: 30px; /* Ширина ячейки */
+}
+.col1_first {
+    width: 250px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+.col1_latest {
+    width: 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+.col1_ordinary {
+    padding-left: 10px;
+    padding-right: 10px;
+}

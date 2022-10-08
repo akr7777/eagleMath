@@ -1,7 +1,6 @@
 import axios, {AxiosResponse} from "axios";
-import {changeParentIdThunk, IdFiledType} from "../features/categoriesSlice";
+import {IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
-import {makeUserAsUser} from "../features/usersSlice";
 import {NoteType} from "../features/dashboardSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
@@ -62,12 +61,20 @@ export const ContentAPI = {
     changeParentId: (contentId: IdFiledType, newParentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/changeParentId', {contentId, newParentId});
     },
+}
 
+export const NotesAPI = {
     setNotes: (userId: IdFiledType, notes: NoteType[]):Promise<AxiosResponse> => {
         return instance.post('notes/setNotes', {userId, notes});
     },
     getNotes: (userId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('notes/getNotes', {userId});
+    },
+    changeNoteStatus: (userId: IdFiledType, noteId: IdFiledType, newStatus: boolean):Promise<AxiosResponse> => {
+        return instance.post('notes/changeNoteStatus', {userId, noteId, newStatus});
+    },
+    deleteNote: (userId: IdFiledType, noteId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('notes/deleteNote', {userId, noteId});
     },
 }
 

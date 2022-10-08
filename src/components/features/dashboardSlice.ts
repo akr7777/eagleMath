@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
-import {ContentAPI} from "../api/api";
+import {ContentAPI, NotesAPI} from "../api/api";
 import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
 import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 
@@ -38,9 +38,27 @@ export const getFavoritesThunk = createAsyncThunk(
 );
 
 export const getNotesThunk = createAsyncThunk(
-    'dashboard/getNotes',
+    'dashboard/getNotesThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.getNotes(userId);
+        const res = await NotesAPI.getNotes(userId);
+        return res.data;
+    }
+);
+
+type ChangeNoteStatusType = { userId: IdFiledType, noteId: IdFiledType, newStatus: boolean }
+export const changeNoteStatusThunk = createAsyncThunk(
+    'dashboard/changeNoteStatusThunk',
+    async (data: ChangeNoteStatusType, {rejectWithValue, dispatch}) => {
+        const res = await NotesAPI.changeNoteStatus(data.userId, data.noteId, data.newStatus);
+        return res.data;
+    }
+);
+
+type DeleteNoteDataType = { userId: IdFiledType, noteId: IdFiledType }
+export const deleteNoteThunk = createAsyncThunk(
+    'dashboard/deleteNoteThunk',
+    async (data: DeleteNoteDataType, {rejectWithValue, dispatch}) => {
+        const res = await NotesAPI.deleteNote(data.userId, data.noteId);
         return res.data;
     }
 );
@@ -49,7 +67,7 @@ type SetNotesDataType = {userId: IdFiledType, notes: NoteType[]}
 export const setNotesThunk = createAsyncThunk(
     'dashboard/setNotes',
     async (data: SetNotesDataType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.setNotes(data.userId, data.notes);
+        const res = await NotesAPI.setNotes(data.userId, data.notes);
         return res.data;
     }
 );
@@ -150,6 +168,39 @@ export const dashboardSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(setNotesThunk.rejected, (state: DashboardStateType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(changeNoteStatusThunk.pending, (state: DashboardStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(changeNoteStatusThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            notes: Array<NoteType>,
+            resultCode: number
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success && action.payload.notes.length > 0) {
+                state.notes = [...action.payload.notes];
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(changeNoteStatusThunk.rejected, (state: DashboardStateType) => {
+            state.isLoading = false;
+        })
+
+
+        builder.addCase(deleteNoteThunk.pending, (state: DashboardStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(deleteNoteThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            notes: Array<NoteType>,
+            resultCode: number
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success && action.payload.notes.length > 0) {
+                state.notes = [...action.payload.notes];
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(deleteNoteThunk.rejected, (state: DashboardStateType) => {
             state.isLoading = false;
         })
 
