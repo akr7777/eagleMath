@@ -9,11 +9,12 @@ import {
 import React, {ChangeEvent} from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
-import CancelButton2 from "./cancel-button-2";
+import ButtonCancel2 from "./button-cancel-2";
 import {initNewChapter} from "../Content";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATHS} from "../../AppBar/AppBar";
 import reassignContentIndexes from "./reassign-content-indexes";
+import OkButton2 from "./button-ok-2";
 
 const NewChapterTitle = () => {
     const dispatch = useAppDispatch();
@@ -28,12 +29,11 @@ const NewChapterTitle = () => {
         dispatch(changeNewChapterContent(e.currentTarget.value));
     }
 
-    function addToContent() {
-        //dispatch(changeContent(reassignContentIndexes(content, newChapter, index)));
+    /*function addToContent() {
         dispatch(setContentThunk({content: reassignContentIndexes(content, newChapter, index), contentId: contentId}));
         dispatch(newChapterChange(initNewChapter));
         navigate(PATHS.content + "/" + contentId);
-    }
+    }*/
 
     return <div className={s1.someDiv}>
         {!isAdmin && <Navigate to={PATHS.content + "/" + contentId}/>}
@@ -45,13 +45,16 @@ const NewChapterTitle = () => {
                    onChange={(e) => changeNewContent(e)}
         />
 
-        <div>
-            <Button variant={'outlined'}
-                    onClick={() => addToContent()}>
+        <div className={s1.Ok_Cancel_Buttons}>
+            {/*<Button variant={'outlined'}
+                    onClick={() => addToContent()}
+                    color="success"
+            >
                 ОК
-            </Button>
+            </Button>*/}
+            <OkButton2/>
 
-            <CancelButton2/>
+            <ButtonCancel2/>
         </div>
 
     </div>

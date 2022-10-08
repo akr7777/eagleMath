@@ -43,3 +43,24 @@
     flex-direction: row;
     gap: 30px;
 }
+
+.border_div {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    border: black 2px solid;
+    justify-content: center;
+    align-items: center;
+}
+.innerHeadDiv {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.Ok_Cancel_Buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 35px;
+}
+.ok_cancel_button_style {
+    width: 120px;
+}

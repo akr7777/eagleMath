@@ -2,7 +2,7 @@ import s1 from "../content.module.css";
 import Button from "@mui/material/Button";
 import React from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
-import CancelButton2 from "./cancel-button-2";
+import ButtonCancel2 from "./button-cancel-2";
 import Typography from "@mui/material/Typography";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATHS} from "../../AppBar/AppBar";
@@ -54,7 +54,7 @@ const NewChapterImage = () => {
         </label>
 
         {/*<Button variant={'contained'}>Загрузите картинку</Button>*/}
-        <CancelButton2/>
+        <ButtonCancel2/>
     </div>
 }
 

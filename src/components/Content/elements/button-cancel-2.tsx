@@ -6,8 +6,9 @@ import {RootState, useAppDispatch} from "../../../store/store";
 import { useNavigate } from "react-router-dom";
 import {useSelector} from "react-redux";
 import {PATHS} from "../../AppBar/AppBar";
+import s from "../content.module.css";
 
-const CancelButton2 = () => {
+const ButtonCancel2 = () => {
     const dispatch = useAppDispatch();
     const newChapter: ContentType = useSelector((state: RootState) => state.content.newChapter);
     const contentId = newChapter.contentId;
@@ -20,7 +21,11 @@ const CancelButton2 = () => {
 
     return <Button variant={'outlined'}
                    onClick={() => CancelClickHandler()}
-    >Отмена</Button>
+                   color={"error"}
+                   className={s.ok_cancel_button_style}
+    >
+        Отмена
+    </Button>
 }
 
-export default CancelButton2;
+export default ButtonCancel2;

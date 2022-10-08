@@ -3,7 +3,6 @@ import Container from "@mui/material/Container";
 import {RootState, useAppDispatch} from "../../store/store";
 import {
     baseContentImageUrl,
-    changeContent,
     ContentType,
     getContentThunk,
     newChapterChange,
@@ -19,6 +18,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {useNavigate} from "react-router-dom";
 import {changeNewChapterIndex} from "../features/contentSlice";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import ContentHead from "./elements/content-head";
 
 export const initNewChapter: ContentType = {
     contentId: '',
@@ -64,16 +64,12 @@ const Content = () => {
         }
     }
 
-    /*function saveContent() {
-        if (contentId)
-            dispatch(setContentThunk({content: content, contentId: contentId}));
-    }*/
-
     return <>
         {
             isLoading
                 ? <Preloader/>
                 : <Container className={s.wrapped_div}>
+                    <ContentHead/>
                     {/*<Typography variant={'h4'}>Содержание:</Typography>*/}
                     {
                         content.map((el, indexArr) => {

@@ -5,7 +5,7 @@ import React from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import {initNewChapter} from "../Content";
-import CancelButton2 from "./cancel-button-2";
+import ButtonCancel2 from "./button-cancel-2";
 import s1 from "../content.module.css";
 import {Navigate, useParams} from "react-router-dom";
 import {PATHS} from "../../AppBar/AppBar";
@@ -34,7 +34,7 @@ const NewChapterTypeOptions = () => {
             </Button>
         </div>
         <div className={s1.someDiv2}>
-            <CancelButton2/>
+            <ButtonCancel2/>
             {/*<Button variant={'outlined'}
                     onClick={() => dispatch(newChapterChange(initNewChapter))}
             >Отмена</Button>*/}
