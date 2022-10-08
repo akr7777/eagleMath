@@ -76,6 +76,12 @@ export const NotesAPI = {
     deleteNote: (userId: IdFiledType, noteId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('notes/deleteNote', {userId, noteId});
     },
+    changeNoteTitle: (userId: IdFiledType, noteId: IdFiledType, newTextTitleValue: string):Promise<AxiosResponse> => {
+        return instance.post('notes/changeNoteTitle', {userId, noteId, newTextTitleValue});
+    },
+    changeNoteText: (userId: IdFiledType, noteId: IdFiledType, newTextTitleValue: string):Promise<AxiosResponse> => {
+        return instance.post('notes/changeNoteText', {userId, noteId, newTextTitleValue});
+    },
 }
 
 export const CategoriesAPI = {

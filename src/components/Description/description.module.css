@@ -3,9 +3,6 @@
     flex-direction: column;
     gap: 20px;
     min-height: 700px;
-    /*display: grid;
-    grid-template-columns: 1fr;
-    grid-row-gap: 30px;*/
 
     horiz-align: center;
     align-items: center;
@@ -44,8 +41,6 @@
 }
 
 .description {
-    /*align-self: center;
-    text-align: center;*/
     white-space: pre-line;
     margin-top: 10px;
 }

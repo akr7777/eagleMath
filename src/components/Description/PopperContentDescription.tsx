@@ -4,7 +4,6 @@ import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-//import {setDescriptionAC, setPhotoURLAC, setTitleAC} from "../features/authorSlice";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import s from './description.module.css';
 import {
