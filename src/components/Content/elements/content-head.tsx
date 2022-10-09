@@ -27,6 +27,7 @@ const ContentHead = () => {
     const deleteContent = () => {
         const answer = window.confirm("Удалить контент?");
         if (answer) {
+            //console.log('ContentHead / deleteContent / contentId=', contentId)
             dispatch(deleteContentThunk(contentId || ""));
             navigate(PATHS.description);
         }

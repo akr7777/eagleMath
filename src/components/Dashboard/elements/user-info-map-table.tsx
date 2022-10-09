@@ -56,7 +56,7 @@ const UserInfoMapTable = (props: UserInfoMapTablePropsType) => {
             <tbody className={s1.table_body}>
             {
                 props.notes.map(note => {
-                    return <tr onClick={() => setSelectedId(note.noteId)}>
+                    return <tr onClick={() => setSelectedId(note.noteId)} key={note.noteId}>
 
                         {/*TITLE*/}
                         <td align={"left"}

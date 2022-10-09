@@ -59,6 +59,17 @@ export const renameMaterialThunk = createAsyncThunk(
     }
 );
 
+export const addMaterialThunk = createAsyncThunk(
+    'materials/addMaterialThunk',
+    async (parentContentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.addMaterial(parentContentId);
+        dispatch(getAllMaterialsThunk());
+        dispatch(getAllTasksThunk());
+        dispatch(getAllCategoriesThunk());
+        return res.data;
+    }
+);
+
 
 export const materialsSlice = createSlice({
     name: 'materials',
@@ -91,6 +102,10 @@ export const materialsSlice = createSlice({
         builder.addCase(renameMaterialThunk.pending, (state: InitStateMaterialsType) => {state.isLoading = true})
         builder.addCase(renameMaterialThunk.fulfilled, (state: InitStateMaterialsType) => {state.isLoading = false})
         builder.addCase(renameMaterialThunk.rejected, (state: InitStateMaterialsType) => {state.isLoading = false})
+
+        builder.addCase(addMaterialThunk.pending, (state: InitStateMaterialsType) => {state.isLoading = true})
+        builder.addCase(addMaterialThunk.fulfilled, (state: InitStateMaterialsType) => {state.isLoading = false})
+        builder.addCase(addMaterialThunk.rejected, (state: InitStateMaterialsType) => {state.isLoading = false})
 
     },
 })

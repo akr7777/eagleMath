@@ -1,12 +1,12 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ContentAPI} from "../api/api";
-import {IdFiledType} from "./categoriesSlice";
+import {CategoryType, IdFiledType} from "./categoriesSlice";
 import {ResultCodesEnum} from "../common/resultCodes";
 import {useNavigate} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 
 export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
-
+export type ContentTypeVariantsTypes = "Material" | "Task" | "Category" | undefined;
 export type ContentType = {
     contentId: string,
     //index: number,
@@ -23,6 +23,7 @@ export type ContentInitStateType = {
     isLoading: boolean,
     newChapter: ContentType,
     newChapterIndex: number,
+    contentType: ContentTypeVariantsTypes,
 }
 const contentInitState:ContentInitStateType = {
     content: [],
@@ -34,6 +35,7 @@ const contentInitState:ContentInitStateType = {
         content: '',
     },
     newChapterIndex: -1,
+    contentType: undefined,
 }
 
 export const getContentThunk = createAsyncThunk(
@@ -59,6 +61,14 @@ export const deleteContentThunk = createAsyncThunk(
         return res.data;
     }
 );
+
+/*export const contentTypeThunk = createAsyncThunk(
+    'Content/contentType',
+    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.contentType(contentId);
+        return res.data;
+    }
+);*/
 
 type UploadContentImage = { file: any, fileName: string }
 export const uploadContentImage = createAsyncThunk(
@@ -142,6 +152,20 @@ export const contentSlice = createSlice({
         builder.addCase(deleteContentThunk.rejected, (state: ContentInitStateType) => {
             state.isLoading = false;
         })
+
+        /*builder.addCase(contentTypeThunk.pending, (state: ContentInitStateType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(contentTypeThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+            contentType: ContentTypeVariantsTypes,
+            resultCode: ResultCodesEnum,
+        }>) => {
+            state.contentType = action.payload.contentType;
+            state.isLoading = false;
+        })
+        builder.addCase(contentTypeThunk.rejected, (state: ContentInitStateType) => {
+            state.isLoading = false;
+        })*/
     }
 });
 

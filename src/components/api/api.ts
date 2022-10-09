@@ -64,6 +64,15 @@ export const ContentAPI = {
     deleteContent: (contentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/deleteContent', {contentId});
     },
+    contentType: (contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/getContentType', {contentId});
+    },
+    addMaterial: (parentContentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/addMaterial', {parentContentId});
+    },
+    addTask: (parentContentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/addTask', {parentContentId});
+    },
 }
 
 export const NotesAPI = {

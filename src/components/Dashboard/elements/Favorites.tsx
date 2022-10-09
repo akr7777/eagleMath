@@ -55,6 +55,7 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
                                                 contentId={item.contentId}
                                                 label={item.label}
                                                 isMaterial={true}
+                                                contentType={item.type}
                                             />
 
                                         </div>

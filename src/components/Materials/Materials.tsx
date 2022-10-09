@@ -41,6 +41,7 @@ const Materials = () => {
                         <Tree5
                             categories={categories}
                             materials={materials}
+                            contentType={"M"}
                         />
                     </div>
 

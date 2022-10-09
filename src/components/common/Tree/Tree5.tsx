@@ -12,7 +12,7 @@ import {useSelector} from "react-redux";
 import {TaskType} from "../../features/tasksSlice";
 import {addToShownCats, deleteFromShownCats} from "../../features/categoriesSlice";
 import {CategoryType} from "../../features/categoriesSlice";
-import Line from "../line";
+import Line, {contentTypeType} from "../line";
 
 export type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
 
@@ -51,12 +51,15 @@ type DrawTreePropsType = {
 
     plusIconClick: (id: IdFiledType) => void,
     minusIconClick: (id: IdFiledType) => void,
+
+    contentType: contentTypeType,
 }
 const DrawTree: React.FC<DrawTreePropsType> = ({
                                                    items, isShowArr,
                                                    selectedId, setSelected,
                                                    materialsIds,
                                                    plusIconClick, minusIconClick,
+                                                   contentType
                                                }) => {
 
     return <div className={s.treeLeaf}>
@@ -84,6 +87,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                             contentId={item.id}
                             label={item.label}
                             isMaterial={isMaterial}
+                            contentType={contentType}
                         />
 
                     </div>
@@ -97,6 +101,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                 plusIconClick: plusIconClick,
                                 minusIconClick: minusIconClick,
                                 setSelected: setSelected,
+                                contentType: contentType,
                             })
                         }
                     </div>
@@ -109,6 +114,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
 type TreePropsType = {
     categories: Array<CategoryType>,
     materials: Array<MaterialType>,
+    contentType: contentTypeType,
 }
 export const Tree5: React.FC<TreePropsType> = (props) => {
     const dispatch = useAppDispatch();
@@ -136,6 +142,7 @@ export const Tree5: React.FC<TreePropsType> = (props) => {
                 plusIconClick: plusIconClick,
                 minusIconClick: minusIconClick,
                 setSelected: setSelectedId,
+                contentType: props.contentType,
             })
         }
     </div>

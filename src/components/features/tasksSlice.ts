@@ -3,6 +3,8 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import {ContentAPI} from "../api/api";
 //import {addMaterialToFavoritesThunk, deleteMaterialFromFavoritesThunk} from "./materialsSlice";
 import {useAppDispatch} from "../../store/store";
+import {getAllCategoriesThunk} from "./categoriesSlice";
+import {getAllMaterialsThunk} from "./materialsSlice";
 //import {CategoryType} from "./categoriesSlice";
 
 export type IdFiledType = string | number;
@@ -66,6 +68,17 @@ export const deleteTaskFromFavoritesThunk = createAsyncThunk(
     }
 );
 
+export const addTaskThunk = createAsyncThunk(
+    'materials/addTaskThunk',
+    async (parentContentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.addTask(parentContentId);
+        dispatch(getAllMaterialsThunk());
+        dispatch(getAllTasksThunk());
+        dispatch(getAllCategoriesThunk());
+        return res.data;
+    }
+);
+
 export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
@@ -93,7 +106,6 @@ export const tasksSlice = createSlice({
         })
         builder.addCase(getAllTasksThunk.rejected, (state: InitStateTasksType) => {
             state.isLoading = false;
-            console.log('extraReducers / getAllMaterials.rejected');
         })
 
         builder.addCase(getFavoritesThunk.pending, (state: InitStateTasksType) => {
@@ -128,6 +140,10 @@ export const tasksSlice = createSlice({
         builder.addCase(deleteTaskFromFavoritesThunk.rejected, (state: InitStateTasksType) => {
             state.isLoading = false;
         })
+
+        builder.addCase(addTaskThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
+        builder.addCase(addTaskThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<Array<IdFiledType>>) => {state.isLoading = false;})
+        builder.addCase(addTaskThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
     },
 })
 

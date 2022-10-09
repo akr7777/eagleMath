@@ -8,10 +8,6 @@ import {Tree5} from "../common/Tree/Tree5";
 import {
     addTaskToFavoritesThunk,
     deleteTaskFromFavoritesThunk,
-
-    addIdToFavoritesTasksAC,
-    deleteIdFromFavoritesTasksAC,
-
     getAllTasksThunk,
     getFavoritesThunk,
     TaskType
@@ -65,9 +61,7 @@ export const Tasks = () => {
                         <Tree5
                             categories={categories}
                             materials={tasks}
-                            //addToFavorite={addToFavorite}
-                            //deleteFromFavorite={deleteFromFavorite}
-                            //favoritesIds={favoritesIds}
+                            contentType={"T"}
                         />
                     </div>
 
