@@ -59,6 +59,15 @@ export const deleteFromFavoritesThunk = createAsyncThunk(
     }
 );
 
+export const addCategoryThunk = createAsyncThunk(
+    'categories/addCategoryThunk',
+    async (parentid:IdFiledType, {rejectWithValue, dispatch}) => {
+        //const {userId, contentId} = content;
+        const res = await ContentAPI.addCategory(parentid);
+        return res.data;
+    }
+);
+
 type ChangeParentIdType = {contentId: IdFiledType, newParentId: IdFiledType}
 export const changeParentIdThunk = createAsyncThunk(
     'categories/changeParentIdThunk',
@@ -147,6 +156,20 @@ export const categoriesSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(changeParentIdThunk.rejected, (state: InitStatecategoryType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(addCategoryThunk.pending, (state: InitStatecategoryType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(addCategoryThunk.fulfilled, (state: InitStatecategoryType, action: PayloadAction<{
+            categories: Array<CategoryType>,
+            resultCode: number
+        }>) => {
+            state.categories = [...action.payload.categories];
+            state.isLoading = false;
+        })
+        builder.addCase(addCategoryThunk.rejected, (state: InitStatecategoryType) => {
             state.isLoading = false;
         })
     },

@@ -11,8 +11,13 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AddIcon from '@mui/icons-material/Add';
-import React, {ChangeEvent, useEffect, useState} from "react";
-import {addToFavoritesThunk, deleteFromFavoritesThunk, IdFiledType} from "../features/categoriesSlice";
+import React, {ChangeEvent, useState} from "react";
+import {
+    addCategoryThunk,
+    addToFavoritesThunk,
+    deleteFromFavoritesThunk, getAllCategoriesThunk,
+    IdFiledType
+} from "../features/categoriesSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -63,7 +68,8 @@ const Line = (props: LinePropsType) => {
     const deleteCategory = () => {}
 
     const addCategoryClickHandler = () => {
-        //dispatch(addCategoryThunk(props.contentId));
+        dispatch(addCategoryThunk(props.contentId));
+        dispatch(getAllCategoriesThunk());
     }
 
     const addMaterialOrTask = () => {
@@ -125,18 +131,17 @@ const Line = (props: LinePropsType) => {
             />
         }
 
-        {/*Move to other folder*/}
-        {/*{
-            isAdmin && <DriveFileMoveIcon
-                cursor={'pointer'}
-            />
-        }*/}
+        {/*Move to other folder (category)*/}
         { isAdmin && <DraggableDialog contentId={props.contentId}/> }
 
+        {/*delete category*/}
         { isAdmin && !props.isMaterial && <Typography>DELETE CATEGORY!!!!!</Typography>}
-        {/*{ isAdmin && !props.isMaterial && <Typography>ADD CONTENT!!!!!</Typography>}*/}
+
+        {/*add Material Or Task*/}
         { isAdmin && !props.isMaterial && <AddIcon cursor={'pointer'} onClick={addMaterialOrTask}/>}
-        ADD_CATEGORY!!!{ isAdmin && !props.isMaterial && <LibraryAddIcon cursor={'pointer'} onClick={() => {}}/>}
+
+        {/*Add new category*/}
+        { isAdmin && !props.isMaterial && <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>}
 
 
     </>

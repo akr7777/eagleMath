@@ -73,6 +73,9 @@ export const ContentAPI = {
     addTask: (parentContentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/addTask', {parentContentId});
     },
+    addCategory: (parentContentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/addCategory', {parentContentId});
+    },
 }
 
 export const NotesAPI = {
