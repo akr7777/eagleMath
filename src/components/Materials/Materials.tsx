@@ -8,12 +8,14 @@ import {Tree5} from "../common/Tree/Tree5";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
 import {addToFavoritesThunk, deleteFromFavoritesThunk, getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
+import MaterialTaskHead from "../common/material-task-head";
 
 const Materials = () => {
 
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const isLoading = useSelector((state: RootState) => state.materials.isLoading);
     let dispatch = useAppDispatch();
+
     useEffect(() => {
         dispatch(getAllCategoriesThunk());
         dispatch(getAllMaterialsThunk());
@@ -38,9 +40,13 @@ const Materials = () => {
                     </div>
 
                     <div className={s.someDiv1}>
+                        <MaterialTaskHead/>
+                    </div>
+
+                    <div className={s.someDiv1}>
                         <Tree5
-                            categories={categories}
-                            materials={materials}
+                            //categories={categories}
+                            //materials={materials}
                             contentType={"M"}
                         />
                     </div>

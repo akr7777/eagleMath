@@ -76,6 +76,9 @@ export const ContentAPI = {
     addCategory: (parentContentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/addCategory', {parentContentId});
     },
+    deleteCategory: (contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/deleteCategory', {contentId});
+    },
 }
 
 export const NotesAPI = {

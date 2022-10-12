@@ -14,6 +14,7 @@ import {
 } from "../features/tasksSlice";
 import {CategoryType, getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
 import Preloader from "../common/Preloader";
+import MaterialTaskHead from "../common/material-task-head";
 
 export const Tasks = () => {
 
@@ -27,21 +28,23 @@ export const Tasks = () => {
         dispatch(getFavoritesThunk(userId));
     }, [userId]);
 
-    const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
-    const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
-    const tasks: TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
+    //const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
+
+    /*const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
+    const tasks: TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];*/
+
     //const favoritesIds = useSelector((state: RootState) => state.tasks.favoriteTasksIds);
-    const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
+    //const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
 
-    const addToFavorite = (contentId: IdFiledType) => {
+    /*const addToFavorite = (contentId: IdFiledType) => {
         //dispatch(addIdToFavoritesTasksAC(contentId));
         dispatch(addTaskToFavoritesThunk({userId, contentId}))
     }
     const deleteFromFavorite = (contentId: IdFiledType) => {
         //dispatch(deleteIdFromFavoritesTasksAC(contentId));
         dispatch(deleteTaskFromFavoritesThunk({userId, contentId}))
-    }
+    }*/
 
     return <>
         {
@@ -58,9 +61,13 @@ export const Tasks = () => {
                     </div>
 
                     <div className={s.someDiv1}>
+                        <MaterialTaskHead/>
+                    </div>
+
+                    <div className={s.someDiv1}>
                         <Tree5
-                            categories={categories}
-                            materials={tasks}
+                            /*categories={categories} вот это убрать внутрь tree
+                            materials={tasks} и это тоже: можно получить из contentType,который ниже*/
                             contentType={"T"}
                         />
                     </div>

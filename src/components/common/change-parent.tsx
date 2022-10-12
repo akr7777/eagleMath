@@ -40,7 +40,7 @@ const DrawingCategoriesTree = (nodeData: Array<CategoryLongType>, selected: IdFi
     </>
 }
 
-function PaperComponent(props: PaperProps) {
+export function PaperComponent1(props: PaperProps) {
     return (
         <Draggable
             handle="#draggable-dialog-title"
@@ -79,10 +79,15 @@ export default function DraggableDialog(props: DraggableDialogPropsType) {
                 onClick={handleClickOpen}
                 cursor={'pointer'}
             />
+
+            {/*<div onClick={handleClickOpen}>
+                <Typography>Переместить</Typography>
+            </div>*/}
+
             <Dialog
                 open={open}
                 onClose={handleClose}
-                PaperComponent={PaperComponent}
+                PaperComponent={PaperComponent1}
                 aria-labelledby="draggable-dialog-title"
             >
                 <DialogTitle style={{cursor: 'move'}} id="draggable-dialog-title">
@@ -90,6 +95,13 @@ export default function DraggableDialog(props: DraggableDialogPropsType) {
                 </DialogTitle>
                 <DialogContent>
                     {/*<DialogContentText>*/}
+
+                    <div
+                        onClick={() => setSelected("0")}
+                        className={"0" === selected ? s1.treeLine + ' ' + s1.selectedLine : s1.treeLine}
+                    >
+                        <Typography>RooT</Typography>
+                    </div>
 
                     {DrawingCategoriesTree(nodeData, selected, setSelected)}
 

@@ -11,10 +11,11 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AddIcon from '@mui/icons-material/Add';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import React, {ChangeEvent, useState} from "react";
 import {
     addCategoryThunk,
-    addToFavoritesThunk,
+    addToFavoritesThunk, deleteCategoryThunk,
     deleteFromFavoritesThunk, getAllCategoriesThunk,
     IdFiledType
 } from "../features/categoriesSlice";
@@ -65,7 +66,13 @@ const Line = (props: LinePropsType) => {
         setIsEditContentName(false);
     }
 
-    const deleteCategory = () => {}
+    const deleteCategory = () => {
+        const answer = window.confirm("Удалить категорию "+ props.label +"?");
+        if (answer) {
+            dispatch(deleteCategoryThunk(props.contentId));
+            dispatch(getAllCategoriesThunk());
+        }
+    }
 
     const addCategoryClickHandler = () => {
         dispatch(addCategoryThunk(props.contentId));
@@ -87,7 +94,6 @@ const Line = (props: LinePropsType) => {
                     <label>Новое название: </label>
                     <div className={s1.some_div_1}>
                         <TextField
-                            //label="Новое название:"
                             variant="outlined"
                             value={contentName}
                             onChange={(e) => onContentNameChange(e)}
@@ -124,25 +130,19 @@ const Line = (props: LinePropsType) => {
         }
 
         {/*Edit this material. For admin only*/}
-        {
-            isAdmin && <ModeEditIcon
-                onClick={ () => setIsEditContentName(true) }
-                cursor={'pointer'}
-            />
-        }
+        { isAdmin && <ModeEditIcon onClick={ () => setIsEditContentName(true) } cursor={'pointer'}/> }
 
         {/*Move to other folder (category)*/}
         { isAdmin && <DraggableDialog contentId={props.contentId}/> }
 
         {/*delete category*/}
-        { isAdmin && !props.isMaterial && <Typography>DELETE CATEGORY!!!!!</Typography>}
+        { isAdmin && !props.isMaterial && <DeleteSweepIcon cursor={'pointer'} onClick={deleteCategory}/>}
 
         {/*add Material Or Task*/}
         { isAdmin && !props.isMaterial && <AddIcon cursor={'pointer'} onClick={addMaterialOrTask}/>}
 
         {/*Add new category*/}
         { isAdmin && !props.isMaterial && <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>}
-
 
     </>
 }

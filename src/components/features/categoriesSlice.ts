@@ -17,6 +17,8 @@ type InitStatecategoryType = {
     isLoading: boolean,
     isShownCats: Array<IdFiledType>,
     favoriteIds: Array<IdFiledType>,
+    selectedId: IdFiledType,
+    showMenuId: IdFiledType,
 }
 let initialState: InitStatecategoryType = {
     categories: [
@@ -26,6 +28,8 @@ let initialState: InitStatecategoryType = {
     isLoading: false,
     isShownCats:[],
     favoriteIds:[],
+    selectedId: "-1",
+    showMenuId: "-1",
 }
 
 export const getAllCategoriesThunk = createAsyncThunk(
@@ -62,8 +66,15 @@ export const deleteFromFavoritesThunk = createAsyncThunk(
 export const addCategoryThunk = createAsyncThunk(
     'categories/addCategoryThunk',
     async (parentid:IdFiledType, {rejectWithValue, dispatch}) => {
-        //const {userId, contentId} = content;
         const res = await ContentAPI.addCategory(parentid);
+        return res.data;
+    }
+);
+
+export const deleteCategoryThunk = createAsyncThunk(
+    'categories/deleteCategoryThunk',
+    async (contentId:IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.deleteCategory(contentId);
         return res.data;
     }
 );
@@ -85,21 +96,12 @@ export const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
-        setAllCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
-            state.categories = action.payload;
-        },
-        addIdToFavoritesCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteIds = [...state.favoriteIds, action.payload]
-        },
-        deleteIdFromFavoritesCategoriesAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteIds = state.favoriteIds.filter(el => String(el) !== String(action.payload))
-        },
         addToShownCats: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
             state.isShownCats.push(action.payload);
         },
         deleteFromShownCats: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
             state.isShownCats = state.isShownCats.filter(item => item !== action.payload)
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getAllCategoriesThunk.fulfilled, (state: InitStatecategoryType, action: PayloadAction<CategoryType[]>) => {
@@ -108,7 +110,6 @@ export const categoriesSlice = createSlice({
         })
         builder.addCase(getAllCategoriesThunk.rejected, (state: InitStatecategoryType)=>{
             state.isLoading = false;
-            //console.log('extraReducers / getAllMaterials.rejected');
         })
         builder.addCase(getAllCategoriesThunk.pending, (state: InitStatecategoryType)=>{
             state.isLoading = true;
@@ -163,23 +164,33 @@ export const categoriesSlice = createSlice({
             state.isLoading = true;
         })
         builder.addCase(addCategoryThunk.fulfilled, (state: InitStatecategoryType, action: PayloadAction<{
-            categories: Array<CategoryType>,
-            resultCode: number
+            categories: CategoryType[], resultCode: number
         }>) => {
-            state.categories = [...action.payload.categories];
+            //state.categories = [...action.payload.categories];
             state.isLoading = false;
         })
         builder.addCase(addCategoryThunk.rejected, (state: InitStatecategoryType) => {
+            state.isLoading = false;
+        })
+
+        builder.addCase(deleteCategoryThunk.pending, (state: InitStatecategoryType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(deleteCategoryThunk.fulfilled, (state: InitStatecategoryType, action: PayloadAction<{
+            categories: CategoryType[], resultCode: number
+        }>) => {
+            //state.categories = [...action.payload.categories];
+            state.isLoading = false;
+        })
+        builder.addCase(deleteCategoryThunk.rejected, (state: InitStatecategoryType) => {
             state.isLoading = false;
         })
     },
 })
 
 export const {
-    addIdToFavoritesCategoriesAC,
-    deleteIdFromFavoritesCategoriesAC,
     addToShownCats,
-    deleteFromShownCats
+    deleteFromShownCats,
 } = categoriesSlice.actions;
 
 

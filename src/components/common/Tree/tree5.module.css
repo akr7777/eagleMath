@@ -1,11 +1,21 @@
 
 .wrappedDiv {
-    background-color: darkgrey;
     border-radius: 10px;
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
 }
+.menu_wrap_div2 {
+    display: flex;
+    flex-direction: row;
+    background-color: grey;
+    border-radius: 10px;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+}
+
 .leafAndChildren {
     width: 100%;
 }
@@ -39,4 +49,28 @@
 .navLink {
     color: #312f2f;
     text-decoration: none;
+}
+
+.menu_wrap_div {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    gap: 5px;
+    /*background-color: red;*/
+}
+.menu_div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    /*background-color: green;*/
+}
+.menu_div:hover {
+    background-color: cornflowerblue;
+    border-radius: 5px;
+}
+.cursor_div {
+    cursor: pointer;
 }

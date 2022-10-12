@@ -7,11 +7,11 @@
     margin-bottom: 20px;
     min-height: 700px;
 
-    justify-content: center;
+    /*justify-content: center;*/
     /*align-items: center;*/
-    align-content: center;
+   /* align-content: center;*/
     text-align: center;
-    horiz-align: center;
+    /*horiz-align: center;*/
 }
 
 
@@ -32,4 +32,17 @@
 .preloaderImage {
     width: 100px;
     height: 100px;
+}
+
+.mat_task_div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border: black 1px solid;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.mat_task_inner_div {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
