@@ -4,7 +4,7 @@ import s from "./Tree/tree5.module.css";
 import s1 from "./line.module.css";
 import TextField from '@mui/material/TextField';
 import Typography from "@mui/material/Typography";
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import ReadThisMaterial from "@mui/icons-material/AutoStories";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -17,7 +17,7 @@ import {
     addCategoryThunk,
     addToFavoritesThunk, deleteCategoryThunk,
     deleteFromFavoritesThunk, getAllCategoriesThunk,
-    IdFiledType
+    IdFiledType, setEditNameIdAC, setNewContentName
 } from "../features/categoriesSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
@@ -49,21 +49,28 @@ const Line = (props: LinePropsType) => {
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
-    const [contentName, setContentName] = useState<string>(props.label);
-    const [isEditContentName, setIsEditContentName] = useState<boolean>(false)
+    //const [contentName, setContentName] = useState<string>(props.label);
+    //const [isEditContentName, setIsEditContentName] = useState<boolean>(false);
+    const contentName = useSelector((state:RootState) => state.categories.newContentName);
+    const editNameId = useSelector((state: RootState) => state.categories.editNameId);
 
-    const onContentNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setContentName(e.currentTarget.value);
+    const onContentNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+        dispatch(setNewContentName(e.currentTarget.value));//setContentName(e.currentTarget.value);
+    const editContentTumbler = () => {
+        dispatch(setEditNameIdAC(props.contentId));
+        dispatch(setNewContentName(props.label));
     }
-
     const cancelEditing = () => {
-        setContentName(props.label);
-        setIsEditContentName(false);
+        //setContentName(props.label);
+        //setIsEditContentName(false);
+        dispatch(setNewContentName(props.label));
+        dispatch(setEditNameIdAC("-1"));
     }
-
     const changeContentName = () => {
         dispatch(renameMaterialThunk({contentId: props.contentId, newName: contentName}));
-        setIsEditContentName(false);
+        //setIsEditContentName(false);
+        //dispatch(setEditNameIdAC(props.contentId));
+        dispatch(setEditNameIdAC("-1"));
     }
 
     const deleteCategory = () => {
@@ -89,7 +96,8 @@ const Line = (props: LinePropsType) => {
     return <>
         {/*Label*/}
         {
-            isEditContentName
+            /*isEditContentName*/
+            editNameId === props.contentId
                 ? <div className={s1.editable_div}>
                     <label>Новое название: </label>
                     <div className={s1.some_div_1}>
@@ -130,7 +138,8 @@ const Line = (props: LinePropsType) => {
         }
 
         {/*Edit this material. For admin only*/}
-        { isAdmin && <ModeEditIcon onClick={ () => setIsEditContentName(true) } cursor={'pointer'}/> }
+       {/* { isAdmin && <ModeEditIcon onClick={ () => setIsEditContentName(true) } cursor={'pointer'}/> } */}
+        { isAdmin && <ModeEditIcon onClick={editContentTumbler} cursor={'pointer'}/> }
 
         {/*Move to other folder (category)*/}
         { isAdmin && <DraggableDialog contentId={props.contentId}/> }

@@ -19,6 +19,9 @@ type InitStatecategoryType = {
     favoriteIds: Array<IdFiledType>,
     selectedId: IdFiledType,
     showMenuId: IdFiledType,
+
+    editNameId: IdFiledType,
+    newContentName: string,
 }
 let initialState: InitStatecategoryType = {
     categories: [
@@ -30,6 +33,9 @@ let initialState: InitStatecategoryType = {
     favoriteIds:[],
     selectedId: "-1",
     showMenuId: "-1",
+
+    editNameId: "-1",
+    newContentName: "",
 }
 
 export const getAllCategoriesThunk = createAsyncThunk(
@@ -101,6 +107,13 @@ export const categoriesSlice = createSlice({
         },
         deleteFromShownCats: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
             state.isShownCats = state.isShownCats.filter(item => item !== action.payload)
+        },
+        setEditNameIdAC: (state: InitStatecategoryType, action: PayloadAction<IdFiledType>) => {
+            //console.log('catSlice / setEditNameIdAC / action=', action.payload)
+            state.editNameId = action.payload;
+        },
+        setNewContentName: (state: InitStatecategoryType, action: PayloadAction<string>) => {
+            state.newContentName = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -191,6 +204,8 @@ export const categoriesSlice = createSlice({
 export const {
     addToShownCats,
     deleteFromShownCats,
+    setEditNameIdAC,
+    setNewContentName
 } = categoriesSlice.actions;
 
 

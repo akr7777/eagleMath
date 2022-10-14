@@ -1,10 +1,11 @@
 import {configureStore, ThunkDispatch, AnyAction} from "@reduxjs/toolkit";
+import {useDispatch} from "react-redux";
+
 import authorSlice from "../components/features/authorSlice";
 import authSlice from "../components/features/authSlice";
 import contactsSlice from "../components/features/contactsSlice";
 import tasksSlice from "../components/features/tasksSlice";
 import materialsSlice from "../components/features/materialsSlice";
-import {useDispatch} from "react-redux";
 import categoriesSlice from "../components/features/categoriesSlice";
 import dashboardSlice from "../components/features/dashboardSlice";
 import contentSlice from "../components/features/contentSlice";

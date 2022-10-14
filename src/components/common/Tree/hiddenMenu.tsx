@@ -6,7 +6,7 @@ import {
     addToFavoritesThunk,
     deleteCategoryThunk,
     deleteFromFavoritesThunk, getAllCategoriesThunk,
-    IdFiledType
+    IdFiledType, setEditNameIdAC, setNewContentName
 } from "../../features/categoriesSlice";
 import {contentTypeType} from "../line";
 import {NavLink} from "react-router-dom";
@@ -45,22 +45,27 @@ const HiddenMenu = (props: MouseLineClickType) => {
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
-    const [contentName, setContentName] = useState<string>(props.label);
-    const [isEditContentName, setIsEditContentName] = useState<boolean>(false)
+    const contentName = useSelector((state:RootState) => state.categories.newContentName);
+    /*const editNameId = useSelector((state: RootState) => state.categories.editNameId);
 
-    const onContentNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setContentName(e.currentTarget.value);
+    const onContentNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+        dispatch(setNewContentName(e.currentTarget.value));//setContentName(e.currentTarget.value);*/
+    const editContentTumbler = () => {
+        dispatch(setEditNameIdAC(props.contentId));
+        dispatch(setNewContentName(props.label));
     }
-
-    const cancelEditing = () => {
-        setContentName(props.label);
-        setIsEditContentName(false);
+    /*const cancelEditing = () => {
+        //setContentName(props.label);
+        //setIsEditContentName(false);
+        dispatch(setNewContentName(props.label));
+        dispatch(setEditNameIdAC("-1"));
     }
-
     const changeContentName = () => {
         dispatch(renameMaterialThunk({contentId: props.contentId, newName: contentName}));
-        setIsEditContentName(false);
-    }
+        //setIsEditContentName(false);
+        //dispatch(setEditNameIdAC(props.contentId));
+        dispatch(setEditNameIdAC("-1"));
+    }*/
 
     const deleteCategory = () => {
         dispatch(deleteCategoryThunk(props.contentId));
@@ -78,138 +83,112 @@ const HiddenMenu = (props: MouseLineClickType) => {
         if (props.contentType === "T")
             dispatch(addTaskThunk(props.contentId));
     }
-    /* const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-
-     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-         setAnchorEl(event.currentTarget);
-     };
-
-     const handleClose = () => {
-         setAnchorEl(null);
-     };
-
-     const open = Boolean(anchorEl);
-     const id = open ? 'simple-popover' : undefined;*/
 
     return (
-        <div>
-            {/*<Button aria-describedby={id} variant="contained" onClick={handleClick}>
-                    Open Popover
-                </Button>*/}
-            {/*<Popover
-                //id={props.id}
-                open={props.open}
-                anchorEl={props.anchorEl}
-                onClose={props.handleClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
-                }}
-            >*/}
-                <div className={s.menu_wrap_div2}>
-                    {/*Read this material ICON*/}
-                    {
-                        props.isMaterial && <div className={s.menu_div}>
-                            <NavLink to={'/Content/' + props.contentId} className={s.navLink}>
-                                <ReadThisMaterial/>
-                            </NavLink>
-                            <NavLink to={'/Content/' + props.contentId} className={s.navLink}>
-                                <Typography>Изучить материал</Typography>
-                            </NavLink>
-                        </div>
-                    }
+        <>
+            <div className={s.menu_wrap_div2}>
+                {/*Read this material ICON*/}
+                {
+                    props.isMaterial && <div className={s.menu_div}>
+                        <NavLink to={'/Content/' + props.contentId} className={s.navLink}>
+                            <ReadThisMaterial/>
+                        </NavLink>
+                        <NavLink to={'/Content/' + props.contentId} className={s.navLink}>
+                            <Typography>Изучить материал</Typography>
+                        </NavLink>
+                    </div>
+                }
 
-                    {/*Add to favorite this material*/}
-                    {
-                        isAuth && props.isMaterial
-                            ? favoritesIds.some(el => String(el) === String(props.contentId))
-                                ? <div className={s.menu_div}>
-                                    <StarIcon
-                                        cursor={'pointer'}
-                                        onClick={() => dispatch(deleteFromFavoritesThunk({
-                                            userId: userId,
-                                            contentId: props.contentId
-                                        }))}
-                                    />
-                                    <div className={s.cursor_div}
-                                         onClick={() => dispatch(deleteFromFavoritesThunk({
-                                             userId: userId,
-                                             contentId: props.contentId
-                                         }))}>
-                                        <Typography>Удалить из избранного</Typography>
-                                    </div>
+                {/*Add to favorite this material*/}
+                {
+                    isAuth && props.isMaterial
+                        ? favoritesIds.some(el => String(el) === String(props.contentId))
+                            ? <div className={s.menu_div}>
+                                <StarIcon
+                                    cursor={'pointer'}
+                                    onClick={() => dispatch(deleteFromFavoritesThunk({
+                                        userId: userId,
+                                        contentId: props.contentId
+                                    }))}
+                                />
+                                <div className={s.cursor_div}
+                                     onClick={() => dispatch(deleteFromFavoritesThunk({
+                                         userId: userId,
+                                         contentId: props.contentId
+                                     }))}>
+                                    <Typography>Удалить из избранного</Typography>
                                 </div>
-                                : <div className={s.menu_div}>
-                                    <StarOutlineIcon
-                                        cursor={'pointer'}
-                                        onClick={() => dispatch(addToFavoritesThunk({
-                                            userId: userId,
-                                            contentId: props.contentId
-                                        }))}
-                                    />
-                                    <div className={s.cursor_div}
-                                         onClick={() => dispatch(addToFavoritesThunk({
-                                             userId: userId,
-                                             contentId: props.contentId
-                                         }))}
-                                    >
-                                        <Typography>Добавить в избранное</Typography>
-                                    </div>
+                            </div>
+                            : <div className={s.menu_div}>
+                                <StarOutlineIcon
+                                    cursor={'pointer'}
+                                    onClick={() => dispatch(addToFavoritesThunk({
+                                        userId: userId,
+                                        contentId: props.contentId
+                                    }))}
+                                />
+                                <div className={s.cursor_div}
+                                     onClick={() => dispatch(addToFavoritesThunk({
+                                         userId: userId,
+                                         contentId: props.contentId
+                                     }))}
+                                >
+                                    <Typography>Добавить в избранное</Typography>
                                 </div>
-                            : ""
-                    }
-
-                    {/*Edit this material. For admin only*/}
-                    {
-                        isAdmin && <div className={s.menu_div}>
-                            <div className={s.cursor_div}>
-                                <ModeEditIcon onClick={() => setIsEditContentName(true)} cursor={'pointer'}/>
                             </div>
-                            <div className={s.cursor_div}>
-                                <Typography onClick={() => setIsEditContentName(true)}>Редактировать</Typography>
-                            </div>
+                        : ""
+                }
+
+                {/*Edit this material. For admin only*/}
+                {
+                    isAdmin && <div className={s.menu_div}>
+                        <div className={s.cursor_div}>
+                            <ModeEditIcon onClick={editContentTumbler} cursor={'pointer'}/>
                         </div>
-                    }
-
-                    {/*Move to other folder (category)*/}
-                    {
-                        isAdmin && <div className={s.menu_div}>
-                            <DraggableDialog contentId={props.contentId}/>
-                            <Typography>Переместить</Typography>
+                        <div className={s.cursor_div}>
+                            <Typography onClick={editContentTumbler}>Редактировать</Typography>
                         </div>
-                    }
+                    </div>
+                }
 
-                    {/*delete category*/}
-                    {
-                        isAdmin && !props.isMaterial &&
-                        <div className={s.menu_div}>
-                            <DeleteSweepIcon cursor={'pointer'} onClick={deleteCategory}/>
-                            <Typography onClick={deleteCategory}>Удалить категорию</Typography>
-                        </div>
-                    }
+                {/*Move to other folder (category)*/}
+                {
+                    isAdmin && <div className={s.menu_div}>
+                        <DraggableDialog contentId={props.contentId}/>
+                        <Typography>Переместить</Typography>
+                    </div>
+                }
 
-                    {/*add Material Or Task*/}
-                    {
-                        isAdmin && !props.isMaterial &&
-                        <div className={s.menu_div}>
-                            <AddIcon cursor={'pointer'} onClick={addMaterialOrTask}/>
-                            <Typography onClick={addMaterialOrTask}>Добавить контент</Typography>
-                        </div>
-                    }
+                {/*delete category*/}
+                {
+                    isAdmin && !props.isMaterial &&
+                    <div className={s.menu_div}>
+                        <DeleteSweepIcon cursor={'pointer'} onClick={deleteCategory}/>
+                        <Typography onClick={deleteCategory}>Удалить категорию</Typography>
+                    </div>
+                }
 
-                    {/*Add new category*/}
-                    {
-                        isAdmin && !props.isMaterial &&
-                        <div className={s.menu_div}>
-                            <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>
-                            <Typography onClick={addCategoryClickHandler}>Добавить новую категорию</Typography>
-                        </div>
-                    }
+                {/*add Material Or Task*/}
+                {
+                    isAdmin && !props.isMaterial &&
+                    <div className={s.menu_div}>
+                        <AddIcon cursor={'pointer'} onClick={addMaterialOrTask}/>
+                        <Typography onClick={addMaterialOrTask}>Добавить контент</Typography>
+                    </div>
+                }
 
-                </div>
+                {/*Add new category*/}
+                {
+                    isAdmin && !props.isMaterial &&
+                    <div className={s.menu_div}>
+                        <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>
+                        <Typography onClick={addCategoryClickHandler}>Добавить новую категорию</Typography>
+                    </div>
+                }
 
-            {/*</Popover>*/}
-        </div>
+            </div>
+
+        </>
     );
 }
 
