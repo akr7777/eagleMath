@@ -23,7 +23,6 @@ const TestContent = () => {
     return <div className={css.test_main_div}>
         {
             test.content.map((testItem: TestContentType, index) => {
-                //const userAnswer: TestAnswersType | undefined = testAnswers.find(el => el.questionId === testItem.questionId);
                 const onAnswerButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
                     if (String(testItem.answer) === String(e.currentTarget.value))
                         dispatch(pushTestAnswerAC({

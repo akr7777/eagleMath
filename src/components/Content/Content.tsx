@@ -110,18 +110,6 @@ const Content = () => {
                     </div>
                     }
 
-                    {/*<div className={s1.someDiv}
-                    >
-                        {isAdmin && <Button
-                            variant="contained"
-                            disabled={newChapterIndex === -1}
-                            onClick={() => saveContent()}
-                        >
-                            Сохранить
-                        </Button>
-                        }
-                    </div>*/}
-
                     <TestContent/>
 
                 </Container>

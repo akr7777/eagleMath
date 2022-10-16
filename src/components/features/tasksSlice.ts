@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {ContentAPI} from "../api/api";
+import {ContentAPI, testAPI} from "../api/api";
 import {getAllCategoriesThunk, IdFiledType} from "./categoriesSlice";
 import {getAllMaterialsThunk} from "./materialsSlice";
 import {ResultCodesEnum as resultCodes} from './../common/resultCodes';
@@ -66,10 +66,32 @@ export const getFavoritesThunk = createAsyncThunk(
         return res.data;
     }
 );
+
 export const getTestThunk = createAsyncThunk(
     'tasks/getTestThunk',
     async (contentId:IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.getTests(contentId);
+        const res = await testAPI.getTests(contentId);
+        return res.data;
+    }
+);
+
+export type OneTestType = {
+    questionId: string,
+    question: string,
+    options: Array<any>,
+    answer: string,
+}
+export type TestResultType = {
+    userId: string,
+    testId: string,
+    result: number,
+    protocol: Array< OneTestType & { receivedAnswer: string } >,
+    date: string,
+ }
+export const setTestResultThunk = createAsyncThunk(
+    'tasks/setTestResultThunk',
+    async (data:TestResultType, {rejectWithValue, dispatch}) => {
+        const res = await testAPI.setTestResult(data);
         return res.data;
     }
 );

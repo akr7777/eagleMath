@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
 import {NoteType} from "../features/dashboardSlice";
+import {TestResultType} from "../features/tasksSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
 
@@ -79,9 +80,6 @@ export const ContentAPI = {
     deleteCategory: (contentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/deleteCategory', {contentId});
     },
-    getTests: (contentId: IdFiledType):Promise<AxiosResponse> => {
-        return instance.get('test/getTest?contentId='+contentId);
-    },
 }
 
 export const NotesAPI = {
@@ -102,6 +100,15 @@ export const NotesAPI = {
     },
     changeNoteText: (userId: IdFiledType, noteId: IdFiledType, newTextTitleValue: string):Promise<AxiosResponse> => {
         return instance.post('notes/changeNoteText', {userId, noteId, newTextTitleValue});
+    },
+}
+
+export const testAPI = {
+    getTests: (contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.get('test/getTest?contentId='+contentId);
+    },
+    setTestResult: (data: TestResultType):Promise<AxiosResponse> => {
+        return instance.post('test/setTestResults', {...data});
     },
 }
 
