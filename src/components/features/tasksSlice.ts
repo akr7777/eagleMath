@@ -1,31 +1,47 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {ContentAPI} from "../api/api";
-//import {addMaterialToFavoritesThunk, deleteMaterialFromFavoritesThunk} from "./materialsSlice";
-import {useAppDispatch} from "../../store/store";
-import {getAllCategoriesThunk} from "./categoriesSlice";
+import {getAllCategoriesThunk, IdFiledType} from "./categoriesSlice";
 import {getAllMaterialsThunk} from "./materialsSlice";
-//import {CategoryType} from "./categoriesSlice";
+import {ResultCodesEnum as resultCodes} from './../common/resultCodes';
 
-export type IdFiledType = string | number;
+export type TestAnswersType = {questionId: string, receivedAnswer: string, isRight: boolean}
+export type TestContentType = {
+    questionId: string
+    question: string,
+    options: Array<any>,
+    answer: string,
+}
 export type TaskType = {
     id: IdFiledType,
     parentId: IdFiledType,
     label: string,
 }
-
+export type TestType = {
+    testId: string,
+    contentId: IdFiledType,
+    content: Array<TestContentType>
+}
 type InitStateTasksType = {
     tasks: Array<TaskType>,
     favoriteTasksIds: Array<IdFiledType>,
     isLoading: boolean,
-
+    test: TestType,
+    testAnswers: Array<TestAnswersType>
 }
+
 let initialState: InitStateTasksType = {
     tasks: [
         /*{id: '', parentId: '', label: ""},*/
     ],
     favoriteTasksIds: [],
     isLoading: true,
+    test: {
+        testId: "",
+        contentId: "",
+        content: []
+    },
+    testAnswers: []
 }
 
 export const getAllTasksThunk = createAsyncThunk(
@@ -44,12 +60,20 @@ export const getAllTasksThunk = createAsyncThunk(
 );
 
 export const getFavoritesThunk = createAsyncThunk(
-    'materials/getFavoritesThunk',
+    'tasks/getFavoritesThunk',
     async (userId:IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.getFavoriteContent(userId);
         return res.data;
     }
 );
+export const getTestThunk = createAsyncThunk(
+    'tasks/getTestThunk',
+    async (contentId:IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.getTests(contentId);
+        return res.data;
+    }
+);
+
 export const addTaskToFavoritesThunk = createAsyncThunk(
     'tasks/addTaskToFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
@@ -83,7 +107,7 @@ export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        setAllTasksAC: (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
+        /*setAllTasksAC: (state: InitStateTasksType, action: PayloadAction<TaskType[]>) => {
             state.tasks = action.payload;
         },
         addIdToFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
@@ -93,7 +117,12 @@ export const tasksSlice = createSlice({
         deleteIdFromFavoritesTasksAC: (state: InitStateTasksType, action: PayloadAction<IdFiledType>) => {
             console.log('deleteIdFromFavoritesTasksAC, state.favoriteTasksIds=', state.favoriteTasksIds)
             state.favoriteTasksIds = state.favoriteTasksIds.filter(el => String(el) !== String(action.payload))
+        },*/
+        pushTestAnswerAC: (state: InitStateTasksType, action: PayloadAction<TestAnswersType>) => {
+            //state.testAnswers.set(action.payload.questionId, action.payload.isRight);
+            state.testAnswers.push(action.payload);
         },
+        clearTestAnswersAC: (state: InitStateTasksType) => {state.testAnswers = []},
     },
     extraReducers: (builder) => {
         builder.addCase(getAllTasksThunk.pending, (state: InitStateTasksType) => {
@@ -144,13 +173,28 @@ export const tasksSlice = createSlice({
         builder.addCase(addTaskThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
         builder.addCase(addTaskThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<Array<IdFiledType>>) => {state.isLoading = false;})
         builder.addCase(addTaskThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
+
+        builder.addCase(getTestThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
+        builder.addCase(getTestThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<TestType & {resultCode: number}>) => {
+            if (action.payload.resultCode === resultCodes.Success)
+                state.test = {
+                    ...state.test,
+                    testId: action.payload.testId,
+                    contentId: action.payload.contentId,
+                    content: [...action.payload.content],
+                }
+            state.isLoading = false;
+        })
+        builder.addCase(getTestThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
     },
 })
 
 export const {
-    setAllTasksAC,
+    pushTestAnswerAC,
+    clearTestAnswersAC,
+    /*setAllTasksAC,
     addIdToFavoritesTasksAC,
-    deleteIdFromFavoritesTasksAC
+    deleteIdFromFavoritesTasksAC*/
 } = tasksSlice.actions;
 
 

@@ -79,6 +79,9 @@ export const ContentAPI = {
     deleteCategory: (contentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/deleteCategory', {contentId});
     },
+    getTests: (contentId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.get('test/getTest?contentId='+contentId);
+    },
 }
 
 export const NotesAPI = {

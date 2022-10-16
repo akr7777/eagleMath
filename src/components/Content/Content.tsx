@@ -19,6 +19,7 @@ import {useNavigate} from "react-router-dom";
 import {changeNewChapterIndex} from "../features/contentSlice";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ContentHead from "./elements/content-head";
+import TestContent from "./elements/test-content";
 
 export const initNewChapter: ContentType = {
     contentId: '',
@@ -120,6 +121,9 @@ const Content = () => {
                         </Button>
                         }
                     </div>*/}
+
+                    <TestContent/>
+
                 </Container>
         }
     </>
