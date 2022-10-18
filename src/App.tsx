@@ -19,6 +19,7 @@ import InitializeApp from "./components/common/initializeApp";
 import Content from "./components/Content/Content";
 import ChangeContent from "./components/Content/elements/ChangeContent";
 import UserInfo from "./components/Dashboard/elements/user-info";
+import AddTest from "./components/Content/elements/add-test";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -56,6 +57,8 @@ function App() {
                 <Route path={PATHS.changeContent+'/:contentId'} element={<ChangeContent/>}/>
 
                 <Route path={PATHS.user+'/:userId'} element={<UserInfo/>}/>
+
+                <Route path={PATHS.addTest} element={<AddTest/>}/>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 

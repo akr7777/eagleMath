@@ -12,7 +12,7 @@ import s from "../../common/commonCSS.module.css";
 import {PATHS} from "../../AppBar/AppBar";
 
 const ChangeContent = () => {
-    const dispatch = useAppDispatch();
+   /* const dispatch = useAppDispatch();*/
     const newChapter: ContentType = useSelector((state: RootState) => state.content.newChapter);
     const {contentId} = useParams();
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);

@@ -6,6 +6,7 @@ import {getAllMaterialsThunk} from "./materialsSlice";
 import {ResultCodesEnum as resultCodes} from './../common/resultCodes';
 
 export type TestAnswersType = {questionId: string, receivedAnswer: string, isRight: boolean}
+type AddTestType = {contentId: IdFiledType, content: Array<TestContentType>}
 export type TestContentType = {
     questionId: string
     question: string,
@@ -27,7 +28,8 @@ type InitStateTasksType = {
     favoriteTasksIds: Array<IdFiledType>,
     isLoading: boolean,
     test: TestType,
-    testAnswers: Array<TestAnswersType>
+    testAnswers: Array<TestAnswersType>,
+    addTest: AddTestType,
 }
 
 let initialState: InitStateTasksType = {
@@ -41,7 +43,11 @@ let initialState: InitStateTasksType = {
         contentId: "",
         content: []
     },
-    testAnswers: []
+    testAnswers: [],
+    addTest: {
+        contentId: "",
+        content: [],
+    }
 }
 
 export const getAllTasksThunk = createAsyncThunk(
@@ -205,6 +211,10 @@ export const tasksSlice = createSlice({
                     contentId: action.payload.contentId,
                     content: [...action.payload.content],
                 }
+            else {
+                state.test = { testId: "", contentId: "", content: [] }
+                state.testAnswers = []
+            }
             state.isLoading = false;
         })
         builder.addCase(getTestThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})

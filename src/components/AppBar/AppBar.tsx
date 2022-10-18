@@ -45,8 +45,9 @@ export const PATHS = {
     content: '/content',
     changeContent: '/change_content',
     user: '/user',
+    addTest: '/addtest',
 
-    dashboard: '/dashboard'
+    dashboard: '/dashboard',
 }
 
 const logoText = "Eagle's Math"

@@ -62,6 +62,24 @@ export const deleteContentThunk = createAsyncThunk(
     }
 );
 
+export const moveParagraphThunk = createAsyncThunk(
+    'Content/moveParagraphThunk',
+    async (data: {contentId: IdFiledType, elementIndex: number, direction: "up"|"down"}, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.moveParagraph(data.contentId, data.elementIndex, data.direction);
+        return res.data;
+    }
+);
+
+/*
+export const setNewContent = createAsyncThunk(
+    'Content/setNewContent',
+    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.deleteContent(contentId);
+        return res.data;
+    }
+);
+*/
+
 /*export const contentTypeThunk = createAsyncThunk(
     'Content/contentType',
     async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
@@ -153,19 +171,20 @@ export const contentSlice = createSlice({
             state.isLoading = false;
         })
 
-        /*builder.addCase(contentTypeThunk.pending, (state: ContentInitStateType) => {
+        builder.addCase(moveParagraphThunk.pending, (state: ContentInitStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(contentTypeThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
-            contentType: ContentTypeVariantsTypes,
+        builder.addCase(moveParagraphThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+            content: Array<ContentType>,
             resultCode: ResultCodesEnum,
         }>) => {
-            state.contentType = action.payload.contentType;
+            state.content = [...action.payload.content];
             state.isLoading = false;
         })
-        builder.addCase(contentTypeThunk.rejected, (state: ContentInitStateType) => {
+        builder.addCase(moveParagraphThunk.rejected, (state: ContentInitStateType) => {
             state.isLoading = false;
-        })*/
+        })
+
     }
 });
 

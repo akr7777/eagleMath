@@ -1,4 +1,4 @@
-import {ContentType, newChapterChange, setContentThunk} from "../../features/contentSlice";
+import {ContentType, getContentThunk, newChapterChange, setContentThunk} from "../../features/contentSlice";
 import {initNewChapter} from "../Content";
 import Button from "@mui/material/Button";
 import React from "react";
@@ -17,9 +17,10 @@ const OkButton2 = () => {
     const content:ContentType[] = useSelector((state: RootState) => state.content.content);
     const index = useSelector((state: RootState) => state.content.newChapterIndex);
 
-    function addToContent() {
-        dispatch(setContentThunk({content: reassignContentIndexes(content, newChapter, index), contentId: contentId}));
-        dispatch(newChapterChange(initNewChapter));
+    async function addToContent() {
+        await dispatch(setContentThunk({content: reassignContentIndexes(content, newChapter, index), contentId: contentId}));
+        await dispatch(newChapterChange(initNewChapter));
+        await dispatch(getContentThunk(contentId));
         navigate(PATHS.content + "/" + contentId);
     }
 

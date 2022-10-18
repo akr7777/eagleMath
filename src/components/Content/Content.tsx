@@ -20,12 +20,18 @@ import {changeNewChapterIndex} from "../features/contentSlice";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ContentHead from "./elements/content-head";
 import TestContent from "./elements/test-content";
+import {PATHS} from "../AppBar/AppBar";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ContentImage from "./elements/content-paragraph";
+import ContentParagraph from "./elements/content-paragraph";
 
 export const initNewChapter: ContentType = {
     contentId: '',
     type: null,
     content: '',
 }
+
 
 const Content = () => {
     const dispatch = useAppDispatch();
@@ -38,7 +44,7 @@ const Content = () => {
 
     useEffect(() => {
         //if (content.length === 0)
-            dispatch(getContentThunk(contentId || ""));
+        dispatch(getContentThunk(contentId || ""));
     }, []);
 
 
@@ -50,7 +56,7 @@ const Content = () => {
         }
         dispatch(changeNewChapterIndex(index + 1));
         dispatch(newChapterChange(newElement));
-        return navigate("/change_content/" + contentId);
+        return navigate(PATHS.changeContent + "/" + contentId);
     }
 
     const deleteChapter = (index: number) => {
@@ -79,9 +85,7 @@ const Content = () => {
                                 {/*<label>indexArr: {indexArr}</label>*/}
 
                                 {/*Если уже есть контент*/}
-                                {el.type === "Title" && <Typography variant={'h4'}>{el.content}</Typography>}
-                                {el.type === "Text" && <Typography>{el.content}</Typography>}
-                                {el.type === "Image" && <img src={baseContentImageUrl+el.content} className={s1.imageClass}/>}
+                                <ContentParagraph content={el.content} type={el.type} elementIndex={indexArr}/>
 
                                 {isAdmin &&
                                     <div className={s1.plus_minus}>

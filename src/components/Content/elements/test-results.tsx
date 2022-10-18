@@ -1,6 +1,5 @@
 import {
     clearTestAnswersAC,
-    OneTestType,
     setTestResultThunk,
     TestAnswersType, TestContentType,
     TestType
@@ -10,7 +9,8 @@ import {RootState, useAppDispatch} from "../../../store/store";
 import css from "./../content.module.css";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
+import {PATHS} from "../../AppBar/AppBar";
 
 type ProtocolType = {
     questionId: string,
@@ -21,6 +21,7 @@ type ProtocolType = {
 }
 const TestResults = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
     const rightAnswersResult = testAnswers?.filter(answer => answer.isRight).length;
@@ -29,6 +30,7 @@ const TestResults = () => {
     const testId = useSelector((state: RootState) => state.tasks.test.testId);
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const protocol = test.content.map((el: TestContentType) => {
         return {
             ...el,
@@ -49,19 +51,27 @@ const TestResults = () => {
             date: date,
         }));
 
-    return <div className={css.test_results_main_div}>
-        <div>
-            <Typography variant={'h4'}>Результаты теста:</Typography>
-        </div>
-        <div>
-            <Typography variant={'h5'}>
-                У Вас <b>{rightAnswersResult}</b> правильных ответов из <b>{test.content.length}</b>
-            </Typography>
-        </div>
-        <div>
-            <Button onClick={retryTest} variant={'contained'}>Пройти тест повторно</Button>
-        </div>
-    </div>
+    return <>
+        {
+            isAdmin && test && testAnswers?.length > 0
+                ? <div className={css.test_results_main_div}>
+                    <div>
+                        <Typography variant={'h4'}>Результаты теста:</Typography>
+                    </div>
+                    <div>
+                        <Typography variant={'h5'}>
+                            У Вас <b>{rightAnswersResult}</b> правильных ответов из <b>{test.content.length}</b>
+                        </Typography>
+                    </div>
+                    <div>
+                        <Button onClick={retryTest} variant={'contained'}>Пройти тест повторно</Button>
+                    </div>
+                </div>
+                : <Button onClick={() => {navigate(PATHS.addTest)}}>Создать новый тест</Button>
+        }
+
+    </>
+
 }
 
 export default TestResults;

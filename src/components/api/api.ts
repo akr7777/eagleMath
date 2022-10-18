@@ -80,6 +80,9 @@ export const ContentAPI = {
     deleteCategory: (contentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.post('content/deleteCategory', {contentId});
     },
+    moveParagraph: (contentId: IdFiledType, elementIndex: number, direction: "up"|"down"):Promise<AxiosResponse> => {
+        return instance.post('content/moveParagraph', {contentId: contentId, elementIndex:elementIndex, direction:direction});
+    },
 }
 
 export const NotesAPI = {

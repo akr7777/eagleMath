@@ -114,3 +114,20 @@
     border: blue 3px solid;
     border-radius: 20px;
 }
+
+.paragraph_div_admin {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    width: 100%;
+    background-color: yellow;
+}
+.paragraph_div_admin_right_part {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.paragraph_div_user {
+
+}
