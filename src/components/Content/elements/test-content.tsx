@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import css from './../content.module.css';
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useEffect} from "react";
@@ -8,15 +8,19 @@ import Typography from "@mui/material/Typography";
 import {MouseEvent} from "react";
 import TestResults from "./test-results";
 import TestContentButton from "./test-content-button";
+import Button from "@mui/material/Button";
+import {PATHS} from "../../AppBar/AppBar";
 
 const TestContent = () => {
     const {contentId} = useParams();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getTestThunk(contentId || ""));
     }, [])
 
+    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
 
@@ -59,7 +63,10 @@ const TestContent = () => {
         }
 
         {/*Test results*/}
-        {testAnswers.length >= test.content.length && <TestResults/>}
+        {testAnswers.length >= test.content.length && test.content.length > 0 && <TestResults/>}
+
+        {/*Create new test*/}
+        { isAdmin && (test.content.length === 0) && <Button onClick={() => {navigate(PATHS.addTest)}}>Создать новый тест</Button> }
 
 
     </div>

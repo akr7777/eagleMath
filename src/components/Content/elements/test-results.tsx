@@ -9,19 +9,16 @@ import {RootState, useAppDispatch} from "../../../store/store";
 import css from "./../content.module.css";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import {useNavigate} from "react-router-dom";
-import {PATHS} from "../../AppBar/AppBar";
 
-type ProtocolType = {
+/*type ProtocolType = {
     questionId: string,
     question: string,
     options: Array<any>,
     answer: string,
     receivedAnswer: string | undefined,
-}
+}*/
 const TestResults = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
     const rightAnswersResult = testAnswers?.filter(answer => answer.isRight).length;
@@ -53,8 +50,8 @@ const TestResults = () => {
 
     return <>
         {
-            isAdmin && test && testAnswers?.length > 0
-                ? <div className={css.test_results_main_div}>
+            isAdmin && test && testAnswers?.length > 0 &&
+                <div className={css.test_results_main_div}>
                     <div>
                         <Typography variant={'h4'}>Результаты теста:</Typography>
                     </div>
@@ -67,8 +64,8 @@ const TestResults = () => {
                         <Button onClick={retryTest} variant={'contained'}>Пройти тест повторно</Button>
                     </div>
                 </div>
-                : <Button onClick={() => {navigate(PATHS.addTest)}}>Создать новый тест</Button>
         }
+
 
     </>
 

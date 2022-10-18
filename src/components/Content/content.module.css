@@ -119,7 +119,7 @@
     display: grid;
     grid-template-columns: 1fr 50px;
     width: 100%;
-    background-color: yellow;
+    /*background-color: yellow;*/
 }
 .paragraph_div_admin_right_part {
     display: flex;
@@ -128,6 +128,5 @@
     align-items: center;
     gap: 5px;
 }
-.paragraph_div_user {
-
-}
+.vertical_arrow {color: black;}
+.vertical_arrow:hover {color: blue;}

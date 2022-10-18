@@ -20,7 +20,6 @@ const ContentParagraph = (props: ContentImagePropsType) => {
     const contentId = content[0].contentId;
 
     const moveParagraphClickHandler = async (direction: 'up' | 'down') => {
-        //[content[props.elementIndex - 1], content[props.elementIndex]] = [content[props.elementIndex - 1], content[props.elementIndex]]
         dispatch(moveParagraphThunk({contentId: contentId, elementIndex: props.elementIndex, direction: direction}));
     }
 
@@ -32,11 +31,24 @@ const ContentParagraph = (props: ContentImagePropsType) => {
                     <div>
                         {props.type === "Title" && <Typography variant={'h4'}>{props.content}</Typography>}
                         {props.type === "Text" && <Typography>{props.content}</Typography>}
-                        {props.type === "Image" && <img src={baseContentImageUrl + props.content} className={s1.imageClass}/>}
+                        {props.type === "Image" &&
+                            <img src={baseContentImageUrl + props.content} className={s1.imageClass}/>}
                     </div>
                     <div className={s1.paragraph_div_admin_right_part}>
-                        { props.elementIndex > 0 && <KeyboardArrowUpIcon cursor={'pointer'} onClick={() => moveParagraphClickHandler("up")}/>}
-                        { props.elementIndex < (content.length - 1) && <KeyboardArrowDownIcon cursor={'pointer'} onClick={() => moveParagraphClickHandler("down")}/>}
+                        {
+                            props.elementIndex > 0 &&
+                                <KeyboardArrowUpIcon
+                                    className={s1.vertical_arrow}
+                                    cursor={'pointer'}
+                                    onClick={() => moveParagraphClickHandler("up")}
+                                />
+                        }
+                            {props.elementIndex < (content.length - 1) &&
+                                <KeyboardArrowDownIcon
+                                    className={s1.vertical_arrow}
+                                    cursor={'pointer'}
+                                    onClick={() => moveParagraphClickHandler("down")}
+                                />}
                     </div>
 
                 </div>
