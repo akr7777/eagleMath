@@ -1,10 +1,10 @@
-import {TestContentType} from "../../features/tasksSlice";
+import {TestContentType} from "../../../../features/tasksSlice";
 import Typography from "@mui/material/Typography";
-import s1 from "./../content.module.css";
+import s1 from "../../../content.module.css";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import {IdFiledType} from "../../features/categoriesSlice";
+import {IdFiledType} from "../../../../features/categoriesSlice";
 
 type AddTestOneQuestionAdded = {
     oneQuestion: TestContentType,

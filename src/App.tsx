@@ -12,14 +12,14 @@ import Materials from "./components/Materials/Materials";
 import Login from "./components/AuthPage/Login";
 import Profile from "./components/Profile/Profile";
 import Dashboard from "./components/Dashboard/Dashboard";
-
+import EditTest from "./components/Content/elements/test/edit_test/edit-test";
 import SingUpPage from "./components/AuthPage/SingUpPage";
 import Logout from "./components/AuthPage/Logout";
 import InitializeApp from "./components/common/initializeApp";
 import Content from "./components/Content/Content";
 import ChangeContent from "./components/Content/elements/ChangeContent";
 import UserInfo from "./components/Dashboard/elements/user-info";
-import AddTest from "./components/Content/elements/add-test";
+import AddTest from "./components/Content/elements/test/add_test/add-test";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -57,6 +57,7 @@ function App() {
                 <Route path={PATHS.changeContent+'/:contentId'} element={<ChangeContent/>}/>
 
                 <Route path={PATHS.user+'/:userId'} element={<UserInfo/>}/>
+                <Route path={PATHS.editTest+'/:testId'} element={<EditTest/>}/>
 
                 <Route path={PATHS.addTest} element={<AddTest/>}/>
 

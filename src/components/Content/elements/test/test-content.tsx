@@ -1,15 +1,16 @@
 import {useNavigate, useParams} from "react-router-dom";
-import css from './../content.module.css';
-import {RootState, useAppDispatch} from "../../../store/store";
+import css from '../../content.module.css';
+import {RootState, useAppDispatch} from "../../../../store/store";
 import {useEffect} from "react";
-import {getTestThunk, pushTestAnswerAC, TestContentType, TestType, TestAnswersType} from "../../features/tasksSlice";
+import {getTestThunk, pushTestAnswerAC, TestContentType, TestType, TestAnswersType} from "../../../features/tasksSlice";
 import {useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
 import {MouseEvent} from "react";
 import TestResults from "./test-results";
 import TestContentButton from "./test-content-button";
 import Button from "@mui/material/Button";
-import {PATHS} from "../../AppBar/AppBar";
+import {PATHS} from "../../../AppBar/AppBar";
+import CreateTwoToneIcon from '@mui/icons-material/CreateTwoTone';
 
 const TestContent = () => {
     const {contentId} = useParams();
@@ -24,8 +25,16 @@ const TestContent = () => {
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
 
+    const onEditTestClickHandler = () => {
+        navigate(PATHS.editTest + "/" + String(test.testId));
+    }
+
     return <div className={css.test_main_div}>
-        <Typography variant={'h3'}>{test.title}</Typography>
+        <div>
+            <Typography variant={'h3'}>{test.title}</Typography>
+            <CreateTwoToneIcon cursor={'pointer'} onClick={onEditTestClickHandler}/>
+        </div>
+
         {
             test.content.map((testItem: TestContentType, index) => {
                 const onAnswerButtonClick = (e: MouseEvent<HTMLButtonElement>) => {

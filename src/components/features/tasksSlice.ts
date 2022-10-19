@@ -85,6 +85,14 @@ export const getTestThunk = createAsyncThunk(
     }
 );
 
+export const getTestByIdThunk = createAsyncThunk(
+    'tasks/getTestByIdThunk',
+    async (testId:string, {rejectWithValue, dispatch}) => {
+        const res = await testAPI.getTestById(testId);
+        return res.data;
+    }
+);
+
 export const getAllTestsContentIdsThunk = createAsyncThunk(
     'tasks/getAllTestsContentIdsThunk',
     async (_, {rejectWithValue, dispatch}) => {
@@ -93,18 +101,13 @@ export const getAllTestsContentIdsThunk = createAsyncThunk(
     }
 );
 
-export type OneTestType = {
-    questionId: string,
-    question: string,
-    options: Array<any>,
-    answer: string,
-}
+
 export type TestResultType = {
     userId: string,
     testId: string,
     title: string
     result: number,
-    protocol: Array< OneTestType & { receivedAnswer: string } >,
+    protocol: Array< TestContentType & { receivedAnswer: string } >,
     date: string,
  }
 export const setTestResultThunk = createAsyncThunk(
@@ -138,6 +141,15 @@ export const addNewTestToDataBaseThunk = createAsyncThunk(
     async (data:{title: string, contentId: IdFiledType, content:Array<TestContentType>}, {rejectWithValue, dispatch}) => {
         const {title, contentId, content} = data;
         const res = await testAPI.addNewTestToDataBase(title, contentId, content);
+        return res.data; //возывращает массив id Array<IdFieldType>
+    }
+);
+
+export const editTestInDataBaseThunk = createAsyncThunk(
+    'tasks/editTestInDataBaseThunk',
+    async (data:{testId: string, title: string, contentId: IdFiledType, content:Array<TestContentType>}, {rejectWithValue, dispatch}) => {
+        const {testId, title, contentId, content} = data;
+        const res = await testAPI.editTestInDataBase(testId, title, contentId, content);
         return res.data; //возывращает массив id Array<IdFieldType>
     }
 );
@@ -240,6 +252,24 @@ export const tasksSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(getTestThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
+
+        builder.addCase(getTestByIdThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
+        builder.addCase(getTestByIdThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<TestType & {resultCode: number}>) => {
+            if (action.payload.resultCode === resultCodes.Success)
+                state.test = {
+                    ...state.test,
+                    testId: action.payload.testId,
+                    title: action.payload.title,
+                    contentId: action.payload.contentId,
+                    content: [...action.payload.content],
+                }
+            else {
+                state.test = { testId: "", title: "", contentId: "", content: [] }
+                state.testAnswers = []
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(getTestByIdThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
     },
 })
 

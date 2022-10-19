@@ -46,7 +46,7 @@ export const PATHS = {
     changeContent: '/change_content',
     user: '/user',
     addTest: '/addtest',
-
+    editTest: '/edittest',
     dashboard: '/dashboard',
 }
 

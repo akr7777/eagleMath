@@ -19,7 +19,7 @@ import {useNavigate} from "react-router-dom";
 import {changeNewChapterIndex} from "../features/contentSlice";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ContentHead from "./elements/content-head";
-import TestContent from "./elements/test-content";
+import TestContent from "./elements/test/test-content";
 import {PATHS} from "../AppBar/AppBar";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';

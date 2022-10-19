@@ -69,7 +69,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 20px; margin-bottom: 20px;
+    margin-top: 60px; margin-bottom: 20px;
 }
 .test_question_div {
     margin-top: 20px;
@@ -200,6 +200,19 @@
     box-shadow: 7px 7px darkgrey;
     color: black;
     cursor: pointer;
+}
+.add_new_test_to_database:disabled {
+    cursor: pointer;
+    background-color: darkgrey;
+    color: floralwhite;
+    box-shadow: 5px 5px gray;
+}
+.add_new_test_to_database:disabled:hover {
+    cursor: pointer;
+    color: floralwhite;
+    background-color: darkgrey;
+    cursor: default;
+    box-shadow: 5px 5px gray;
 }
 .test_title_textfield {
     margin-top: 30px;

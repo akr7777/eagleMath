@@ -1,19 +1,19 @@
 import Container from "@mui/material/Container";
-import s from "../../common/commonCSS.module.css";
-import {IdFiledType} from "../../features/categoriesSlice";
+import s from "../../../../common/commonCSS.module.css";
+import {IdFiledType} from "../../../../features/categoriesSlice";
 import AddTestAllTasksList from "./add-test-all-tasks-list";
 import Typography from "@mui/material/Typography";
 import {useState} from "react";
-import {TaskType, TestContentType, addNewTestToDataBaseThunk} from "../../features/tasksSlice";
+import {TaskType, TestContentType, addNewTestToDataBaseThunk} from "../../../../features/tasksSlice";
 import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "../../../store/store";
+import {RootState, useAppDispatch} from "../../../../../store/store";
 import AddTestAddNewQuestion from "./add-test-add-new-question";
 import AddTestOneQuestionAdded from "./add-test-one-question-added";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import s1 from "../content.module.css";
+import s1 from "../../../content.module.css";
 import TextField from "@mui/material/TextField";
 import {useNavigate} from "react-router-dom";
-import {PATHS} from "../../AppBar/AppBar";
+import {PATHS} from "../../../../AppBar/AppBar";
 
 const AddTest = () => {
     const dispatch = useAppDispatch();

@@ -110,6 +110,9 @@ export const testAPI = {
     getTests: (contentId: IdFiledType):Promise<AxiosResponse> => {
         return instance.get('test/getTest?contentId='+contentId);
     },
+    getTestById: (testId: string):Promise<AxiosResponse> => {
+        return instance.get('test/getTest?testId='+testId);
+    },
     setTestResult: (data: TestResultType):Promise<AxiosResponse> => {
         return instance.post('test/setTestResults', {...data});
     },
@@ -118,6 +121,9 @@ export const testAPI = {
     },
     addNewTestToDataBase: (title: string, contentId: IdFiledType, content:Array<TestContentType>):Promise<AxiosResponse> => {
         return instance.post('test/addNewTestToDataBase', {title: title, contentId: contentId, content: content});
+    },
+    editTestInDataBase: (testId: string, title: string, contentId: IdFiledType, content:Array<TestContentType>):Promise<AxiosResponse> => {
+        return instance.post('test/editTestInDataBase', {testId: testId, title: title, contentId: contentId, content: content});
     },
 }
 

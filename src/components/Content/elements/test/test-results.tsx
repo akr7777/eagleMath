@@ -3,10 +3,10 @@ import {
     setTestResultThunk,
     TestAnswersType, TestContentType,
     TestType
-} from "../../features/tasksSlice";
+} from "../../../features/tasksSlice";
 import {useSelector} from "react-redux";
-import {RootState, useAppDispatch} from "../../../store/store";
-import css from "./../content.module.css";
+import {RootState, useAppDispatch} from "../../../../store/store";
+import css from "../../content.module.css";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 

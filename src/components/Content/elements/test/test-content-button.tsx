@@ -1,7 +1,7 @@
-import css from "../content.module.css";
-import {TestAnswersType, TestContentType} from "../../features/tasksSlice";
+import css from "../../content.module.css";
+import {TestAnswersType, TestContentType} from "../../../features/tasksSlice";
 import {useSelector} from "react-redux";
-import {RootState} from "../../../store/store";
+import {RootState} from "../../../../store/store";
 import {MouseEvent} from "react";
 
 type TestContentButtonPropsType = {
