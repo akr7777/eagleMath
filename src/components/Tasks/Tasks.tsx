@@ -6,13 +6,13 @@ import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
 import {
-    addTaskToFavoritesThunk,
-    deleteTaskFromFavoritesThunk,
+    //addTaskToFavoritesThunk,
+    //deleteTaskFromFavoritesThunk,
     getAllTasksThunk,
     getFavoritesThunk,
-    TaskType
+    //TaskType
 } from "../features/tasksSlice";
-import {CategoryType, getAllCategoriesThunk, IdFiledType} from "../features/categoriesSlice";
+import {getAllCategoriesThunk} from "../features/categoriesSlice";
 import Preloader from "../common/Preloader";
 import MaterialTaskHead from "../common/material-task-head";
 

@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
 import {NoteType} from "../features/dashboardSlice";
-import {TestResultType} from "../features/tasksSlice";
+import {TestContentType, TestResultType} from "../features/tasksSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
 
@@ -112,6 +112,12 @@ export const testAPI = {
     },
     setTestResult: (data: TestResultType):Promise<AxiosResponse> => {
         return instance.post('test/setTestResults', {...data});
+    },
+    getAllTestsContentIds: ():Promise<AxiosResponse> => {
+        return instance.get('test/getAllTestsContentIds');
+    },
+    addNewTestToDataBase: (contentId: IdFiledType, content:Array<TestContentType>):Promise<AxiosResponse> => {
+        return instance.post('test/addNewTestToDataBase', {contentId: contentId, content: content});
     },
 }
 
