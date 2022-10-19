@@ -25,6 +25,7 @@ const TestResults = () => {
 
     const date = new Date().toString();
     const testId = useSelector((state: RootState) => state.tasks.test.testId);
+    const title = useSelector((state: RootState) => state.tasks.test.title);
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
@@ -43,6 +44,7 @@ const TestResults = () => {
         dispatch(setTestResultThunk({
             userId: userId,
             testId: testId,
+            title: title,
             result: rightAnswersResult,
             protocol: protocol,
             date: date,

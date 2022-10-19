@@ -25,6 +25,7 @@ const TestContent = () => {
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
 
     return <div className={css.test_main_div}>
+        <Typography variant={'h3'}>{test.title}</Typography>
         {
             test.content.map((testItem: TestContentType, index) => {
                 const onAnswerButtonClick = (e: MouseEvent<HTMLButtonElement>) => {

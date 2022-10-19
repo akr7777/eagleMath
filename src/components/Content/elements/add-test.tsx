@@ -11,22 +11,26 @@ import AddTestAddNewQuestion from "./add-test-add-new-question";
 import AddTestOneQuestionAdded from "./add-test-one-question-added";
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import s1 from "../content.module.css";
-import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import {useNavigate} from "react-router-dom";
+import {PATHS} from "../../AppBar/AppBar";
 
 const AddTest = () => {
     const dispatch = useAppDispatch();
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
+    const navigate = useNavigate();
 
     const [currentContentId, setCurrentContentId] = useState<IdFiledType>('');
     const [content, setContent] = useState<Array<TestContentType>>([]);
     const [showNewQuestionAdding, setShowNewQuestionAdding] = useState<boolean>(false);
-    //const [error, setError] = useState<string>('');
+    const [title, setTitle] = useState<string>('');
+    const [addTestError, setAddTestError] = useState<string>("");
 
-    const tasks: Array<TaskType> = useSelector((state: RootState) => state.tasks.tasks);
+    /*const tasks: Array<TaskType> = useSelector((state: RootState) => state.tasks.tasks);
     const testContentIds: Array<IdFiledType> = useSelector((state: RootState) => state.tasks.testContentIds);
     const list: Array<TaskType> = tasks.filter(task => !testContentIds.includes(task.id));
     if (list.length > 0 && currentContentId === '')
-        setCurrentContentId(list[0].id);
+        setCurrentContentId(list[0].id);*/
 
     const onQuestionAdding = (question: TestContentType) => {
         setContent([...content, question]);
@@ -46,14 +50,29 @@ const AddTest = () => {
     }
 
     const addNewTestToDataBase = () => {
-        dispatch(addNewTestToDataBaseThunk({contentId: currentContentId, content: content}));
+        if (title.trim()) {
+            dispatch(addNewTestToDataBaseThunk({title: title, contentId: currentContentId, content: content}));
+            navigate(PATHS.tasks);
+        } else setAddTestError('Введите заголовок теста')
     }
 
     return <>
         {
             isAdmin
                 ? <Container className={s.wrapped_div}>
+
                     <div><Typography variant={'h4'}>Добавить новый тест</Typography></div>
+
+                   {/* currentContentId: {currentContentId}*/}
+                    <>
+                        <TextField variant={"outlined"}
+                                   value={title}
+                                   onChange={(e) => setTitle(e.currentTarget.value)}
+                                   label={'Заголовок (название) теста'}
+                                   className={s1.test_title_textfield}
+                                   multiline
+                        />
+                    </>
 
                     <AddTestAllTasksList
                         currentContentId={currentContentId}
@@ -79,6 +98,7 @@ const AddTest = () => {
                             </div>
                     }
 
+                    <Typography color={"red"}>{addTestError}</Typography>
                     {
                         content.length > 0 && currentContentId &&
                             <button

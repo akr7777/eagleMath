@@ -36,6 +36,7 @@ const AddTestAllTasksList = (props: AddTestAllTasksListType) => {
                     className={s1.options_css}
                     defaultValue={props.currentContentId}
                 >
+                    <option value={""}> </option>
                     {
                         list.map(task => {
                             return <option

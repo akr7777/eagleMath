@@ -116,8 +116,8 @@ export const testAPI = {
     getAllTestsContentIds: ():Promise<AxiosResponse> => {
         return instance.get('test/getAllTestsContentIds');
     },
-    addNewTestToDataBase: (contentId: IdFiledType, content:Array<TestContentType>):Promise<AxiosResponse> => {
-        return instance.post('test/addNewTestToDataBase', {contentId: contentId, content: content});
+    addNewTestToDataBase: (title: string, contentId: IdFiledType, content:Array<TestContentType>):Promise<AxiosResponse> => {
+        return instance.post('test/addNewTestToDataBase', {title: title, contentId: contentId, content: content});
     },
 }
 

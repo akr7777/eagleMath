@@ -20,6 +20,7 @@ export type TaskType = {
 }
 export type TestType = {
     testId: string,
+    title: string,
     contentId: IdFiledType,
     content: Array<TestContentType>
 }
@@ -41,6 +42,7 @@ let initialState: InitStateTasksType = {
     isLoading: true,
     test: {
         testId: "",
+        title: "",
         contentId: "",
         content: []
     },
@@ -100,6 +102,7 @@ export type OneTestType = {
 export type TestResultType = {
     userId: string,
     testId: string,
+    title: string
     result: number,
     protocol: Array< OneTestType & { receivedAnswer: string } >,
     date: string,
@@ -132,9 +135,9 @@ export const deleteTaskFromFavoritesThunk = createAsyncThunk(
 
 export const addNewTestToDataBaseThunk = createAsyncThunk(
     'tasks/addNewTestToDataBaseThunk',
-    async (data:{contentId: IdFiledType, content:Array<TestContentType>}, {rejectWithValue, dispatch}) => {
-        const {contentId, content} = data;
-        const res = await testAPI.addNewTestToDataBase(contentId, content);
+    async (data:{title: string, contentId: IdFiledType, content:Array<TestContentType>}, {rejectWithValue, dispatch}) => {
+        const {title, contentId, content} = data;
+        const res = await testAPI.addNewTestToDataBase(title, contentId, content);
         return res.data; //возывращает массив id Array<IdFieldType>
     }
 );
@@ -226,11 +229,12 @@ export const tasksSlice = createSlice({
                 state.test = {
                     ...state.test,
                     testId: action.payload.testId,
+                    title: action.payload.title,
                     contentId: action.payload.contentId,
                     content: [...action.payload.content],
                 }
             else {
-                state.test = { testId: "", contentId: "", content: [] }
+                state.test = { testId: "", title: "", contentId: "", content: [] }
                 state.testAnswers = []
             }
             state.isLoading = false;

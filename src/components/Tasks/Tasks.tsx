@@ -6,6 +6,7 @@ import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
 import {
+    clearTestAnswersAC,
     //addTaskToFavoritesThunk,
     //deleteTaskFromFavoritesThunk,
     getAllTasksThunk,
@@ -26,6 +27,7 @@ export const Tasks = () => {
         dispatch(getAllTasksThunk());
         dispatch(getAllCategoriesThunk());
         dispatch(getFavoritesThunk(userId));
+        dispatch(clearTestAnswersAC());
     }, [userId]);
 
     //const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
