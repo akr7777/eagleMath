@@ -52,3 +52,24 @@
     align-items: center;
     justify-content: center;
 }
+
+.results_table {
+    width: 100%;
+    background-color: darkgrey;
+    border-radius: 5px;
+    cellPadding: 3px;
+}
+.table_tr_style_selected {
+    border-radius: 10px;
+    background-color: cornflowerblue;
+}
+.arrow:hover {
+    color: green;
+    cursor: pointer;
+}
+.protocol_div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px 0 10px 0;
+}

@@ -1,9 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
-import {ContentAPI, NotesAPI} from "../api/api";
+import {ContentAPI, NotesAPI, testAPI} from "../api/api";
 //import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
 import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
+import {TestContentType} from "./tasksSlice";
 
 export type ContentTypes = "C" | "M" | "T";
 export type NotesStatusType = "All" | "Active" | "Completed";
@@ -13,20 +14,31 @@ export type NoteType = {
     text: string,
     isActive: boolean,
 }
-
+export type TestResultProtocolType = TestContentType & { receivedAnswer: string }
+export type TestResultType = {
+    userId: string,
+    testId: string,
+    title: string,
+    result: number,
+    protocol: Array<TestResultProtocolType>,
+    date: string,
+}
 type DashboardStateType = {
     favoriteContent: Array<IdFiledType>,
     notes: Array<NoteType>,
     searchNotesField: string,
     isLoading: boolean,
     notesStatus: NotesStatusType,
+    testResult: Array<TestResultType>,
 }
+
 const dashboardInitialState:DashboardStateType = {
     favoriteContent: [],
     isLoading: false,
     notes: [],
     searchNotesField: '',
     notesStatus: "All",
+    testResult: [],
 }
 
 export const getFavoritesThunk = createAsyncThunk(
@@ -96,6 +108,14 @@ export const changeNoteTextOrTitleThunk = createAsyncThunk(
         const res = (data.type === "Title")
             ? await NotesAPI.changeNoteTitle(data.userId, data.noteId, data.newTextTitleValue)
             : await NotesAPI.changeNoteText(data.userId, data.noteId, data.newTextTitleValue);
+        return res.data;
+    }
+);
+
+export const getTestResultsByUserId = createAsyncThunk(
+    'dashboard/getTestResultsByUserId',
+    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await testAPI.getTestResultsByUserId(userId);
         return res.data;
     }
 );
@@ -235,8 +255,20 @@ export const dashboardSlice = createSlice({
             state.isLoading = false;
         })
 
+        builder.addCase(getTestResultsByUserId.pending, (state: DashboardStateType) => {state.isLoading = true;})
+        builder.addCase(getTestResultsByUserId.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            testResults: Array<TestResultType>,
+            resultCode: resultCodes,
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success) {
+                state.testResult = [...action.payload.testResults];
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(getTestResultsByUserId.rejected, (state: DashboardStateType) => {state.isLoading = false;})
+
     }
 })
-export const {/*setFavoriteContent, addNote, */changeSearchText, changeNotesFilterStatus} = dashboardSlice.actions;
+export const {changeSearchText, changeNotesFilterStatus} = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

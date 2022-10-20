@@ -21,9 +21,12 @@ const AddTestOneQuestionAdded = (props: AddTestOneQuestionAdded) => {
         </div>
         <div>
             <Typography variant={'h5'}>{props.oneQuestion.question}</Typography>
+            Make redaction for question
+
             <div className={props.oneQuestion.options.length % 2 === 0 ? s1.test_options_div_2 : s1.test_options_div_3}>
                 {
                     props.oneQuestion.options.map((opt, index) =>
+                        //Make redaction for options
                         <Typography
                             key={index}
                             variant={opt === props.oneQuestion.answer ? 'body1' : 'body2'}

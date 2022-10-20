@@ -1,13 +1,10 @@
-import {
-    IdFiledType,
-    MaterialType
-} from "../../features/materialsSlice";
+import {MaterialType} from "../../features/materialsSlice";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import s from "./tree5.module.css";
 import {TaskType} from "../../features/tasksSlice";
-import {CategoryType} from "../../features/categoriesSlice";
+import {CategoryType, IdFiledType} from "../../features/categoriesSlice";
 
 import {NavLink} from "react-router-dom";
 

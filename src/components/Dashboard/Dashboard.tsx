@@ -3,19 +3,12 @@ import s from '../common/commonCSS.module.css';
 import Container from "@mui/material/Container";
 import Preloader from "../common/Preloader";
 import {Typography} from "@mui/material";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FavoriteMaterials from "./elements/Favorites";
-import {Navigate} from "react-router-dom";
-import {PATHS} from "../AppBar/AppBar";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
-import {FavoriteContent} from "./utils/utils";
-import s1 from './styles.module.css';
 import Users from "./elements/users";
 import Notes from "./elements/user-info-notes";
+import TestResults from "./elements/test-results";
 
 
 const Dashboard = () => {
@@ -43,6 +36,8 @@ const Dashboard = () => {
                     <Notes userId={userId}/>
 
                     <Users/>
+
+                    <TestResults/>
 
 
                 </Container>

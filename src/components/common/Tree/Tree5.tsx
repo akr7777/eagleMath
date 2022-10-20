@@ -1,8 +1,5 @@
 import s from './tree5.module.css';
-import {
-    IdFiledType,
-    MaterialType
-} from "../../features/materialsSlice";
+import {MaterialType} from "../../features/materialsSlice";
 import PlusIcon from '@mui/icons-material/ControlPoint';
 import MinusIcon from '@mui/icons-material/RemoveCircleOutline';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -10,7 +7,7 @@ import React, {useState} from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import {TaskType} from "../../features/tasksSlice";
-import {addToShownCats, deleteFromShownCats} from "../../features/categoriesSlice";
+import {addToShownCats, deleteFromShownCats, IdFiledType} from "../../features/categoriesSlice";
 import {CategoryType} from "../../features/categoriesSlice";
 import Line, {contentTypeType} from "../line";
 import HiddenMenu from "./hiddenMenu";

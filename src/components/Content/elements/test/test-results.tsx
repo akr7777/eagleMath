@@ -23,7 +23,7 @@ const TestResults = () => {
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
     const rightAnswersResult = testAnswers?.filter(answer => answer.isRight).length;
 
-    const date = new Date().toString();
+    const date = new Date().toLocaleString('ru-RU');
     const testId = useSelector((state: RootState) => state.tasks.test.testId);
     const title = useSelector((state: RootState) => state.tasks.test.title);
     const userId = useSelector((state: RootState) => state.auth.user.id);
@@ -40,7 +40,8 @@ const TestResults = () => {
         dispatch(clearTestAnswersAC());
     }
 
-    if (isAuth)
+    if (isAuth) {
+        //console.log('userId:', userId, 'testId:', testId, 'title:', title, 'result:', rightAnswersResult, 'protocol:', protocol, 'date:', date,)
         dispatch(setTestResultThunk({
             userId: userId,
             testId: testId,
@@ -49,6 +50,7 @@ const TestResults = () => {
             protocol: protocol,
             date: date,
         }));
+    }
 
     return <>
         {

@@ -125,6 +125,9 @@ export const testAPI = {
     editTestInDataBase: (testId: string, title: string, contentId: IdFiledType, content:Array<TestContentType>):Promise<AxiosResponse> => {
         return instance.post('test/editTestInDataBase', {testId: testId, title: title, contentId: contentId, content: content});
     },
+    getTestResultsByUserId: (userId: IdFiledType): Promise<AxiosResponse> => {
+        return instance.post('test/getTestResultsByUserId', {userId: userId});
+    }
 }
 
 export const CategoriesAPI = {
