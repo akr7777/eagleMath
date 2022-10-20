@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import Users from "./elements/users";
 import Notes from "./elements/user-info-notes";
-import TestResults from "./elements/test-results";
+import TestResultsDashboard from "./elements/test-results-dashboard";
 
 
 const Dashboard = () => {
@@ -37,7 +37,7 @@ const Dashboard = () => {
 
                     <Users/>
 
-                    <TestResults/>
+                    <TestResultsDashboard/>
 
 
                 </Container>

@@ -1,10 +1,11 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
-import {ContentAPI, NotesAPI, testAPI} from "../api/api";
+import {ContentAPI, NotesAPI, testAPI, usersAPI} from "../api/api";
 //import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
 import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 import {TestContentType} from "./tasksSlice";
+import {getUsers, UserType} from "./usersSlice";
 
 export type ContentTypes = "C" | "M" | "T";
 export type NotesStatusType = "All" | "Active" | "Completed";
@@ -30,6 +31,7 @@ type DashboardStateType = {
     isLoading: boolean,
     notesStatus: NotesStatusType,
     testResult: Array<TestResultType>,
+    userList: UserType[],
 }
 
 const dashboardInitialState:DashboardStateType = {
@@ -39,8 +41,16 @@ const dashboardInitialState:DashboardStateType = {
     searchNotesField: '',
     notesStatus: "All",
     testResult: [],
+    userList: [],
 }
 
+export const getUserListThunk = createAsyncThunk(
+    'dashboard/getUserListThunk',
+    async (_, {rejectWithValue, dispatch}) => {
+        const res = await usersAPI.getUsers();
+        return res.data;
+    }
+)
 export const getFavoritesThunk = createAsyncThunk(
     'dashboard/getFavoritesThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
@@ -266,6 +276,13 @@ export const dashboardSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(getTestResultsByUserId.rejected, (state: DashboardStateType) => {state.isLoading = false;})
+
+        builder.addCase(getUserListThunk.pending, (state: DashboardStateType) => {state.isLoading = true;})
+        builder.addCase(getUserListThunk.fulfilled, (state: DashboardStateType, action: PayloadAction<UserType[]>) => {
+            state.userList = [...action.payload];
+            state.isLoading = false;
+        })
+        builder.addCase(getUserListThunk.rejected, (state: DashboardStateType) => {state.isLoading = false;})
 
     }
 })

@@ -10,23 +10,31 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {getTestResultsByUserId, TestResultProtocolType, TestResultType} from "../../features/dashboardSlice";
+import {
+    getTestResultsByUserId,
+    getUserListThunk,
+    TestResultProtocolType,
+    TestResultType
+} from "../../features/dashboardSlice";
 import {IdFiledType} from "../../features/categoriesSlice";
-import {v4} from "uuid";
+import {UserType} from "../../features/usersSlice";
 
-const TestResults = () => {
+const TestResultsDashboard = () => {
     const dispatch = useAppDispatch();
     const testResults: Array<TestResultType> = useSelector((state: RootState) => state.dashboard.testResult);
     const [selectedIndex, setSelectedIndex] = useState<number>(-1);
     const [protocolRowIndex, setProtocolRowIndex] = useState<number>(-1);
+    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
+    const userList: UserType[] = useSelector((state: RootState) => state.dashboard.userList);
 
-    let userId: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
+    //let userId: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
+    const [userId, setUserId] = useState<IdFiledType>(useSelector((state: RootState) => state.auth.user.id))
+
 
     useEffect(() => {
+        dispatch(getUserListThunk());
         dispatch(getTestResultsByUserId(userId));
     }, [userId]);
-
-    //console.log('testResults=', testResults);
 
     return <div className={s2.div1}>
         <Accordion className={s1.accordion}>
@@ -38,6 +46,24 @@ const TestResults = () => {
                 <Typography variant={'h5'}>Результаты тестов пользователя</Typography>
             </AccordionSummary>
             <AccordionDetails>
+
+                {
+                    isAdmin && <div className={s1.user_id_div}>
+                        <select
+                            className={s1.user_id_selection}
+                        onChange={(e) => setUserId(e.currentTarget.value)}
+                    >
+                        {
+                            userList.map((user: UserType) => {
+                                return <option value={user.userId}>
+                                    {user.name}
+                                </option>
+                            })
+                        }
+                    </select>
+                    </div>
+                }
+
                 <table className={s1.results_table}>
                     <thead>
                     <tr>
@@ -88,9 +114,14 @@ const TestResults = () => {
                                                     className={s1.protocol_div}
                                                     key={protocolItem.questionId}
                                                 >
-                                                    <Typography><b>Вопрос N{protocolIndex+1}: {protocolItem.question}</b></Typography>
-                                                    <Typography>Полученный ответ: {protocolItem.receivedAnswer}</Typography>
-                                                    <Typography>Верный ответ: {protocolItem.answer}</Typography>
+                                                    <Typography className={ protocolItem.answer === protocolItem.receivedAnswer ? s1.question_success : s1.question_error}>
+                                                        <b>Вопрос N{protocolIndex + 1}: {protocolItem.question}</b>
+                                                    </Typography>
+                                                    <Typography>Полученный
+                                                        ответ: {protocolItem.receivedAnswer}
+                                                    </Typography>
+                                                    <Typography>Верный ответ: {protocolItem.answer}
+                                                    </Typography>
                                                 </div>
                                             })
                                         }
@@ -108,4 +139,4 @@ const TestResults = () => {
     </div>
 }
 
-export default TestResults;
+export default TestResultsDashboard;

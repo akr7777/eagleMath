@@ -73,3 +73,17 @@
     gap: 5px;
     margin: 10px 0 10px 0;
 }
+.user_id_div {
+    margin: 20px 0 20px 0;
+    width: 100%;
+}
+.user_id_selection {
+    width: 400px;
+    min-height: 35px;
+    border-radius: 10px;
+    padding: 0 5px 0 5px;
+    font-size: 16px;
+    font-family: Helvetica;
+}
+.question_success {color: #0f460f;}
+.question_error {color: #852121;}
