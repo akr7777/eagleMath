@@ -114,13 +114,16 @@ const TestResultsDashboard = () => {
                                                     className={s1.protocol_div}
                                                     key={protocolItem.questionId}
                                                 >
-                                                    <Typography className={ protocolItem.answer === protocolItem.receivedAnswer ? s1.question_success : s1.question_error}>
+                                                    <Typography className={
+                                                        protocolItem.answer === protocolItem.receivedAnswer ? s1.question_success : s1.question_error
+                                                    }>
                                                         <b>Вопрос N{protocolIndex + 1}: {protocolItem.question}</b>
                                                     </Typography>
-                                                    <Typography>Полученный
-                                                        ответ: {protocolItem.receivedAnswer}
+                                                    <Typography>
+                                                        Полученный ответ: {protocolItem.receivedAnswer}
                                                     </Typography>
-                                                    <Typography>Верный ответ: {protocolItem.answer}
+                                                    <Typography>
+                                                        Верный ответ: {protocolItem.answer}
                                                     </Typography>
                                                 </div>
                                             })

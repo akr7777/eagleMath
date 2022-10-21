@@ -130,8 +130,10 @@
 }
 .vertical_arrow {color: black;}
 .vertical_arrow:hover {color: blue;}
-.delete_icon { color: black; }
+.delete_icon { color: black; cursor: pointer}
 .delete_icon:hover { color: red; }
+.edit_icon { color: black; }
+.edit_icon:hover { color: green; cursor: pointer}
 
 .options_css {
     min-width: 300px;

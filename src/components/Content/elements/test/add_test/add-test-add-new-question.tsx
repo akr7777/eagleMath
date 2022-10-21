@@ -9,14 +9,17 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 type AddTestAddNewQuestionType = {
     onQuestionAdding: (question: TestContentType) => void,
+    question?: string,
+    options?: Array<string>,
+    answer?: string,
 }
 
 const AddTestAddNewQuestion = (props: AddTestAddNewQuestionType) => {
 
-    const [question, setQuestion] = useState<string>('');
-    const [options, setOptions] = useState<Array<string>>([]);
+    const [question, setQuestion] = useState<string>(props.question || '');
+    const [options, setOptions] = useState<Array<string>>(props.options || []);
     const [newCurrentOption, setNewCurrentOption] = useState<string>('');
-    const [answer, setAnswer] = useState<string>('');
+    const [answer, setAnswer] = useState<string>(props.answer || '');
     const [error, setError] = useState<string>('');
 
     const deleteOption = (opt: string) => {

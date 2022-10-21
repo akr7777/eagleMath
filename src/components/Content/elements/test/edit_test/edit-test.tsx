@@ -14,6 +14,8 @@ import AddTestAddNewQuestion from "../add_test/add-test-add-new-question";
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
 import {PATHS} from "../../../../AppBar/AppBar";
 
+export type EditingQuestionValuesType = { question: string, answer: string, options:Array<string> }
+
 const EditTest = () => {
     const {testId} = useParams();
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
@@ -31,11 +33,22 @@ const EditTest = () => {
     const [error, setError] = useState<string>('');
     const [showNewQuestionAdding, setShowNewQuestionAdding] = useState<boolean>(false);
 
-    const [localStr, setLocalStr] = useState<string>('');
+    const [editingQuestionValues, setEditingQuestionValues] = useState<EditingQuestionValuesType>({
+        question: '',
+        answer: '',
+        options: []
+    });
+
+    //const [localStr, setLocalStr] = useState<string>('');
 
     const onQuestionAdding = (question: TestContentType) => {
         setContent([...content, question]);
         setShowNewQuestionAdding(false);
+        setEditingQuestionValues({
+            question: '',
+            answer: '',
+            options: []
+        });
     }
 
     const moveQuestion = (ind: number, direction: "up" | "down") => {
@@ -86,20 +99,29 @@ const EditTest = () => {
                         length={content.length}
                         moveQuestion={moveQuestion}
                         deleteQuestion={deleteQuestion}
+                        setEditingQuestionValues={setEditingQuestionValues}
                     />)
                 }
 
                 {
                     showNewQuestionAdding
                         ? <AddTestAddNewQuestion onQuestionAdding={onQuestionAdding}/>
-                        : <div className={s1.add_question_div}>
+                        : editingQuestionValues.options && editingQuestionValues.answer && editingQuestionValues.question && !showNewQuestionAdding
+                            ? <AddTestAddNewQuestion
+                                onQuestionAdding={onQuestionAdding}
+                                question={editingQuestionValues.question}
+                                answer={editingQuestionValues.answer}
+                                options={editingQuestionValues.options}
+                            />
+                            : <div className={s1.add_question_div}>
                             <ControlPointIcon onClick={() => setShowNewQuestionAdding(true)}/>
                         </div>
                 }
 
+
                 <div className={s1.paragraph_div_admin_right_part}>
                     <Typography color={"red"}>{error}</Typography>
-                    contentId: {contentId}
+
                     <button
                         className={s1.add_new_test_to_database}
                         onClick={editTestInDataBase}
