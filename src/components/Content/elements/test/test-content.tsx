@@ -31,7 +31,7 @@ const TestContent = () => {
 
     return <div className={css.test_main_div}>
         <div>
-            <Typography variant={'h3'}>{test.title}</Typography>
+            <Typography variant={'h4'}>{test.title}</Typography>
             <CreateTwoToneIcon cursor={'pointer'} onClick={onEditTestClickHandler}/>
         </div>
 

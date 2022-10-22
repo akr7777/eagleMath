@@ -2,7 +2,13 @@ import axios, {AxiosResponse} from "axios";
 import {IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
 import {NoteType} from "../features/dashboardSlice";
-import {TestContentType, TestResultType} from "../features/tasksSlice";
+import {
+    getObjectiveByContentIdThunk,
+    ObjectiveResultType,
+    ObjectiveType,
+    TestContentType,
+    TestResultType
+} from "../features/tasksSlice";
 
 const accessToken = localStorage.getItem("accessToken") || "";
 
@@ -127,6 +133,18 @@ export const testAPI = {
     },
     getTestResultsByUserId: (userId: IdFiledType): Promise<AxiosResponse> => {
         return instance.post('test/getTestResultsByUserId', {userId: userId});
+    }
+}
+
+export const objectiveAPI = {
+    getObjectiveByContentId: (contentId: IdFiledType): Promise<AxiosResponse> => {
+        return instance.post('objectives/getObjectiveByContentId', {contentId: contentId})
+    },
+    addNewObjective: (data: ObjectiveType): Promise<AxiosResponse> => {
+        return instance.post('objectives/addObjective', {...data})
+    },
+    setObjectiveResult:(data: ObjectiveResultType): Promise<AxiosResponse> => {
+        return instance.post('objectives/setObjectiveResult', {...data})
     }
 }
 

@@ -47,22 +47,23 @@ export const PATHS = {
     user: '/user',
     addTest: '/addtest',
     editTest: '/edittest',
+    addObjective: '/addobjective',
     dashboard: '/dashboard',
 }
 
 const logoText = "Eagle's Math"
 const navItemsDesctop = [
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.description}>Главная страница</NavLink>,
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.materials}>Материалы</NavLink>,
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.tasks}>Задачи</NavLink>,
+    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.materials}>Теория</NavLink>,
+    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.tasks}>Практика</NavLink>,
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.contacts}>Контакты</NavLink>,
     <NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>,
 ];
 
 const navItemsMobile = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.description}>Главная страница</NavLink>,
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.materials}>Материалы</NavLink>,
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Задачи</NavLink>,
+    <NavLink className={s.NavLinkCSSMobile} to={PATHS.materials}>Теория</NavLink>,
+    <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Практика</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.contacts}>Контакты</NavLink>,
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>,
 ];

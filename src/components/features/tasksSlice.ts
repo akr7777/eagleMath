@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {contactsAPI, ContentAPI, testAPI} from "../api/api";
+import {ContentAPI, objectiveAPI, testAPI} from "../api/api";
 import {getAllCategoriesThunk, IdFiledType} from "./categoriesSlice";
 import {getAllMaterialsThunk} from "./materialsSlice";
 import {ResultCodesEnum, ResultCodesEnum as resultCodes} from './../common/resultCodes';
@@ -24,6 +24,14 @@ export type TestType = {
     contentId: IdFiledType,
     content: Array<TestContentType>
 }
+export type ObjectiveType = {
+    _id: string,
+    title: string,
+    picture?: any,
+    contentId: IdFiledType,
+    content: string,
+    answer: string,
+}
 type InitStateTasksType = {
     tasks: Array<TaskType>,
     favoriteTasksIds: Array<IdFiledType>,
@@ -32,12 +40,11 @@ type InitStateTasksType = {
     testAnswers: Array<TestAnswersType>,
     //addTest: AddTestType,
     testContentIds: Array<IdFiledType>,
+    objectives: Array<ObjectiveType>,
 }
 
 let initialState: InitStateTasksType = {
-    tasks: [
-        /*{id: '', parentId: '', label: ""},*/
-    ],
+    tasks: [],
     favoriteTasksIds: [],
     isLoading: true,
     test: {
@@ -51,7 +58,8 @@ let initialState: InitStateTasksType = {
         contentId: "",
         content: [],
     },*/
-    testContentIds: []
+    testContentIds: [],
+    objectives: [],
 }
 
 export const getAllTasksThunk = createAsyncThunk(
@@ -118,6 +126,23 @@ export const setTestResultThunk = createAsyncThunk(
     }
 );
 
+export type ObjectiveResultType = {
+    userId: string,
+    objectiveId: string,
+    title: string
+    content: string,
+    answer: string,
+    result: string,
+    date: string,
+ }
+export const setObjectiveResultThunk = createAsyncThunk(
+    'tasks/setObjectiveResultThunk',
+    async (data:ObjectiveResultType, {rejectWithValue, dispatch}) => {
+        const res = await objectiveAPI.setObjectiveResult(data);
+        return res.data;
+    }
+);
+
 export const addTaskToFavoritesThunk = createAsyncThunk(
     'tasks/addTaskToFavoritesThunk',
     async (content:{userId: IdFiledType, contentId:IdFiledType}, {rejectWithValue, dispatch}) => {
@@ -162,6 +187,22 @@ export const addTaskThunk = createAsyncThunk(
         dispatch(getAllTasksThunk());
         dispatch(getAllCategoriesThunk());
         return res.data;
+    }
+);
+
+export const getObjectiveByContentIdThunk = createAsyncThunk(
+    'tasks/getObjectiveByContentIdThunk',
+    async (contentId:IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await objectiveAPI.getObjectiveByContentId(contentId);
+        return res.data;
+    }
+);
+
+export const addNewObjectiveThunk = createAsyncThunk(
+    'tasks/addNewObjectiveThunk',
+    async (data: ObjectiveType, {rejectWithValue, dispatch}) => {
+        const res = await objectiveAPI.addNewObjective({...data});
+        return res.data; //возывращает массив id Array<IdFieldType>
     }
 );
 
@@ -270,15 +311,41 @@ export const tasksSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(getTestByIdThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
+
+
+        builder.addCase(addNewObjectiveThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
+        builder.addCase(addNewObjectiveThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<{
+            objectives: Array<ObjectiveType>,
+            resultCode: number,
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success)
+                state.objectives = [...action.payload.objectives]
+            state.isLoading = false;
+        })
+        builder.addCase(addNewObjectiveThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
+
+        builder.addCase(getObjectiveByContentIdThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
+        builder.addCase(getObjectiveByContentIdThunk.fulfilled, (state: InitStateTasksType, action:PayloadAction<{
+            objectives: Array<ObjectiveType>,
+            resultCode: number,
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success)
+                state.objectives = [...action.payload.objectives]
+            else if (action.payload.resultCode === resultCodes.Error)
+                state.objectives = [];
+            state.isLoading = false;
+        })
+        builder.addCase(getObjectiveByContentIdThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
+
+        builder.addCase(setObjectiveResultThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
+        builder.addCase(setObjectiveResultThunk.fulfilled, (state: InitStateTasksType) => {state.isLoading = false;})
+        builder.addCase(setObjectiveResultThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
     },
 })
 
 export const {
     pushTestAnswerAC,
     clearTestAnswersAC,
-    /*setAllTasksAC,
-    addIdToFavoritesTasksAC,
-    deleteIdFromFavoritesTasksAC*/
 } = tasksSlice.actions;
 
 

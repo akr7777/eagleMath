@@ -19,8 +19,8 @@ import Preloader from "../common/Preloader";
 const Login = () => {
     const [error, setError] = useState<string>('');
     const serverError: string = useSelector((state: RootState) => state.auth.loginServerError);
-    const [email, setEmail] = useState<string>('akrov77@gmail.com');
-    const [password, setPassword] = useState<string>('111111');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     const dispatch = useAppDispatch();
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);

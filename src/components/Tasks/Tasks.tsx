@@ -54,7 +54,7 @@ export const Tasks = () => {
                 ? <Preloader/>
                 : <Container className={s.wrapped_div}>
                     <div className={s.someDiv1}>
-                        <Typography variant={'h4'}>Задачи</Typography>
+                        <Typography variant={'h4'}>Практика</Typography>
                     </div>
                     <div className={s.someDiv1}>
                         <Typography variant={'h6'}>

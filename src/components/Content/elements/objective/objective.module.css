@@ -1,0 +1,69 @@
+.main_div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0 20px 0;
+}
+.selection {
+    min-width: 400px;
+    min-height: 35px;
+    font-family: Arial;
+    font-size: 18px;
+    border-radius: 7px;
+}
+.selection_error {
+    background-color: #f5bbbb;
+}
+.selection_option {
+    text-align: center;
+}
+.picture_div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.button_div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.button1 {
+    width: 400px;
+    box-shadow: #abbee3 5px 5px;
+}
+
+.content_object_div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: black 1px solid;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 30px 0 30px 0;
+    padding: 15px;
+}
+.content_one_objective_div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.content_answer_div {
+    width: 300px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: Helvetica;
+    min-height: 35px;
+    min-width: 350px;
+    padding: 0 10px 0 10px;
+    text-align: center;
+}
+.content_answer_div_success {
+    background-color: darkseagreen;
+}
+.content_answer_div_error {
+    background-color: palevioletred;
+}

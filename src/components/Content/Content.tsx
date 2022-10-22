@@ -25,6 +25,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ContentImage from "./elements/content-paragraph";
 import ContentParagraph from "./elements/content-paragraph";
+import ObjectiveContent from "./elements/objective/objective-content";
 
 export const initNewChapter: ContentType = {
     contentId: '',
@@ -115,6 +116,8 @@ const Content = () => {
                     }
 
                     <TestContent/>
+
+                    <ObjectiveContent/>
 
                 </Container>
         }

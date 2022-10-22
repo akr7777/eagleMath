@@ -20,6 +20,7 @@ import Content from "./components/Content/Content";
 import ChangeContent from "./components/Content/elements/ChangeContent";
 import UserInfo from "./components/Dashboard/elements/user-info";
 import AddTest from "./components/Content/elements/test/add_test/add-test";
+import AddObjective from "./components/Content/elements/objective/add-objective";
 
 const Layout = () => {
     return <div className={s.appWrapper}>
@@ -60,6 +61,7 @@ function App() {
                 <Route path={PATHS.editTest+'/:testId'} element={<EditTest/>}/>
 
                 <Route path={PATHS.addTest} element={<AddTest/>}/>
+                <Route path={PATHS.addObjective} element={<AddObjective/>}/>
 
                 <Route path={PATHS.singup} element={<SingUpPage/>}/>
 

@@ -31,7 +31,7 @@ const Materials = () => {
                 ? <Preloader/>
                 : <Container className={s.wrapped_div}>
                     <div className={s.someDiv1}>
-                        <Typography variant={'h4'}>Материалы</Typography>
+                        <Typography variant={'h4'}>Теория</Typography>
                     </div>
                     <div className={s.someDiv1}>
                         <Typography variant={'h6'}>
