@@ -13,6 +13,7 @@ import TestResultsDashboard from "./elements/test-results-dashboard";
 import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
+import ObjectiveResultDashboard from "./elements/objective-results-dashboard";
 
 const Dashboard = () => {
     //const isLoading = useSelector((state: RootState) => state.dashboard.isLoading);
@@ -41,6 +42,8 @@ const Dashboard = () => {
                     <Users/>
 
                     <TestResultsDashboard/>
+
+                    <ObjectiveResultDashboard/>
 
                     {
                         isAdmin && <div className={s1.add_buttons_div}>

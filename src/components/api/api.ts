@@ -145,6 +145,9 @@ export const objectiveAPI = {
     },
     setObjectiveResult:(data: ObjectiveResultType): Promise<AxiosResponse> => {
         return instance.post('objectives/setObjectiveResult', {...data})
+    },
+    getObjectiveResultsByUserId: (userId: IdFiledType): Promise<AxiosResponse> => {
+        return instance.post('objectives/getObjectiveResultsByUserId', {userId: userId});
     }
 }
 

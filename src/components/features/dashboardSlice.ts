@@ -1,11 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
-import {ContentAPI, NotesAPI, testAPI, usersAPI} from "../api/api";
-//import {addTaskToFavoritesThunk, deleteTaskFromFavoritesThunk} from "./tasksSlice";
+import {ContentAPI, NotesAPI, objectiveAPI, testAPI, usersAPI} from "../api/api";
 import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 import {TestContentType} from "./tasksSlice";
-import {getUsers, UserType} from "./usersSlice";
+import {UserType} from "./usersSlice";
 
 export type ContentTypes = "C" | "M" | "T";
 export type NotesStatusType = "All" | "Active" | "Completed";
@@ -24,6 +23,15 @@ export type TestResultType = {
     protocol: Array<TestResultProtocolType>,
     date: string,
 }
+export type ObjectiveResultsType = {
+    userId: IdFiledType,
+    objectiveId: string,
+    title: string,
+    content: string,
+    answer: string,
+    result: string,
+    date: string,
+}
 type DashboardStateType = {
     favoriteContent: Array<IdFiledType>,
     notes: Array<NoteType>,
@@ -32,6 +40,7 @@ type DashboardStateType = {
     notesStatus: NotesStatusType,
     testResult: Array<TestResultType>,
     userList: UserType[],
+    objectiveResults: Array<ObjectiveResultsType>,
 }
 
 const dashboardInitialState:DashboardStateType = {
@@ -42,6 +51,7 @@ const dashboardInitialState:DashboardStateType = {
     notesStatus: "All",
     testResult: [],
     userList: [],
+    objectiveResults: [],
 }
 
 export const getUserListThunk = createAsyncThunk(
@@ -130,7 +140,13 @@ export const getTestResultsByUserId = createAsyncThunk(
     }
 );
 
-
+export const getObjectiveResultsByUserId = createAsyncThunk(
+    'dashboard/getObjectiveResultsByUserId',
+    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await objectiveAPI.getObjectiveResultsByUserId(userId);
+        return res.data;
+    }
+);
 
 
 export const dashboardSlice = createSlice({
@@ -284,6 +300,17 @@ export const dashboardSlice = createSlice({
         })
         builder.addCase(getUserListThunk.rejected, (state: DashboardStateType) => {state.isLoading = false;})
 
+        builder.addCase(getObjectiveResultsByUserId.pending, (state: DashboardStateType) => {state.isLoading = true;})
+        builder.addCase(getObjectiveResultsByUserId.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            objectiveResults: Array<ObjectiveResultsType>,
+            resultCode: resultCodes,
+        }>) => {
+            if (action.payload.resultCode === resultCodes.Success) {
+                state.objectiveResults = [...action.payload.objectiveResults];
+            }
+            state.isLoading = false;
+        })
+        builder.addCase(getObjectiveResultsByUserId.rejected, (state: DashboardStateType) => {state.isLoading = false;})
     }
 })
 export const {changeSearchText, changeNotesFilterStatus} = dashboardSlice.actions;

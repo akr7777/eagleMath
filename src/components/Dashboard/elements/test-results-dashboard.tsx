@@ -21,6 +21,7 @@ import {UserType} from "../../features/usersSlice";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
 import TestResultDashboardFilters from "./test-result-dashboard-filters";
 import {Dayjs} from "dayjs";
+import {v4} from "uuid";
 
 const TestResultsDashboard = () => {
     const dispatch = useAppDispatch();
@@ -143,7 +144,7 @@ const TestResultsDashboard = () => {
                                     </td>
                                 </tr>
                                 {rowIndex === protocolRowIndex && <tr>
-                                    <td colSpan={3}>
+                                    <td colSpan={3} key={v4()}>
                                         {
                                             result.protocol.map((protocolItem: TestResultProtocolType, protocolIndex) => {
                                                 return <div

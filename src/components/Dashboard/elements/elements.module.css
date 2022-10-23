@@ -116,3 +116,24 @@
     align-items: center;
     justify-content: flex-end;
 }
+
+.objective_result_cell_success {
+    border-radius: 10px;
+    background-color: darkseagreen;
+}
+.objective_result_cell_error {
+    border-radius: 10px;
+    background-color: indianred;
+}
+
+.objective_results_filter_div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    margin: 5px 0 10px 0;
+    width: 100%;
+    padding: 0 20px 0 20px;
+}
+.objective_result_fields {
+    height: 35px;
+}
