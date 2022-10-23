@@ -15,6 +15,7 @@ import IconTask from '@mui/icons-material/AppRegistration';
 import Line from "../../common/line";
 import s2 from "./elements.module.css"
 import {getFavoritesThunk} from "../../features/dashboardSlice";
+import TextField from "@mui/material/TextField";
 
 type FavoriteMaterialsPropsType = {userId: IdFiledType}
 const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
@@ -28,7 +29,8 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
         dispatch(getFavoritesThunk(props.userId));
     }, [props.userId]);
 
-    const list:Array<FavoriteContentOutputType> = FavoriteContent();
+    const [searchValue, setSearchValue] = useState<string>('');
+    const list:Array<FavoriteContentOutputType> = FavoriteContent().filter(el => el.label.toLowerCase().includes(searchValue.toLowerCase()));
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
 
     return <div className={s2.div1}>
@@ -41,6 +43,14 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
                 <Typography variant={'h5'}>Избранные материалы</Typography>
             </AccordionSummary>
             <AccordionDetails>
+
+                    <TextField variant={"standard"}
+                               label={"Поиск"}
+                               value={searchValue}
+                               onChange={(e) => setSearchValue(e.currentTarget.value)}
+                               className={s2.text_field_2}
+                    />
+
                     {
                         list.map(item => {
                             return <div key={item.contentId}

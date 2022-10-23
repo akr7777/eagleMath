@@ -89,7 +89,6 @@ const ObjectiveContent = () => {
                                disabled={answerInput?.isGiven}
                     />
                     <Button onClick={onOkClickHandler} disabled={answerInput?.isGiven}>OK</Button>
-                    {obj.answer}
 
                 </div>
             })

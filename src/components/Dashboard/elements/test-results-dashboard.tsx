@@ -18,10 +18,36 @@ import {
 } from "../../features/dashboardSlice";
 import {IdFiledType} from "../../features/categoriesSlice";
 import {UserType} from "../../features/usersSlice";
+import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
+import TestResultDashboardFilters from "./test-result-dashboard-filters";
+import {Dayjs} from "dayjs";
 
 const TestResultsDashboard = () => {
     const dispatch = useAppDispatch();
-    const testResults: Array<TestResultType> = useSelector((state: RootState) => state.dashboard.testResult);
+
+    //const testResultsResults = useSelector((state: RootState) => state.dashboard.testResult);
+    //const minTestResult = Math.min(...testResultsResults.map(el => el.result));
+    //const maxTestResult = Math.max(...testResultsResults.map(el => el.result));
+    const [dateFilterValue, setDateFilterValue] = React.useState<Dayjs | null>(null);
+
+    const [testResultTitleFilter, setTestResultTitleFilter] = useState<string>('');
+    const [resultValueRange, setResultValueRange] = React.useState<number[]>([0, 100]);
+
+    const testResults: Array<TestResultType> = useSelector((state: RootState) => state.dashboard.testResult).filter(el => {
+            const resultPercent = Math.round(100 * el.result / el.protocol.length);
+            if (dateFilterValue) {
+                if (
+                    el.title.toLowerCase().includes(testResultTitleFilter.toLowerCase()) &&
+                    resultPercent >= Number(resultValueRange[0]) && resultPercent <= Number(resultValueRange[1]) &&
+                    dateFilterValue.format('DD.MM.YYYY') === el.date.slice(0, 10)
+                ) return el;
+            } else if (
+                el.title.toLowerCase().includes(testResultTitleFilter.toLowerCase()) &&
+                resultPercent >= Number(resultValueRange[0]) && resultPercent <= Number(resultValueRange[1])
+            ) return el;
+        }
+    );
+
     const [selectedIndex, setSelectedIndex] = useState<number>(-1);
     const [protocolRowIndex, setProtocolRowIndex] = useState<number>(-1);
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
@@ -48,21 +74,31 @@ const TestResultsDashboard = () => {
             <AccordionDetails>
 
                 {
-                    isAdmin && <div className={s1.user_id_div}>
+                    isAdmin && <TestResultDashboardUserChoose setUserId={setUserId} userList={userList}/>
+                    /*<div className={s1.user_id_div}>
                         <select
                             className={s1.user_id_selection}
-                        onChange={(e) => setUserId(e.currentTarget.value)}
-                    >
-                        {
-                            userList.map((user: UserType) => {
-                                return <option value={user.userId}>
-                                    {user.name}
-                                </option>
-                            })
-                        }
-                    </select>
-                    </div>
+                            onChange={(e) => setUserId(e.currentTarget.value)}
+                        >
+                            <option value={""}></option>
+                            {
+                                userList.map((user: UserType) => {
+                                    return <option key={user.userId} value={user.userId}>
+                                        {user.name}
+                                    </option>
+                                })
+                            }
+                        </select>
+                    </div>*/
                 }
+
+                <TestResultDashboardFilters
+                    testResultTitleFilter={testResultTitleFilter} setTestResultTitleFilter={setTestResultTitleFilter}
+                    resultValueRange={resultValueRange} setResultValueRange={setResultValueRange}
+                    dateFilterValue={dateFilterValue} setDateFilterValue={setDateFilterValue}
+                    /*testResultFrom={testResultFrom} setTestResultFrom={setTestResultFrom}
+                    testResultTo={testResultTo} setTestResultTo={setTestResultTo}*/
+                />
 
                 <table className={s1.results_table}>
                     <thead>
@@ -76,7 +112,7 @@ const TestResultsDashboard = () => {
                     <tbody>
                     {
                         testResults.map((result, rowIndex) => {
-                            return <>
+                            return (<>
                                 <tr
                                     key={rowIndex}
                                     className={rowIndex === selectedIndex ? s1.table_tr_style_selected : ""}
@@ -86,7 +122,7 @@ const TestResultsDashboard = () => {
                                         {result.title}
                                     </td>
                                     <td>
-                                        {100 * result.result / result.protocol.length}%
+                                        {Math.round(100 * result.result / result.protocol.length)}%
                                         : {result.result} из {result.protocol.length}
                                     </td>
                                     <td>
@@ -131,7 +167,7 @@ const TestResultsDashboard = () => {
                                     </td>
                                 </tr>
                                 }
-                            </>
+                            </>)
                         })
                     }
                     </tbody>
