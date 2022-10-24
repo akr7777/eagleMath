@@ -6,13 +6,9 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {Typography} from "@mui/material";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import IconMaterial from "@mui/icons-material/AutoStories";
-import IconTask from "@mui/icons-material/AppRegistration";
-import Line from "../../common/line";
 import {IdFiledType} from "../../features/categoriesSlice";
-import {FavoriteContent, FavoriteContentOutputType} from "../utils/utils";
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import {getUsers, searchFieldChange, UserType} from "../../features/usersSlice";
+import { getUsersThunk, searchFieldChange, UserType} from "../../features/usersSlice";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import Preloader from "../../common/Preloader";
@@ -24,7 +20,7 @@ const Users = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     useEffect(() => {
-        dispatch(getUsers());
+        dispatch(getUsersThunk());
     }, []);
 
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
@@ -37,6 +33,7 @@ const Users = () => {
     const onSearchFieldChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         dispatch(searchFieldChange(e.currentTarget.value))
     }
+    //const isLoading: boolean = false;
 
     return <>
         {

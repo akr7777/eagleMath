@@ -17,6 +17,8 @@ import {UserType} from "../../features/usersSlice";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
 import {Dayjs} from "dayjs";
 import ObjectiveResultsDashboardFilter from "./objective-result-dashboard-filters";
+import LinearProgress from '@mui/material/LinearProgress';
+import Preloader from "../../common/Preloader";
 
 export type UserAnswerFilterType = "Wrong" | "Right" | "";
 const ObjectiveResultDashboard = () => {
@@ -60,6 +62,8 @@ const ObjectiveResultDashboard = () => {
         dispatch(getObjectiveResultsByUserId(userId));
     }, [userId]);
 
+    const isLoading:boolean = useSelector((state: RootState) => state.dashboard.loading.objectivesResultsLoading);
+
     return <div className={s2.div1}>
         <Accordion className={s1.accordion}>
             <AccordionSummary
@@ -75,54 +79,61 @@ const ObjectiveResultDashboard = () => {
                     isAdmin && <TestResultDashboardUserChoose setUserId={setUserId} userList={userList}/>
                 }
 
-                <ObjectiveResultsDashboardFilter
-                    titleResultFilter={titleResultFilter} setTitleResultFilter={setTitleResultFilter}
-                    contentResultFilter={contentResultFilter} setContentResultFilter={setContentResultFilter}
-                    userAnswerFilter={userAnswerFilter} setUserAnswerFilter={setUserAnswerFilter}
-                    dateFilterValue={dateFilterValue} setDateFilterValue={setDateFilterValue}
-                />
+                {
+                    isLoading
+                        ? <LinearProgress/>
+                        : <>
+                            <ObjectiveResultsDashboardFilter
+                                titleResultFilter={titleResultFilter} setTitleResultFilter={setTitleResultFilter}
+                                contentResultFilter={contentResultFilter} setContentResultFilter={setContentResultFilter}
+                                userAnswerFilter={userAnswerFilter} setUserAnswerFilter={setUserAnswerFilter}
+                                dateFilterValue={dateFilterValue} setDateFilterValue={setDateFilterValue}
+                            />
 
-                <table className={s1.results_table}>
-                    <thead>
-                    <tr>
-                        <th>Название задачи</th>
-                        <th>Условия задачи</th>
-                        <th>Полученный ответ</th>
-                        <th>Время завершения теста</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                            <table className={s1.results_table}>
+                                <thead>
+                                <tr>
+                                    <th>Название задачи</th>
+                                    <th>Условия задачи</th>
+                                    <th>Полученный ответ</th>
+                                    <th>Время завершения теста</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                    {
-                        objectiveResults.map((result, rowIndex) => {
-                            return <tr
-                                key={rowIndex}
-                                className={rowIndex === selectedIndex ? s1.table_tr_style_selected : ""}
-                                onClick={() => setSelectedIndex(rowIndex)}
-                            >
-                                <td>
-                                    {result.title}
-                                </td>
-                                <td>
-                                    {result.content}
-                                </td>
-                                <td className={rowIndex !== selectedIndex
-                                    ? result.result === result.answer
-                                        ? s2.objective_result_cell_success
-                                        : s2.objective_result_cell_error
-                                    : ""
+                                {
+                                    objectiveResults.map((result, rowIndex) => {
+                                        return <tr
+                                            key={rowIndex}
+                                            className={rowIndex === selectedIndex ? s1.table_tr_style_selected : ""}
+                                            onClick={() => setSelectedIndex(rowIndex)}
+                                        >
+                                            <td>
+                                                {result.title}
+                                            </td>
+                                            <td>
+                                                {result.content}
+                                            </td>
+                                            <td className={rowIndex !== selectedIndex
+                                                ? result.result === result.answer
+                                                    ? s2.objective_result_cell_success
+                                                    : s2.objective_result_cell_error
+                                                : ""
+                                            }
+                                            >
+                                                {result.result}
+                                            </td>
+                                            <td>
+                                                {result.date}
+                                            </td>
+                                        </tr>
+                                    })
                                 }
-                                >
-                                    {result.result}
-                                </td>
-                                <td>
-                                    {result.date}
-                                </td>
-                            </tr>
-                        })
-                    }
-                    </tbody>
-                </table>
+                                </tbody>
+                            </table>
+                        </>
+                }
+
             </AccordionDetails>
         </Accordion>
 

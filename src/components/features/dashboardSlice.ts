@@ -37,6 +37,11 @@ type DashboardStateType = {
     notes: Array<NoteType>,
     searchNotesField: string,
     isLoading: boolean,
+    loading: {
+        usersListLoading: boolean,
+        testsResultsLoading: boolean
+        objectivesResultsLoading: boolean,
+    }
     notesStatus: NotesStatusType,
     testResult: Array<TestResultType>,
     userList: UserType[],
@@ -46,6 +51,11 @@ type DashboardStateType = {
 const dashboardInitialState:DashboardStateType = {
     favoriteContent: [],
     isLoading: false,
+    loading: {
+        usersListLoading: false,
+        testsResultsLoading: false,
+        objectivesResultsLoading: false,
+    },
     notes: [],
     searchNotesField: '',
     notesStatus: "All",
@@ -281,7 +291,7 @@ export const dashboardSlice = createSlice({
             state.isLoading = false;
         })
 
-        builder.addCase(getTestResultsByUserId.pending, (state: DashboardStateType) => {state.isLoading = true;})
+        builder.addCase(getTestResultsByUserId.pending, (state: DashboardStateType) => {state.loading = {...state.loading, testsResultsLoading: true}})
         builder.addCase(getTestResultsByUserId.fulfilled, (state: DashboardStateType, action:PayloadAction<{
             testResults: Array<TestResultType>,
             resultCode: resultCodes,
@@ -289,18 +299,19 @@ export const dashboardSlice = createSlice({
             if (action.payload.resultCode === resultCodes.Success) {
                 state.testResult = [...action.payload.testResults];
             }
-            state.isLoading = false;
+            state.loading = {...state.loading, testsResultsLoading: false}
         })
-        builder.addCase(getTestResultsByUserId.rejected, (state: DashboardStateType) => {state.isLoading = false;})
+        //builder.addCase(getTestResultsByUserId.rejected, (state: DashboardStateType) => {state.isLoading = false;})
+        builder.addCase(getTestResultsByUserId.rejected, (state: DashboardStateType) => {state.loading = {...state.loading, testsResultsLoading: false}})
 
-        builder.addCase(getUserListThunk.pending, (state: DashboardStateType) => {state.isLoading = true;})
+        builder.addCase(getUserListThunk.pending, (state: DashboardStateType) => {state.loading = {...state.loading, usersListLoading: true}})
         builder.addCase(getUserListThunk.fulfilled, (state: DashboardStateType, action: PayloadAction<UserType[]>) => {
             state.userList = [...action.payload];
-            state.isLoading = false;
+            state.loading = {...state.loading, usersListLoading: false}
         })
-        builder.addCase(getUserListThunk.rejected, (state: DashboardStateType) => {state.isLoading = false;})
+        builder.addCase(getUserListThunk.rejected, (state: DashboardStateType) => {state.loading = {...state.loading, usersListLoading: false}})
 
-        builder.addCase(getObjectiveResultsByUserId.pending, (state: DashboardStateType) => {state.isLoading = true;})
+        builder.addCase(getObjectiveResultsByUserId.pending, (state: DashboardStateType) => {state.loading = {...state.loading, objectivesResultsLoading: true}})
         builder.addCase(getObjectiveResultsByUserId.fulfilled, (state: DashboardStateType, action:PayloadAction<{
             objectiveResults: Array<ObjectiveResultsType>,
             resultCode: resultCodes,
@@ -308,9 +319,9 @@ export const dashboardSlice = createSlice({
             if (action.payload.resultCode === resultCodes.Success) {
                 state.objectiveResults = [...action.payload.objectiveResults];
             }
-            state.isLoading = false;
+            state.loading = {...state.loading, objectivesResultsLoading: false}
         })
-        builder.addCase(getObjectiveResultsByUserId.rejected, (state: DashboardStateType) => {state.isLoading = false;})
+        builder.addCase(getObjectiveResultsByUserId.rejected, (state: DashboardStateType) => {state.loading = {...state.loading, objectivesResultsLoading: false}})
     }
 })
 export const {changeSearchText, changeNotesFilterStatus} = dashboardSlice.actions;

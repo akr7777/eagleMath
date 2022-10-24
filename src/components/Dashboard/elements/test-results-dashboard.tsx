@@ -22,6 +22,7 @@ import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
 import TestResultDashboardFilters from "./test-result-dashboard-filters";
 import {Dayjs} from "dayjs";
 import {v4} from "uuid";
+import LinearProgress from '@mui/material/LinearProgress';
 
 const TestResultsDashboard = () => {
     const dispatch = useAppDispatch();
@@ -57,11 +58,12 @@ const TestResultsDashboard = () => {
     //let userId: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
     const [userId, setUserId] = useState<IdFiledType>(useSelector((state: RootState) => state.auth.user.id))
 
-
     useEffect(() => {
         dispatch(getUserListThunk());
         dispatch(getTestResultsByUserId(userId));
     }, [userId]);
+
+    const isLoading:boolean = useSelector((state: RootState) => state.dashboard.loading.testsResultsLoading);
 
     return <div className={s2.div1}>
         <Accordion className={s1.accordion}>
@@ -73,106 +75,98 @@ const TestResultsDashboard = () => {
                 <Typography variant={'h5'}>Результаты тестов пользователя</Typography>
             </AccordionSummary>
             <AccordionDetails>
-
                 {
                     isAdmin && <TestResultDashboardUserChoose setUserId={setUserId} userList={userList}/>
-                    /*<div className={s1.user_id_div}>
-                        <select
-                            className={s1.user_id_selection}
-                            onChange={(e) => setUserId(e.currentTarget.value)}
-                        >
-                            <option value={""}></option>
-                            {
-                                userList.map((user: UserType) => {
-                                    return <option key={user.userId} value={user.userId}>
-                                        {user.name}
-                                    </option>
-                                })
-                            }
-                        </select>
-                    </div>*/
                 }
 
-                <TestResultDashboardFilters
-                    testResultTitleFilter={testResultTitleFilter} setTestResultTitleFilter={setTestResultTitleFilter}
-                    resultValueRange={resultValueRange} setResultValueRange={setResultValueRange}
-                    dateFilterValue={dateFilterValue} setDateFilterValue={setDateFilterValue}
-                    /*testResultFrom={testResultFrom} setTestResultFrom={setTestResultFrom}
-                    testResultTo={testResultTo} setTestResultTo={setTestResultTo}*/
-                />
+                {
+                    isLoading
+                        ? <LinearProgress/>
+                        : <>
 
-                <table className={s1.results_table}>
-                    <thead>
-                    <tr>
-                        <th>Название теста</th>
-                        <th>Результат</th>
-                        <th>Время завершения теста</th>
-                        <th>Детали</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        testResults.map((result, rowIndex) => {
-                            return (<>
-                                <tr
-                                    key={rowIndex}
-                                    className={rowIndex === selectedIndex ? s1.table_tr_style_selected : ""}
-                                    onClick={() => setSelectedIndex(rowIndex)}
-                                >
-                                    <td>
-                                        {result.title}
-                                    </td>
-                                    <td>
-                                        {Math.round(100 * result.result / result.protocol.length)}%
-                                        : {result.result} из {result.protocol.length}
-                                    </td>
-                                    <td>
-                                        {result.date}
-                                    </td>
-                                    <td>
-                                        {
-                                            rowIndex === protocolRowIndex
-                                                ? <KeyboardArrowUpIcon
-                                                    className={s1.arrow}
-                                                    onClick={() => setProtocolRowIndex(-1)}
-                                                />
-                                                : <KeyboardArrowDownIcon
-                                                    className={s1.arrow}
-                                                    onClick={() => setProtocolRowIndex(rowIndex)}
-                                                />
-                                        }
-                                    </td>
+
+                            <TestResultDashboardFilters
+                                testResultTitleFilter={testResultTitleFilter} setTestResultTitleFilter={setTestResultTitleFilter}
+                                resultValueRange={resultValueRange} setResultValueRange={setResultValueRange}
+                                dateFilterValue={dateFilterValue} setDateFilterValue={setDateFilterValue}
+                            />
+
+                            <table className={s1.results_table}>
+                                <thead>
+                                <tr>
+                                    <th>Название теста</th>
+                                    <th>Результат</th>
+                                    <th>Время завершения теста</th>
+                                    <th>Детали</th>
                                 </tr>
-                                {rowIndex === protocolRowIndex && <tr>
-                                    <td colSpan={3} key={v4()}>
-                                        {
-                                            result.protocol.map((protocolItem: TestResultProtocolType, protocolIndex) => {
-                                                return <div
-                                                    className={s1.protocol_div}
-                                                    key={protocolItem.questionId}
-                                                >
-                                                    <Typography className={
-                                                        protocolItem.answer === protocolItem.receivedAnswer ? s1.question_success : s1.question_error
-                                                    }>
-                                                        <b>Вопрос N{protocolIndex + 1}: {protocolItem.question}</b>
-                                                    </Typography>
-                                                    <Typography>
-                                                        Полученный ответ: {protocolItem.receivedAnswer}
-                                                    </Typography>
-                                                    <Typography>
-                                                        Верный ответ: {protocolItem.answer}
-                                                    </Typography>
-                                                </div>
-                                            })
-                                        }
-                                    </td>
-                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    testResults.map((result, rowIndex) => {
+                                        return (<>
+                                            <tr
+                                                key={rowIndex}
+                                                className={rowIndex === selectedIndex ? s1.table_tr_style_selected : ""}
+                                                onClick={() => setSelectedIndex(rowIndex)}
+                                            >
+                                                <td>
+                                                    {result.title}
+                                                </td>
+                                                <td>
+                                                    {Math.round(100 * result.result / result.protocol.length)}%
+                                                    : {result.result} из {result.protocol.length}
+                                                </td>
+                                                <td>
+                                                    {result.date}
+                                                </td>
+                                                <td>
+                                                    {
+                                                        rowIndex === protocolRowIndex
+                                                            ? <KeyboardArrowUpIcon
+                                                                className={s1.arrow}
+                                                                onClick={() => setProtocolRowIndex(-1)}
+                                                            />
+                                                            : <KeyboardArrowDownIcon
+                                                                className={s1.arrow}
+                                                                onClick={() => setProtocolRowIndex(rowIndex)}
+                                                            />
+                                                    }
+                                                </td>
+                                            </tr>
+                                            {rowIndex === protocolRowIndex && <tr>
+                                                <td colSpan={3} key={v4()}>
+                                                    {
+                                                        result.protocol.map((protocolItem: TestResultProtocolType, protocolIndex) => {
+                                                            return <div
+                                                                className={s1.protocol_div}
+                                                                key={protocolItem.questionId}
+                                                            >
+                                                                <Typography className={
+                                                                    protocolItem.answer === protocolItem.receivedAnswer ? s1.question_success : s1.question_error
+                                                                }>
+                                                                    <b>Вопрос N{protocolIndex + 1}: {protocolItem.question}</b>
+                                                                </Typography>
+                                                                <Typography>
+                                                                    Полученный ответ: {protocolItem.receivedAnswer}
+                                                                </Typography>
+                                                                <Typography>
+                                                                    Верный ответ: {protocolItem.answer}
+                                                                </Typography>
+                                                            </div>
+                                                        })
+                                                    }
+                                                </td>
+                                            </tr>
+                                            }
+                                        </>)
+                                    })
                                 }
-                            </>)
-                        })
-                    }
-                    </tbody>
-                </table>
+                                </tbody>
+                            </table>
+                        </>
+                }
+
+
             </AccordionDetails>
         </Accordion>
 

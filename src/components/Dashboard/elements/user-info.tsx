@@ -7,7 +7,7 @@ import s from "../../common/commonCSS.module.css";
 import s1 from "./elements.module.css";
 import {Typography} from "@mui/material";
 import {useSelector} from "react-redux";
-import {getOneUser, UserType} from "../../features/usersSlice";
+import {getOneUserThunk, UserType} from "../../features/usersSlice";
 import UserInfoDangerZone from "./user-info-danger-zone";
 import FavoriteMaterials from "./Favorites";
 import UserInfoTitle from "./user-info-title";
@@ -19,7 +19,7 @@ const UserInfo = () => {
         dispatch(getOneUser(userId));*/
     useEffect(() => {
         if (userId)
-            dispatch(getOneUser(userId));
+            dispatch(getOneUserThunk(userId));
     }, []);
 
     const isLoading: boolean = useSelector((state: RootState) => state.users.isLoading);

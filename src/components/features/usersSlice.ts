@@ -23,8 +23,8 @@ const authInitState:UsersStateType = {
     user: {userId: '0', name: '', email: '', isAdmin: false}
 }
 
-export const getUsers = createAsyncThunk(
-    'users/getUsers',
+export const getUsersThunk = createAsyncThunk(
+    'users/getUsersThunk',
     async (_, {rejectWithValue, dispatch}) => {
         const res = await usersAPI.getUsers();
         return res.data;
@@ -32,16 +32,16 @@ export const getUsers = createAsyncThunk(
 )
 
 //type GetOneUserDataType = {userId: IdFiledType}
-export const getOneUser = createAsyncThunk(
-    'users/getOneUser',
+export const getOneUserThunk = createAsyncThunk(
+    'users/getOneUserThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await usersAPI.getOneUser(userId);
         return res.data;
     }
 )
 
-export const deleteUser = createAsyncThunk(
-    'users/deleteUser',
+export const deleteUserThunk = createAsyncThunk(
+    'users/deleteUserThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await usersAPI.deleteUser(userId);
         return res.data;
@@ -76,39 +76,39 @@ export const usersSlice = createSlice({
 
 
     extraReducers: (builder) => {
-        builder.addCase(getUsers.pending, (state: UsersStateType) => {
+        builder.addCase(getUsersThunk.pending, (state: UsersStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(getUsers.fulfilled, (state: UsersStateType, action: PayloadAction<UserType[]>) => {
+        builder.addCase(getUsersThunk.fulfilled, (state: UsersStateType, action: PayloadAction<UserType[]>) => {
             state.users = [...action.payload];
             state.isLoading = false;
         })
-        builder.addCase(getUsers.rejected, (state: UsersStateType) => {
+        builder.addCase(getUsersThunk.rejected, (state: UsersStateType) => {
             state.isLoading = false;
         })
 
-        builder.addCase(getOneUser.pending, (state: UsersStateType) => {
+        builder.addCase(getOneUserThunk.pending, (state: UsersStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(getOneUser.fulfilled, (state: UsersStateType, action: PayloadAction<{user: UserType, resultCode: number}>) => {
+        builder.addCase(getOneUserThunk.fulfilled, (state: UsersStateType, action: PayloadAction<{user: UserType, resultCode: number}>) => {
             state.user = {...action.payload.user};
             state.isLoading = false;
         })
-        builder.addCase(getOneUser.rejected, (state: UsersStateType) => {
+        builder.addCase(getOneUserThunk.rejected, (state: UsersStateType) => {
             state.isLoading = false;
         })
 
-        builder.addCase(deleteUser.pending, (state: UsersStateType) => {
+        builder.addCase(deleteUserThunk.pending, (state: UsersStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(deleteUser.fulfilled, (state: UsersStateType, action: PayloadAction<{users: Array<UserType>, resultCode: number}>) => {
+        builder.addCase(deleteUserThunk.fulfilled, (state: UsersStateType, action: PayloadAction<{users: Array<UserType>, resultCode: number}>) => {
             if (action.payload.resultCode === resultCodes.Success) {
                 state.users = [...action.payload.users];
             }
             //state.user = {...action.payload.user};
             state.isLoading = false;
         })
-        builder.addCase(deleteUser.rejected, (state: UsersStateType) => {
+        builder.addCase(deleteUserThunk.rejected, (state: UsersStateType) => {
             state.isLoading = false;
         })
 

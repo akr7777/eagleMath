@@ -20,10 +20,11 @@ const Dashboard = () => {
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const navigate = useNavigate();
 
-    useEffect(() => {
+    let isLoading: boolean = false;
+   /* useEffect(() => {
+        isLoading = useSelector((state: RootState) => state.dashboard.isLoading);
+    }, [])*/
 
-    }, [])
-    const isLoading = false;
     //const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
 
