@@ -2,18 +2,16 @@ import React, {useEffect} from 'react';
 import Container from "@mui/material/Container";
 import {RootState, useAppDispatch} from "../../store/store";
 import {
-    baseContentImageUrl,
     ContentType,
     getContentThunk,
     newChapterChange,
-    setContentThunk
+    setContentThunk, studiedMaterialsThunk
 } from "../features/contentSlice";
-import {Navigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
 import s from "../common/commonCSS.module.css";
 import s1 from "../Content/content.module.css";
-import {Typography} from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {useNavigate} from "react-router-dom";
 import {changeNewChapterIndex} from "../features/contentSlice";
@@ -21,18 +19,17 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ContentHead from "./elements/content-head";
 import TestContent from "./elements/test/test-content";
 import {PATHS} from "../AppBar/AppBar";
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ContentImage from "./elements/content-paragraph";
 import ContentParagraph from "./elements/content-paragraph";
 import ObjectiveContent from "./elements/objective/objective-content";
+import {getObjectiveByContentIdThunk, getTestThunk, ObjectiveType, TestType} from "../features/tasksSlice";
+import AddRemoveContentStudied from "./elements/add-remove-content-studied";
+import {IdFiledType} from "../features/categoriesSlice";
 
 export const initNewChapter: ContentType = {
     contentId: '',
     type: null,
     content: '',
 }
-
 
 const Content = () => {
     const dispatch = useAppDispatch();
@@ -41,13 +38,19 @@ const Content = () => {
     const content: Array<ContentType> = useSelector((state: RootState) => state.content.content);
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.user.isAdmin);
     const navigate = useNavigate();
-    //const newChapterIndex = useSelector((state: RootState) => state.content.newChapterIndex);
+    const userId = useSelector((state: RootState) => state.auth.user.id);
 
     useEffect(() => {
-        //if (content.length === 0)
         dispatch(getContentThunk(contentId || ""));
+        dispatch(getTestThunk(contentId || ""));
+        dispatch(getObjectiveByContentIdThunk(contentId || ""));
+        dispatch(studiedMaterialsThunk(userId))
     }, []);
 
+    const studiedMaterials: Array<IdFiledType> = useSelector((state: RootState) => state.content.studiedMaterials);
+
+    const test: TestType = useSelector((state: RootState) => state.tasks.test);
+    const objectives: Array<ObjectiveType> = useSelector((state: RootState) => state.tasks.objectives);
 
     const addChapterInside = (index: number) => {
         const newElement = {
@@ -115,9 +118,15 @@ const Content = () => {
                     </div>
                     }
 
-                    <TestContent/>
+                    { test.testId && test.title && test.content && <TestContent/> }
 
-                    <ObjectiveContent/>
+                    { objectives.length > 0 && <ObjectiveContent/> }
+
+                    <AddRemoveContentStudied
+                        userId={userId}
+                        contentId={contentId || ""}
+                        isMaterialStudied={studiedMaterials && studiedMaterials.some(elem => elem === contentId)}
+                    />
 
                 </Container>
         }

@@ -12,7 +12,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect} from "react";
 import {
     addCategoryThunk,
     addToFavoritesThunk, deleteCategoryThunk,
@@ -34,24 +34,18 @@ type LinePropsType = {
     label: string,
     isMaterial: boolean,
     contentType: contentTypeType,
+    isMaterialStudied: boolean,
 }
 
 const Line = (props: LinePropsType) => {
     const dispatch = useAppDispatch();
-
-    /*useEffect(()=>{
-        dispatch(contentTypeThunk(props.contentId));
-    }, []);
-    const contentType:ContentTypeVariantsTypes = useSelector((state: RootState) => state.content.contentType);*/
 
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
-    //const [contentName, setContentName] = useState<string>(props.label);
-    //const [isEditContentName, setIsEditContentName] = useState<boolean>(false);
-    const contentName = useSelector((state:RootState) => state.categories.newContentName);
+    const contentName = useSelector((state: RootState) => state.categories.newContentName);
     const editNameId = useSelector((state: RootState) => state.categories.editNameId);
 
     const onContentNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
@@ -74,7 +68,7 @@ const Line = (props: LinePropsType) => {
     }
 
     const deleteCategory = () => {
-        const answer = window.confirm("Удалить категорию "+ props.label +"?");
+        const answer = window.confirm("Удалить категорию " + props.label + "?");
         if (answer) {
             dispatch(deleteCategoryThunk(props.contentId));
             dispatch(getAllCategoriesThunk());
@@ -92,6 +86,8 @@ const Line = (props: LinePropsType) => {
         if (props.contentType === "T")
             dispatch(addTaskThunk(props.contentId));
     }
+
+    //console.log('isMaterialStudied=',isMaterialStudied, 'label=', props.label, 'contentType=', props.contentType)
 
     return <>
         {/*Label*/}
@@ -138,20 +134,32 @@ const Line = (props: LinePropsType) => {
         }
 
         {/*Edit this material. For admin only*/}
-       {/* { isAdmin && <ModeEditIcon onClick={ () => setIsEditContentName(true) } cursor={'pointer'}/> } */}
-        { isAdmin && <ModeEditIcon onClick={editContentTumbler} cursor={'pointer'}/> }
+        {/* { isAdmin && <ModeEditIcon onClick={ () => setIsEditContentName(true) } cursor={'pointer'}/> } */}
+        {isAdmin && <ModeEditIcon onClick={editContentTumbler} cursor={'pointer'}/>}
 
         {/*Move to other folder (category)*/}
-        { isAdmin && <DraggableDialog contentId={props.contentId}/> }
+        {isAdmin && <DraggableDialog contentId={props.contentId}/>}
 
         {/*delete category*/}
-        { isAdmin && !props.isMaterial && <DeleteSweepIcon cursor={'pointer'} onClick={deleteCategory}/>}
+        {isAdmin && !props.isMaterial && <DeleteSweepIcon cursor={'pointer'} onClick={deleteCategory}/>}
 
         {/*add Material Or Task*/}
-        { isAdmin && !props.isMaterial && <AddIcon cursor={'pointer'} onClick={addMaterialOrTask}/>}
+        {isAdmin && !props.isMaterial && <AddIcon cursor={'pointer'} onClick={addMaterialOrTask}/>}
 
         {/*Add new category*/}
-        { isAdmin && !props.isMaterial && <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>}
+        {isAdmin && !props.isMaterial && <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>}
+
+        {/*Is material learned*/}
+        {/*{props.contentType} {isMaterialStudied && <Typography>Studied</Typography>}*/}
+        {
+            /*(props.contentType === "M" || props.contentType === "T")*/ props.isMaterial &&
+            (
+                props.isMaterialStudied
+                    ? <CheckCircleIcon color={"success"}/>
+                    : <CheckCircleIcon color={"warning"}/>
+            )
+        }
+
 
     </>
 }

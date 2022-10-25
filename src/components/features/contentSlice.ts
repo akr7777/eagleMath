@@ -24,6 +24,7 @@ export type ContentInitStateType = {
     newChapter: ContentType,
     newChapterIndex: number,
     contentType: ContentTypeVariantsTypes,
+    studiedMaterials: Array<IdFiledType>,
 }
 const contentInitState:ContentInitStateType = {
     content: [],
@@ -36,6 +37,7 @@ const contentInitState:ContentInitStateType = {
     },
     newChapterIndex: -1,
     contentType: undefined,
+    studiedMaterials: [],
 }
 
 export const getContentThunk = createAsyncThunk(
@@ -105,6 +107,23 @@ export const uploadContentImage = createAsyncThunk(
     }
 );
 
+export const studiedMaterialsThunk = createAsyncThunk(
+    'content/studiedMaterialsThunk',
+    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.studiedMaterials(userId);
+        return res.data;
+    }
+);
+export const setMaterialStudiedThunk = createAsyncThunk(
+    'content/setMaterialStudiedThunk',
+    async (data: {userId: IdFiledType, contentId: IdFiledType, value: boolean}, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.setMaterialStudied(data.userId, data.contentId, data.value);
+        return res.data;
+    }
+);
+
+
+
 export const contentSlice = createSlice({
     name: 'content',
     initialState: contentInitState,
@@ -171,9 +190,7 @@ export const contentSlice = createSlice({
             state.isLoading = false;
         })
 
-        builder.addCase(moveParagraphThunk.pending, (state: ContentInitStateType) => {
-            state.isLoading = true;
-        })
+        builder.addCase(moveParagraphThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
         builder.addCase(moveParagraphThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
             content: Array<ContentType>,
             resultCode: ResultCodesEnum,
@@ -181,9 +198,27 @@ export const contentSlice = createSlice({
             state.content = [...action.payload.content];
             state.isLoading = false;
         })
-        builder.addCase(moveParagraphThunk.rejected, (state: ContentInitStateType) => {
+        builder.addCase(moveParagraphThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
+
+        builder.addCase(studiedMaterialsThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
+        builder.addCase(studiedMaterialsThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+            studiedMaterials: Array<IdFiledType>,
+            resultCode: ResultCodesEnum,
+        }>) => {
+            state.studiedMaterials = action.payload.studiedMaterials;
             state.isLoading = false;
         })
+        builder.addCase(studiedMaterialsThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
+
+        builder.addCase(setMaterialStudiedThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
+        builder.addCase(setMaterialStudiedThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+            studiedMaterials: Array<IdFiledType>,
+            resultCode: ResultCodesEnum,
+        }>) => {
+            state.studiedMaterials = action.payload.studiedMaterials;
+            state.isLoading = false;
+        })
+        builder.addCase(setMaterialStudiedThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
 
     }
 });

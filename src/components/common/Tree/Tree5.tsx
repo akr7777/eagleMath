@@ -3,7 +3,7 @@ import {MaterialType} from "../../features/materialsSlice";
 import PlusIcon from '@mui/icons-material/ControlPoint';
 import MinusIcon from '@mui/icons-material/RemoveCircleOutline';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
 import {TaskType} from "../../features/tasksSlice";
@@ -11,6 +11,7 @@ import {addToShownCats, deleteFromShownCats, IdFiledType} from "../../features/c
 import {CategoryType} from "../../features/categoriesSlice";
 import Line, {contentTypeType} from "../line";
 import HiddenMenu from "./hiddenMenu";
+import {studiedMaterialsThunk} from "../../features/contentSlice";
 
 export type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
 
@@ -54,6 +55,7 @@ type DrawTreePropsType = {
     minusIconClick: (id: IdFiledType) => void,
 
     contentType: contentTypeType,
+    studiedMaterials: Array<IdFiledType>,
 }
 const DrawTree: React.FC<DrawTreePropsType> = ({
                                                    items, isShowArr,
@@ -62,30 +64,8 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                                    plusIconClick, minusIconClick,
                                                    contentType,
                                                    showMenuId, setShowMenuId,
+                                                   studiedMaterials
                                                }) => {
-    /*const dispatch = useAppDispatch();
-    const isShowArr = useSelector((state: RootState) => state.categories.isShownCats);
-    const plusIconClick = (id: IdFiledType) => {
-        dispatch(addToShownCats(id))
-    }
-    const minusIconClick = (id: IdFiledType) => {
-        dispatch(deleteFromShownCats(id))
-    }
-    const selectedId = useSelector((state: RootState) => state.categories.selectedId);*/
-
-    /*const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-    const open = Boolean(anchorEl);
-    //const id = open ? 'simple-popover' : undefined;*/
-
-    //const [showMenuId, setShowMenuId] = useState<IdFiledType>("-1");
-    //const showMenuId = useSelector((state: RootState) => state.categories.showMenuId);
-
     return <div className={s.treeLeaf}>
         {
             items.map(item => {
@@ -115,21 +95,12 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
                                     : <MinusIcon onClick={() => minusIconClick(item.id)}/>
                         }
 
-                        {/*<MouseLineClick
-                            open={open}
-                            handleClose={handleClose}
-                            anchorEl={anchorEl}
-
-                            label={item.label}
-                            contentId={item.id}
-                            isMaterial={isMaterial}
-                            contentType={contentType}
-                        />*/}
                         <Line
                             contentId={item.id}
                             label={item.label}
                             isMaterial={isMaterial}
                             contentType={contentType}
+                            isMaterialStudied={studiedMaterials && studiedMaterials.includes(item.id)}
                         />
 
                     </div>
@@ -159,6 +130,7 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
 
                                 showMenuId: showMenuId,
                                 setShowMenuId: setShowMenuId,
+                                studiedMaterials: studiedMaterials,
                             })
                         }
                     </div>
@@ -169,8 +141,6 @@ const DrawTree: React.FC<DrawTreePropsType> = ({
 }
 
 type TreePropsType = {
-    //categories: Array<CategoryType>,
-    //materials: Array<MaterialType>,
     contentType: contentTypeType,
 }
 export const Tree5 = (props:TreePropsType) => {
@@ -201,6 +171,12 @@ export const Tree5 = (props:TreePropsType) => {
     const [showMenuId, setShowMenuId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...materials.map(m => m.id)];
 
+    const userId: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
+    useEffect(() => {
+        dispatch(studiedMaterialsThunk(userId));
+    }, [userId])
+    const studiedMaterials = useSelector((state: RootState) => state.content.studiedMaterials);
+
     return <div className={s.wrappedDiv}>
         {
             DrawTree({
@@ -217,6 +193,7 @@ export const Tree5 = (props:TreePropsType) => {
                 setShowMenuId: setShowMenuId,
 
                 contentType: props.contentType,
+                studiedMaterials: studiedMaterials,
             })
         }
     </div>

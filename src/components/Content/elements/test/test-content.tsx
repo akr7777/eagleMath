@@ -21,7 +21,6 @@ const TestContent = () => {
         dispatch(getTestThunk(contentId || ""));
     }, [])
 
-    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const testAnswers: TestAnswersType[] | undefined = useSelector((state: RootState) => state.tasks.testAnswers);
 
@@ -76,7 +75,7 @@ const TestContent = () => {
         {testAnswers.length >= test.content.length && test.content.length > 0 && <TestResults/>}
 
         {/*Create new test*/}
-        { isAdmin && (test.content.length === 0) && <Button onClick={() => {navigate(PATHS.addTest)}}>Создать новый тест</Button> }
+       {/* { isAdmin && (test.content.length === 0) && <Button onClick={() => {navigate(PATHS.addTest)}}>Создать новый тест</Button> }*/}
 
 
     </div>

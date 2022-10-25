@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
-import {useAppDispatch} from "../../../store/store";
+import {RootState, useAppDispatch} from "../../../store/store";
 import {getAllTasksThunk} from "../../features/tasksSlice";
 import {getAllCategoriesThunk, IdFiledType} from "../../features/categoriesSlice";
 import {FavoriteContent, FavoriteContentOutputType} from "../utils/utils";
@@ -16,6 +16,8 @@ import Line from "../../common/line";
 import s2 from "./elements.module.css"
 import {getFavoritesThunk} from "../../features/dashboardSlice";
 import TextField from "@mui/material/TextField";
+import {studiedMaterialsThunk} from "../../features/contentSlice";
+import {useSelector} from "react-redux";
 
 type FavoriteMaterialsPropsType = {userId: IdFiledType}
 const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
@@ -27,11 +29,15 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
         dispatch(getAllMaterialsThunk());
         dispatch(getAllCategoriesThunk());
         dispatch(getFavoritesThunk(props.userId));
+        dispatch(studiedMaterialsThunk(props.userId));
     }, [props.userId]);
 
     const [searchValue, setSearchValue] = useState<string>('');
     const list:Array<FavoriteContentOutputType> = FavoriteContent().filter(el => el.label.toLowerCase().includes(searchValue.toLowerCase()));
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
+
+    const studiedMaterials = useSelector((state: RootState) => state.content.studiedMaterials);
+    //const isMaterialStudied = studiedMaterials.includes(props.userId)
 
     return <div className={s2.div1}>
         <Accordion className={s1.accordion}>
@@ -66,6 +72,7 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
                                                 label={item.label}
                                                 isMaterial={true}
                                                 contentType={item.type}
+                                                isMaterialStudied={studiedMaterials.includes(item.contentId)}
                                             />
 
                                         </div>

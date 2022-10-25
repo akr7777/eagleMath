@@ -89,6 +89,13 @@ export const ContentAPI = {
     moveParagraph: (contentId: IdFiledType, elementIndex: number, direction: "up"|"down"):Promise<AxiosResponse> => {
         return instance.post('content/moveParagraph', {contentId: contentId, elementIndex:elementIndex, direction:direction});
     },
+
+    studiedMaterials: (userId: IdFiledType):Promise<AxiosResponse> => {
+        return instance.post('content/studiedMaterials', {userId: userId});
+    },
+    setMaterialStudied: (userId: IdFiledType, contentId: IdFiledType, value: boolean):Promise<AxiosResponse> => {
+        return instance.post('content/setMaterialStudied', {userId: userId, contentId: contentId, value: value});
+    },
 }
 
 export const NotesAPI = {

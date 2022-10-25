@@ -7,11 +7,8 @@ import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
 import {
     clearTestAnswersAC,
-    //addTaskToFavoritesThunk,
-    //deleteTaskFromFavoritesThunk,
     getAllTasksThunk,
     getFavoritesThunk,
-    //TaskType
 } from "../features/tasksSlice";
 import {getAllCategoriesThunk} from "../features/categoriesSlice";
 import Preloader from "../common/Preloader";
@@ -29,24 +26,6 @@ export const Tasks = () => {
         dispatch(getFavoritesThunk(userId));
         dispatch(clearTestAnswersAC());
     }, [userId]);
-
-    //const isAdmin: boolean = useSelector((state: RootState) => state.auth.isAuth);
-
-    /*const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
-    const tasks: TaskType[] = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];*/
-
-    //const favoritesIds = useSelector((state: RootState) => state.tasks.favoriteTasksIds);
-    //const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
-
-
-    /*const addToFavorite = (contentId: IdFiledType) => {
-        //dispatch(addIdToFavoritesTasksAC(contentId));
-        dispatch(addTaskToFavoritesThunk({userId, contentId}))
-    }
-    const deleteFromFavorite = (contentId: IdFiledType) => {
-        //dispatch(deleteIdFromFavoritesTasksAC(contentId));
-        dispatch(deleteTaskFromFavoritesThunk({userId, contentId}))
-    }*/
 
     return <>
         {
@@ -68,8 +47,6 @@ export const Tasks = () => {
 
                     <div className={s.someDiv1}>
                         <Tree5
-                            /*categories={categories} вот это убрать внутрь tree
-                            materials={tasks} и это тоже: можно получить из contentType,который ниже*/
                             contentType={"T"}
                         />
                     </div>
