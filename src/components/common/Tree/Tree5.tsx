@@ -11,7 +11,7 @@ import {addToShownCats, deleteFromShownCats, IdFiledType} from "../../features/c
 import {CategoryType} from "../../features/categoriesSlice";
 import Line, {contentTypeType} from "../line";
 import HiddenMenu from "./hiddenMenu";
-import {studiedMaterialsThunk} from "../../features/contentSlice";
+import {getStudiedMaterialsThunk} from "../../features/contentSlice";
 
 export type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
 
@@ -173,7 +173,7 @@ export const Tree5 = (props:TreePropsType) => {
 
     const userId: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
     useEffect(() => {
-        dispatch(studiedMaterialsThunk(userId));
+        dispatch(getStudiedMaterialsThunk(userId));
     }, [userId])
     const studiedMaterials = useSelector((state: RootState) => state.content.studiedMaterials);
 

@@ -5,7 +5,8 @@ import {
     ContentType,
     getContentThunk,
     newChapterChange,
-    setContentThunk, studiedMaterialsThunk
+    setContentThunk,
+    getStudiedMaterialsThunk
 } from "../features/contentSlice";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -44,7 +45,7 @@ const Content = () => {
         dispatch(getContentThunk(contentId || ""));
         dispatch(getTestThunk(contentId || ""));
         dispatch(getObjectiveByContentIdThunk(contentId || ""));
-        dispatch(studiedMaterialsThunk(userId))
+        dispatch(getStudiedMaterialsThunk(userId))
     }, []);
 
     const studiedMaterials: Array<IdFiledType> = useSelector((state: RootState) => state.content.studiedMaterials);

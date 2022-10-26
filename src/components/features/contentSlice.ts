@@ -107,7 +107,7 @@ export const uploadContentImage = createAsyncThunk(
     }
 );
 
-export const studiedMaterialsThunk = createAsyncThunk(
+export const getStudiedMaterialsThunk = createAsyncThunk(
     'content/studiedMaterialsThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.studiedMaterials(userId);
@@ -200,15 +200,15 @@ export const contentSlice = createSlice({
         })
         builder.addCase(moveParagraphThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
 
-        builder.addCase(studiedMaterialsThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
-        builder.addCase(studiedMaterialsThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+        builder.addCase(getStudiedMaterialsThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
+        builder.addCase(getStudiedMaterialsThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
             studiedMaterials: Array<IdFiledType>,
             resultCode: ResultCodesEnum,
         }>) => {
             state.studiedMaterials = action.payload.studiedMaterials;
             state.isLoading = false;
         })
-        builder.addCase(studiedMaterialsThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
+        builder.addCase(getStudiedMaterialsThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
 
         builder.addCase(setMaterialStudiedThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
         builder.addCase(setMaterialStudiedThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{

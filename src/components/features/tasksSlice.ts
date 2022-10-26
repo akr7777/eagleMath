@@ -111,7 +111,7 @@ export const getAllTestsContentIdsThunk = createAsyncThunk(
 
 
 export type TestResultType = {
-    userId: string,
+    userId: IdFiledType,
     testId: string,
     title: string
     result: number,
@@ -127,7 +127,7 @@ export const setTestResultThunk = createAsyncThunk(
 );
 
 export type ObjectiveResultType = {
-    userId: string,
+    userId: IdFiledType,
     objectiveId: string,
     title: string
     content: string,

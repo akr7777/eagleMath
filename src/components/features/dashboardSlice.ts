@@ -6,6 +6,10 @@ import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
 import {TestContentType} from "./tasksSlice";
 import {UserType} from "./usersSlice";
 
+export type StudiesContentType = {
+    contentId: IdFiledType,
+    content: string,
+}
 export type ContentTypes = "C" | "M" | "T";
 export type NotesStatusType = "All" | "Active" | "Completed";
 export type NoteType = {
@@ -41,11 +45,13 @@ type DashboardStateType = {
         usersListLoading: boolean,
         testsResultsLoading: boolean
         objectivesResultsLoading: boolean,
+        studiedContentLoading: boolean,
     }
     notesStatus: NotesStatusType,
     testResult: Array<TestResultType>,
     userList: UserType[],
     objectiveResults: Array<ObjectiveResultsType>,
+    studiedMaterialContent: Array<StudiesContentType>,
 }
 
 const dashboardInitialState:DashboardStateType = {
@@ -55,6 +61,7 @@ const dashboardInitialState:DashboardStateType = {
         usersListLoading: false,
         testsResultsLoading: false,
         objectivesResultsLoading: false,
+        studiedContentLoading: false
     },
     notes: [],
     searchNotesField: '',
@@ -62,6 +69,7 @@ const dashboardInitialState:DashboardStateType = {
     testResult: [],
     userList: [],
     objectiveResults: [],
+    studiedMaterialContent: [],
 }
 
 export const getUserListThunk = createAsyncThunk(
@@ -154,6 +162,14 @@ export const getObjectiveResultsByUserId = createAsyncThunk(
     'dashboard/getObjectiveResultsByUserId',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await objectiveAPI.getObjectiveResultsByUserId(userId);
+        return res.data;
+    }
+);
+
+export const getFullStudiedContentThunk = createAsyncThunk(
+    'dashboard/getFullStudiedContentThunk',
+    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.getFullStudiedContent(userId);
         return res.data;
     }
 );
@@ -321,7 +337,29 @@ export const dashboardSlice = createSlice({
             }
             state.loading = {...state.loading, objectivesResultsLoading: false}
         })
-        builder.addCase(getObjectiveResultsByUserId.rejected, (state: DashboardStateType) => {state.loading = {...state.loading, objectivesResultsLoading: false}})
+        builder.addCase(getObjectiveResultsByUserId.rejected, (state: DashboardStateType) => {
+            state.loading = {...state.loading, objectivesResultsLoading: false}
+        })
+
+
+        builder.addCase(getFullStudiedContentThunk.pending, (state: DashboardStateType) => {
+            state.loading = {...state.loading, studiedContentLoading: true}
+        })
+        builder.addCase(getFullStudiedContentThunk.fulfilled, (state: DashboardStateType, action:PayloadAction<{
+            studiedMaterialContent: Array<StudiesContentType>,
+            resultCode: resultCodes,
+        }>) => {
+            //console.log('dashboard slice / getFullStudiedContentThunk / action.payload.studiedMaterialContent=', action.payload.studiedMaterialContent)
+            if (action.payload.resultCode === resultCodes.Success) {
+                if (action.payload.studiedMaterialContent)
+                    state.studiedMaterialContent = [...action.payload.studiedMaterialContent];
+                else state.studiedMaterialContent = [];
+            }
+            state.loading = {...state.loading, studiedContentLoading: false}
+        })
+        builder.addCase(getFullStudiedContentThunk.rejected, (state: DashboardStateType) => {
+            state.loading = {...state.loading, studiedContentLoading: false}
+        })
     }
 })
 export const {changeSearchText, changeNotesFilterStatus} = dashboardSlice.actions;

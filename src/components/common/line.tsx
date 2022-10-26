@@ -12,7 +12,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import React, {ChangeEvent, useEffect} from "react";
+import React, {ChangeEvent} from "react";
 import {
     addCategoryThunk,
     addToFavoritesThunk, deleteCategoryThunk,
@@ -154,9 +154,10 @@ const Line = (props: LinePropsType) => {
         {
             /*(props.contentType === "M" || props.contentType === "T")*/ props.isMaterial &&
             (
-                props.isMaterialStudied
+                props.isMaterialStudied && <CheckCircleIcon color={"success"}/>
+                /*props.isMaterialStudied
                     ? <CheckCircleIcon color={"success"}/>
-                    : <CheckCircleIcon color={"warning"}/>
+                    : <CheckCircleIcon color={"warning"}/>*/
             )
         }
 

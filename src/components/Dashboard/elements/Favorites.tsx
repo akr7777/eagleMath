@@ -16,7 +16,7 @@ import Line from "../../common/line";
 import s2 from "./elements.module.css"
 import {getFavoritesThunk} from "../../features/dashboardSlice";
 import TextField from "@mui/material/TextField";
-import {studiedMaterialsThunk} from "../../features/contentSlice";
+import {getStudiedMaterialsThunk} from "../../features/contentSlice";
 import {useSelector} from "react-redux";
 
 type FavoriteMaterialsPropsType = {userId: IdFiledType}
@@ -29,7 +29,7 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
         dispatch(getAllMaterialsThunk());
         dispatch(getAllCategoriesThunk());
         dispatch(getFavoritesThunk(props.userId));
-        dispatch(studiedMaterialsThunk(props.userId));
+        dispatch(getStudiedMaterialsThunk(props.userId));
     }, [props.userId]);
 
     const [searchValue, setSearchValue] = useState<string>('');

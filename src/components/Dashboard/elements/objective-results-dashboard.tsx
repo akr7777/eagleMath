@@ -55,7 +55,10 @@ const ObjectiveResultDashboard = () => {
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const userList: UserType[] = useSelector((state: RootState) => state.dashboard.userList);
 
-    const [userId, setUserId] = useState<IdFiledType>(useSelector((state: RootState) => state.auth.user.id))
+    //const [userId, setUserId] = useState<IdFiledType>(useSelector((state: RootState) => state.auth.user.id))
+    const uid:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
+    const [userId, setUserId] = useState<IdFiledType>(uid);
+    if (uid !== '0' && userId === '0') setUserId(uid);
 
     useEffect(() => {
         dispatch(getUserListThunk());
@@ -71,12 +74,12 @@ const ObjectiveResultDashboard = () => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
             >
-                <Typography variant={'h5'}>Результаты решенных задач пользователя</Typography>
+                <Typography variant={'h5'}>Результаты решенных задач</Typography>
             </AccordionSummary>
             <AccordionDetails>
 
                 {
-                    isAdmin && <TestResultDashboardUserChoose setUserId={setUserId} userList={userList}/>
+                    isAdmin && <TestResultDashboardUserChoose setUserId={setUserId} userList={userList} userId={userId}/>
                 }
 
                 {

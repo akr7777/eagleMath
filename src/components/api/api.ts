@@ -3,7 +3,6 @@ import {IdFiledType} from "../features/categoriesSlice";
 import {ContentType} from "../features/contentSlice";
 import {NoteType} from "../features/dashboardSlice";
 import {
-    getObjectiveByContentIdThunk,
     ObjectiveResultType,
     ObjectiveType,
     TestContentType,
@@ -96,6 +95,9 @@ export const ContentAPI = {
     setMaterialStudied: (userId: IdFiledType, contentId: IdFiledType, value: boolean):Promise<AxiosResponse> => {
         return instance.post('content/setMaterialStudied', {userId: userId, contentId: contentId, value: value});
     },
+    getFullStudiedContent: (userId: IdFiledType): Promise<AxiosResponse> => {
+        return instance.post('content/getFullStudiedContent', {userId: userId});
+    }
 }
 
 export const NotesAPI = {

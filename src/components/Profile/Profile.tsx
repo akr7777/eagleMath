@@ -22,7 +22,7 @@ import {NavLink} from "react-router-dom";
 
 export default function Profile() {
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
-    const userID:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
+    const userId:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
 
     const dispatch = useAppDispatch();
     /*useEffect(()=>{
@@ -34,7 +34,7 @@ export default function Profile() {
 
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
-    const avaPhoto = baseAvatarPhotoUrl+userID;//useSelector((state: RootState) => state.auth.user.photo);
+    const avaPhoto = baseAvatarPhotoUrl+userId;//useSelector((state: RootState) => state.auth.user.photo);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isActivated = useSelector((state: RootState) => state.auth.user.isActivated);
     const activationLink = useSelector((state: RootState) => state.auth.activationLink);
@@ -47,12 +47,12 @@ export default function Profile() {
         setEmailValue(e.currentTarget.value);
     }
     const saveNewEmailValue = () => {
-        dispatch(updateEmailThunk({id: userID, newEmail: emailValue}));
+        dispatch(updateEmailThunk({id: userId, newEmail: emailValue}));
         setEmailDisabled(true);
     }
     const fileUploadInputChange = (f: any) => {
         if (f.target.files.length) {
-            dispatch(uploadAvatarThunk({file: f.target.files[0], id: userID}))
+            dispatch(uploadAvatarThunk({file: f.target.files[0], id: userId}))
             //dispatch(getAvatarThunk(userID));
         }
     }

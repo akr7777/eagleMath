@@ -7,11 +7,12 @@ import {ResultCodesEnum as resultCodes} from "../common/resultCodes";
 export const baseAvatarPhotoUrl = 'http://localhost:4001/auth/getAvatar?id=';
 
 type UserType = {
-    id: string,
+    id: IdFiledType,
     email: string,
     name: string,
     isAdmin: boolean,
     isActivated: boolean,
+
 }
 export type AuthStateType = {
     user: UserType,
@@ -214,15 +215,29 @@ export const authSlice = createSlice({
         builder.addCase(refreshThunk.pending, (state: AuthStateType) => {
             state.isLoading = true;
         })
-        builder.addCase(refreshThunk.fulfilled, (state: AuthStateType, action: PayloadAction<any>) => {
+        builder.addCase(refreshThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{
+            user: UserType & {activationLink: string},
+            resultCode: resultCodes,
+            accessToken: string,
+            refreshToken: string,
+        }>) => {
+            //console.log('authSlice / refreshThunk / action.payload=', action.payload)
             if (action.payload.resultCode === resultCodes.Success) {
                 state.isAuth = true;
                 state.activationLink = action.payload.user.activationLink;
-                state.user.email = action.payload.user.email;
+                state.user = {
+                    ...state.user,
+                    id: action.payload.user.id,
+                    name: action.payload.user.name,
+                    email: action.payload.user.email,
+                    isAdmin: action.payload.user.isAdmin,
+                    isActivated: action.payload.user.isActivated
+                }
+                /*state.user.email = action.payload.user.email;
                 state.user.name = action.payload.user.name;
                 state.user.id = action.payload.user.id;
                 state.user.isActivated = action.payload.user.isActivated;
-                state.user.isAdmin = action.payload.user.isAdmin;
+                state.user.isAdmin = action.payload.user.isAdmin;*/
                 state.isLoading = false;
             }
         })
