@@ -70,7 +70,6 @@ export const addMaterialThunk = createAsyncThunk(
     }
 );
 
-
 export const materialsSlice = createSlice({
     name: 'materials',
     initialState,

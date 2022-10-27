@@ -6,7 +6,7 @@ import {
     getContentThunk,
     newChapterChange,
     setContentThunk,
-    getStudiedMaterialsThunk
+    getStudiedMaterialsThunk, getContentTitleByIdThunk
 } from "../features/contentSlice";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -25,6 +25,7 @@ import ObjectiveContent from "./elements/objective/objective-content";
 import {getObjectiveByContentIdThunk, getTestThunk, ObjectiveType, TestType} from "../features/tasksSlice";
 import AddRemoveContentStudied from "./elements/add-remove-content-studied";
 import {IdFiledType} from "../features/categoriesSlice";
+import { Typography } from '@mui/material';
 
 export const initNewChapter: ContentType = {
     contentId: '',
@@ -45,13 +46,15 @@ const Content = () => {
         dispatch(getContentThunk(contentId || ""));
         dispatch(getTestThunk(contentId || ""));
         dispatch(getObjectiveByContentIdThunk(contentId || ""));
-        dispatch(getStudiedMaterialsThunk(userId))
+        dispatch(getStudiedMaterialsThunk(userId));
+        dispatch(getContentTitleByIdThunk(contentId || ""));
     }, []);
 
     const studiedMaterials: Array<IdFiledType> = useSelector((state: RootState) => state.content.studiedMaterials);
 
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const objectives: Array<ObjectiveType> = useSelector((state: RootState) => state.tasks.objectives);
+    const contentTitle:string = useSelector((state:RootState) => state.content.contentTitle);
 
     const addChapterInside = (index: number) => {
         const newElement = {
@@ -81,6 +84,9 @@ const Content = () => {
             isLoading
                 ? <Preloader/>
                 : <Container className={s.wrapped_div}>
+
+                    <Typography variant={'h4'}>{contentTitle}</Typography>
+
                     <ContentHead/>
                     {/*<Typography variant={'h4'}>Содержание:</Typography>*/}
                     {

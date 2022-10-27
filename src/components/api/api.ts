@@ -97,6 +97,9 @@ export const ContentAPI = {
     },
     getFullStudiedContent: (userId: IdFiledType): Promise<AxiosResponse> => {
         return instance.post('content/getFullStudiedContent', {userId: userId});
+    },
+    getContentTitleById: (contentId: IdFiledType): Promise<AxiosResponse> => {
+        return instance.post('content/getContentTitleById', {contentId: contentId});
     }
 }
 

@@ -1,9 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ContentAPI} from "../api/api";
-import {CategoryType, IdFiledType} from "./categoriesSlice";
+import {IdFiledType} from "./categoriesSlice";
 import {ResultCodesEnum} from "../common/resultCodes";
-import {useNavigate} from "react-router-dom";
-import {PATHS} from "../AppBar/AppBar";
 
 export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
 export const baseObjectiveImageUrl = 'http://localhost:4001/objectives/getObjectiveImage?name=';
@@ -27,6 +25,7 @@ export type ContentInitStateType = {
     newChapterIndex: number,
     contentType: ContentTypeVariantsTypes,
     studiedMaterials: Array<IdFiledType>,
+    contentTitle: string,
 }
 const contentInitState:ContentInitStateType = {
     content: [],
@@ -40,12 +39,20 @@ const contentInitState:ContentInitStateType = {
     newChapterIndex: -1,
     contentType: undefined,
     studiedMaterials: [],
+    contentTitle: ''
 }
 
 export const getContentThunk = createAsyncThunk(
     'Content/getContent',
     async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.getContent(contentId);
+        return res.data;
+    }
+);
+export const getContentTitleByIdThunk = createAsyncThunk(
+    'Content/getContentTitleById',
+    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.getContentTitleById(contentId);
         return res.data;
     }
 );
@@ -221,6 +228,19 @@ export const contentSlice = createSlice({
             state.isLoading = false;
         })
         builder.addCase(setMaterialStudiedThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
+
+        builder.addCase(getContentTitleByIdThunk.pending, (state: ContentInitStateType) => {state.isLoading = true;})
+        builder.addCase(getContentTitleByIdThunk.fulfilled, (state: ContentInitStateType, action: PayloadAction<{
+            contentTitle: string,
+            resultCode: ResultCodesEnum,
+        }>) => {
+            if (action.payload.resultCode === ResultCodesEnum.Success)
+                state.contentTitle = action.payload.contentTitle;
+            else
+                state.contentTitle = "error";
+            state.isLoading = false;
+        })
+        builder.addCase(getContentTitleByIdThunk.rejected, (state: ContentInitStateType) => {state.isLoading = false;})
 
     }
 });
