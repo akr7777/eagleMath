@@ -23,7 +23,6 @@ const ContentParagraph = (props: ContentImagePropsType) => {
         dispatch(moveParagraphThunk({contentId: contentId, elementIndex: props.elementIndex, direction: direction}));
     }
 
-
     return <>
         {
             isAdmin
@@ -52,7 +51,12 @@ const ContentParagraph = (props: ContentImagePropsType) => {
                     </div>
 
                 </div>
-                : <img src={baseContentImageUrl + props.content} className={s1.imageClass}/>
+                : <div className={s1.paragraph_div_user}>
+                    {props.type === "Title" && <Typography variant={'h4'}>{props.content}</Typography>}
+                    {props.type === "Text" && <Typography>{props.content}</Typography>}
+                    {props.type === "Image" &&
+                        <img src={baseContentImageUrl + props.content} className={s1.imageClass}/>}
+                </div>
         }
     </>
 }

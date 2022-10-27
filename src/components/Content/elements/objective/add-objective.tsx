@@ -47,12 +47,14 @@ const AddObjective = () => {
         else if (!title) setError(ERROR_TITLE);
         else if (!contentId) setError(ERROR_CONTENT_ID);
         else {
+            console.log(picture + "/////" + picture.name)
             dispatch(addNewObjectiveThunk({
                 _id: '0',
                 title: title,
                 contentId: contentId,
                 content: content,
                 answer: answer.toLowerCase(),
+                picture: picture.name ? picture : ""
             }));
             navigate(PATHS.tasks);
         }

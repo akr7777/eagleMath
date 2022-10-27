@@ -150,7 +150,12 @@ export const objectiveAPI = {
         return instance.post('objectives/getObjectiveByContentId', {contentId: contentId})
     },
     addNewObjective: (data: ObjectiveType): Promise<AxiosResponse> => {
-        return instance.post('objectives/addObjective', {...data})
+        console.log('objectiveAPI / addNewObjective / data=', data)
+        return instance.post('objectives/addObjective', {...data}, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     },
     setObjectiveResult:(data: ObjectiveResultType): Promise<AxiosResponse> => {
         return instance.post('objectives/setObjectiveResult', {...data})

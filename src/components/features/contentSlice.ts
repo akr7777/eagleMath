@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 
 export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
+export const baseObjectiveImageUrl = 'http://localhost:4001/objectives/getObjectiveImage?name=';
+
 export type ContentTypeVariantsTypes = "Material" | "Task" | "Category" | undefined;
 export type ContentType = {
     contentId: string,

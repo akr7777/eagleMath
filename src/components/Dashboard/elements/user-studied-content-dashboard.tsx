@@ -72,7 +72,8 @@ const UserStudiedContentDashboard = () => {
                                 />
                             </div>
 
-                            { studiedMaterialContent.length <= 0 && <Typography>У пользователя нет изученных материалов</Typography> }
+                            { studiedMaterialContent.length <= 0 && searchField.length === 0 && <Typography>У пользователя нет изученных материалов</Typography> }
+                            { studiedMaterialContent.length <= 0 && searchField.length !== 0 && <Typography>Нет объектов удовлетворяющих критериям поиска</Typography> }
 
                             <div className={s2.test_results_filter_div}>
                             {

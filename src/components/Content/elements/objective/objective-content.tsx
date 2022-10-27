@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
 import s1 from "./objective.module.css";
 import Button from "@mui/material/Button";
+import {baseObjectiveImageUrl} from "../../../features/contentSlice";
 
 type AnswerType = {objId: string, answer: string, isGiven: boolean, isRight: boolean}
 const ObjectiveContent = () => {
@@ -77,7 +78,7 @@ const ObjectiveContent = () => {
 
                     <Typography variant={'h5'}>{obj.title}</Typography>
 
-                    { obj.picture && <img src={obj.picture}/> }
+                    { obj.picture && <img src={baseObjectiveImageUrl+obj.picture} width={250} height={250}/> }
 
                     <Typography>{obj.content}</Typography>
 

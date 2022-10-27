@@ -123,6 +123,15 @@
     width: 100%;
     /*background-color: yellow;*/
 }
+.paragraph_div_user {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    /*background-color: yellow;*/
+}
 .paragraph_div_admin_right_part {
     display: flex;
     flex-direction: column;
