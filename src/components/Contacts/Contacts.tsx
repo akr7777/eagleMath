@@ -19,13 +19,8 @@ function phoneFormat(phone: string) {
 }
 
 export const Contacts = () => {
-
     const dispatch = useAppDispatch();
-    useEffect(() => {
-        dispatch(getContactsThunk());
-    }, [])
 
-    //const isAdmin:boolean = useSelector( (state:RootState) => state.auth.isAuth)
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const isLoading = useSelector((state: RootState) => state.contacts.isLoading);
 
@@ -37,6 +32,10 @@ export const Contacts = () => {
     const whatsapp = useSelector((state: RootState) => state.contacts.whatsapp);
     const email = useSelector((state: RootState) => state.contacts.email);
     const skype = useSelector((state: RootState) => state.contacts.skype);
+
+    useEffect(() => {
+        dispatch(getContactsThunk());
+    }, [contactsTitle, contactsDescription, phone, telegram, whatsapp, email, skype])
 
     return <>
         {

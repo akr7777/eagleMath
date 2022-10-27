@@ -32,7 +32,7 @@ const PopperContentContacts = (props: PopperContentPropsType) => {
          dispatch(setWhatsappAC(whatsapp));
          dispatch(setEmailAC(email));
          dispatch(setSkypeAC(skype));*/
-        console.log('PopperContentContacts / saveButtonClickHandler')
+        console.log('PopperContentContacts / saveButtonClickHandler', title, description)
         dispatch(setContactsThunk({
             title: title,
             description: description,
