@@ -51,22 +51,13 @@ export const PATHS = {
     dashboard: '/dashboard',
 }
 
-const logoText = "Eagle's Math"
-const navItemsDesctop = [
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.description}>Главная страница</NavLink>,
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.materials}>Теория</NavLink>,
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.tasks}>Практика</NavLink>,
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.contacts}>Контакты</NavLink>,
-    <NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>,
-];
 
-const navItemsMobile = [
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.description}>Главная страница</NavLink>,
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.materials}>Теория</NavLink>,
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Практика</NavLink>,
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.contacts}>Контакты</NavLink>,
-    <NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>,
-];
+/*const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
+if (isAuth) {
+    navItemsDesctop.push(<NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>);
+    navItemsMobile.push(<NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>);
+}*/
+
 const navItemsMobileExtra = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.profile}>
         <ManageAccountsIcon/> Профайл
@@ -85,11 +76,27 @@ export default function MyAppBar(props: Props) {
         setMobileOpen(!mobileOpen);
     };
 
+    const logoText = "My classes"
+    const navItemsDesctop = [
+        <NavLink className={s.NavLinkCSSDesctop} to={PATHS.description}>Главная страница</NavLink>,
+        <NavLink className={s.NavLinkCSSDesctop} to={PATHS.materials}>Теория</NavLink>,
+        <NavLink className={s.NavLinkCSSDesctop} to={PATHS.tasks}>Практика</NavLink>,
+        <NavLink className={s.NavLinkCSSDesctop} to={PATHS.contacts}>Контакты</NavLink>,
+        /*<NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>,*/
+    ];
+
+    const navItemsMobile = [
+        <NavLink className={s.NavLinkCSSMobile} to={PATHS.description}>Главная страница</NavLink>,
+        <NavLink className={s.NavLinkCSSMobile} to={PATHS.materials}>Теория</NavLink>,
+        <NavLink className={s.NavLinkCSSMobile} to={PATHS.tasks}>Практика</NavLink>,
+        <NavLink className={s.NavLinkCSSMobile} to={PATHS.contacts}>Контакты</NavLink>,
+        /*<NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>,*/
+    ];
     let isAuth = useSelector( (state: RootState) => state.auth.isAuth);
-   /* if (isAuth) {
+    if (isAuth) {
         navItemsDesctop.push(<NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>);
         navItemsMobile.push(<NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>);
-    }*/
+    }
 
     const userId = useSelector((state:RootState) => state.auth.user.id);
     const avaURL = baseAvatarPhotoUrl + userId;//useSelector( (state: RootState) => state.auth.user.photo);

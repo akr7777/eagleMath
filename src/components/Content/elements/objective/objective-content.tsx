@@ -31,6 +31,7 @@ const ObjectiveContent = () => {
                 const answerInput = answers.find(el => el.objId === obj._id) ? answers.find(el => el.objId === obj._id) : {objId: "", answer: "", isGiven: false, isRight: false};
 
                 const onAnswerInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+                    //console.log(e.currentTarget.value)
                     setAnswers(answers.map(el => {
                         if (el.objId !== obj._id)
                             return el;

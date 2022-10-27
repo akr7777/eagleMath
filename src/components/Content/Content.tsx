@@ -39,6 +39,7 @@ const Content = () => {
     const isLoading: boolean = useSelector((state: RootState) => state.content.isLoading);
     const content: Array<ContentType> = useSelector((state: RootState) => state.content.content);
     const isAdmin: boolean = useSelector((state: RootState) => state.auth.user.isAdmin);
+    const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
     const navigate = useNavigate();
     const userId = useSelector((state: RootState) => state.auth.user.id);
 
@@ -87,7 +88,7 @@ const Content = () => {
 
                     <Typography variant={'h4'}>{contentTitle}</Typography>
 
-                    <ContentHead/>
+                    { isAuth && <ContentHead/> }
                     {/*<Typography variant={'h4'}>Содержание:</Typography>*/}
                     {
                         content.map((el, indexArr) => {
@@ -129,11 +130,13 @@ const Content = () => {
 
                     { objectives.length > 0 && <ObjectiveContent/> }
 
-                    <AddRemoveContentStudied
-                        userId={userId}
-                        contentId={contentId || ""}
-                        isMaterialStudied={studiedMaterials && studiedMaterials.some(elem => elem === contentId)}
-                    />
+                    {
+                        isAuth && <AddRemoveContentStudied
+                            userId={userId}
+                            contentId={contentId || ""}
+                            isMaterialStudied={studiedMaterials && studiedMaterials.some(elem => elem === contentId)}
+                        />
+                    }
 
                 </Container>
         }

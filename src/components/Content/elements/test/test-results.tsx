@@ -28,7 +28,7 @@ const TestResults = () => {
     const title = useSelector((state: RootState) => state.tasks.test.title);
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-    const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
+    //const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const protocol = test.content.map((el: TestContentType) => {
         return {
             ...el,
@@ -54,7 +54,7 @@ const TestResults = () => {
 
     return <>
         {
-            isAdmin && test && testAnswers?.length > 0 &&
+            isAuth && test && testAnswers?.length > 0 &&
                 <div className={css.test_results_main_div}>
                     <div>
                         <Typography variant={'h4'}>Результаты теста:</Typography>
