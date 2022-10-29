@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import Container from "@mui/material/Container";
 import {RootState, useAppDispatch} from "../../store/store";
 import {
@@ -26,6 +26,7 @@ import {getObjectiveByContentIdThunk, getTestThunk, ObjectiveType, TestType} fro
 import AddRemoveContentStudied from "./elements/add-remove-content-studied";
 import {IdFiledType} from "../features/categoriesSlice";
 import { Typography } from '@mui/material';
+import Switch from "@mui/material/Switch";
 
 export const initNewChapter: ContentType = {
     contentId: '',
@@ -51,7 +52,7 @@ const Content = () => {
         dispatch(getContentTitleByIdThunk(contentId || ""));
     }, []);
 
-    const studiedMaterials: Array<IdFiledType> = useSelector((state: RootState) => state.content.studiedMaterials);
+    //const studiedMaterials: Array<IdFiledType> = useSelector((state: RootState) => state.content.studiedMaterials);
 
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const objectives: Array<ObjectiveType> = useSelector((state: RootState) => state.tasks.objectives);
@@ -78,6 +79,12 @@ const Content = () => {
             ];
             dispatch(setContentThunk({content: arr, contentId: contentId}));
         }
+    }
+
+
+    const [isLoadingNahd, setIsLoadingHand] = useState(false);
+    const handleChangeIsLoading = (event: ChangeEvent<HTMLInputElement>) => {
+        setIsLoadingHand(event.target.checked);
     }
 
     return <>
@@ -134,9 +141,15 @@ const Content = () => {
                         isAuth && <AddRemoveContentStudied
                             userId={userId}
                             contentId={contentId || ""}
-                            isMaterialStudied={studiedMaterials && studiedMaterials.some(elem => elem === contentId)}
+                            //isMaterialStudied={studiedMaterials && studiedMaterials.some(elem => elem === contentId)}
                         />
                     }
+
+                    <Switch
+                        checked={isLoadingNahd}
+                        onChange={handleChangeIsLoading}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
 
                 </Container>
         }

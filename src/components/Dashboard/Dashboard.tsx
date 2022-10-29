@@ -41,7 +41,7 @@ const Dashboard = () => {
 
                     <Notes userId={userId}/>
 
-                    <Users/>
+                    { isAdmin && <Users/> }
 
                     <TestResultsDashboard/>
 

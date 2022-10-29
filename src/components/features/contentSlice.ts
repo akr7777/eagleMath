@@ -32,14 +32,13 @@ const contentInitState:ContentInitStateType = {
     isLoading: false,
     newChapter: {
         contentId: '',
-        //index: 0,
         type: null,
         content: '',
     },
     newChapterIndex: -1,
     contentType: undefined,
     studiedMaterials: [],
-    contentTitle: ''
+    contentTitle: '',
 }
 
 export const getContentThunk = createAsyncThunk(
