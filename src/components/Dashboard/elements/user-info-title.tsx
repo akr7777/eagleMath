@@ -2,7 +2,7 @@ import React from 'react';
 import s1 from "./elements.module.css";
 import Typography from "@mui/material/Typography";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {UserType} from "../../features/usersSlice";
+import {UserType} from "../../../store/features/usersSlice";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 

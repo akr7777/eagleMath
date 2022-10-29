@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {usersAPI} from "../api/api";
+import {usersAPI} from "../../components/api/api";
 import {IdFiledType} from "./categoriesSlice";
-import {ResultCodesEnum as resultCodes} from "../common/resultCodes";
+import {ResultCodesEnum as resultCodes} from "../../components/common/resultCodes";
 
 export type UserType = {
     userId: IdFiledType,

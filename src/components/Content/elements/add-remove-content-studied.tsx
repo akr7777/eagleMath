@@ -2,9 +2,9 @@ import Switch from '@mui/material/Switch';
 import {ChangeEvent, useEffect, useState} from "react";
 import s from "../content.module.css";
 import Typography from "@mui/material/Typography";
-import {setMaterialStudiedThunk} from "../../features/contentSlice";
+import {setMaterialStudiedThunk} from "../../../store/features/contentSlice";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {IdFiledType} from "../../features/categoriesSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {useSelector} from "react-redux";
 
 type AddRemoveContentStudiedPropsType = {

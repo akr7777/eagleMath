@@ -9,10 +9,10 @@ import {Navigate, NavLink} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
-import {resetLoginServerErrorAC} from "../features/authSlice";
+import {resetLoginServerErrorAC} from "../../store/features/authSlice";
 import Alert from "@mui/material/Alert";
 import Preloader from "../common/Preloader";
-import {loginThunk} from "../features/authThunks";
+import {loginThunk} from "../../store/features/authThunks";
 
 const Login = () => {
     const [error, setError] = useState<string>('');

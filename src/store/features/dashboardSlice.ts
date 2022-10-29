@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {IdFiledType} from "./categoriesSlice";
-import {ContentAPI, NotesAPI, objectiveAPI, testAPI, usersAPI} from "../api/api";
-import {ResultCodesEnum as resultCodes} from "./../common/resultCodes";
+import {ContentAPI, NotesAPI, objectiveAPI, testAPI, usersAPI} from "../../components/api/api";
+import {ResultCodesEnum as resultCodes} from "../../components/common/resultCodes";
 import {TestContentType} from "./tasksSlice";
 import {UserType} from "./usersSlice";
 
@@ -179,12 +179,6 @@ export const dashboardSlice = createSlice({
     name: 'dashboard',
     initialState: dashboardInitialState,
     reducers: {
-       /* setFavoriteContent: (state:DashboardStateType, action: PayloadAction<Array<IdFiledType>>): void => {
-            state.favoriteContent = action.payload;
-        },
-        addNote: (state: DashboardStateType, action: PayloadAction<NoteType>): void => {
-            state.notes.push(action.payload);
-        },*/
         changeSearchText: (state: DashboardStateType, action: PayloadAction<string>): void => {
             state.searchNotesField = action.payload;
         },

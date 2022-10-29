@@ -1,25 +1,16 @@
 import axios, {AxiosResponse} from "axios";
-import {IdFiledType} from "../features/categoriesSlice";
-import {ContentType} from "../features/contentSlice";
-import {NoteType} from "../features/dashboardSlice";
-import {
-    ObjectiveResultType,
-    ObjectiveType,
-    TestContentType,
-    TestResultType
-} from "../features/tasksSlice";
+import {IdFiledType} from "../../store/features/categoriesSlice";
+import {ContentType} from "../../store/features/contentSlice";
+import {NoteType} from "../../store/features/dashboardSlice";
+import {ObjectiveType, TestContentType} from "../../store/features/tasksSlice";
+import {ObjectiveResultType, TestResultType} from "../../store/features/tasksThunks"
+import {baseSiteURL} from "../../env";
 
-const accessToken = localStorage.getItem("accessToken") || "";
+//const accessToken = localStorage.getItem("accessToken") || "";
 
 const instance = axios.create({
     withCredentials: true,
-    /*headers: {
-        'Access-Control-Allow-Credentials': true,
-        'Authorization': 'bearer ' + accessToken,
-    },*/
-    baseURL: 'http://localhost:4001/',
-    //baseURL: 'http://192.168.153.17:3001/'
-    //baseURL: 'https://dry-anchorage-96588.herokuapp.com/',
+    baseURL: baseSiteURL,
 });
 
 instance.interceptors.request.use((config)=> {

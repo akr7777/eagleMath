@@ -1,4 +1,4 @@
-import { MaterialType} from "../features/materialsSlice";
+import { MaterialType} from "../../store/features/materialsSlice";
 /*
 
 export const categoriesAPI: CategoryType[] = [

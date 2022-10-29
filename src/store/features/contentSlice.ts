@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ContentAPI} from "../api/api";
+import {ContentAPI} from "../../components/api/api";
 import {IdFiledType} from "./categoriesSlice";
-import {ResultCodesEnum} from "../common/resultCodes";
+import {ResultCodesEnum} from "../../components/common/resultCodes";
 
 export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
 export const baseObjectiveImageUrl = 'http://localhost:4001/objectives/getObjectiveImage?name=';

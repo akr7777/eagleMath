@@ -1,7 +1,7 @@
 import s1 from "../styles.module.css";
-import {UserType} from "../../features/usersSlice";
+import {UserType} from "../../../store/features/usersSlice";
 import React from "react";
-import {IdFiledType} from "../../features/categoriesSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
 
 type TestResultDashboardUserChooseType = {
     setUserId: (userId: string) => void,

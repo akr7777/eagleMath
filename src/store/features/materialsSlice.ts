@@ -1,11 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import type {PayloadAction} from '@reduxjs/toolkit'
-import {ContentAPI} from "../api/api";
-import {getAllTasksThunk} from "./tasksSlice";
+//import type {PayloadAction} from '@reduxjs/toolkit'
+//import {ContentAPI} from "../api/api";
+//import {getAllTasksThunk} from "./tasksSlice";
 import {getAllCategoriesThunk, IdFiledType} from "./categoriesSlice";
-//import {CategoryType} from "./categoriesSlice";
 
-//export type IdFiledType = string | number;
 export type MaterialType = {
     id: IdFiledType,
     parentId: IdFiledType,
@@ -17,14 +15,12 @@ type InitStateMaterialsType = {
     isLoading: boolean,
 }
 let initialState: InitStateMaterialsType = {
-    materials: [
-        /*{id: '', parentId: '', label: ""},*/
-    ],
+    materials: [],
     favoriteMaterialIds: [],
     isLoading: true,
 }
 
-export const getAllMaterialsThunk = createAsyncThunk(
+/*export const getAllMaterialsThunk = createAsyncThunk(
     'materials/getAllMaterials',
     async (_, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.getAllMaterials();
@@ -33,8 +29,9 @@ export const getAllMaterialsThunk = createAsyncThunk(
         } else
             return [];
     }
-);
+);*/
 
+/*
 export const getFavoritesThunk = createAsyncThunk(
     'materials/getFavoritesThunk',
     async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
@@ -42,8 +39,9 @@ export const getFavoritesThunk = createAsyncThunk(
         return res.data;
     }
 );
+*/
 
-type RenameMaterialType = {
+/*type RenameMaterialType = {
     contentId: IdFiledType,
     newName: string,
 }
@@ -57,9 +55,9 @@ export const renameMaterialThunk = createAsyncThunk(
         dispatch(getAllCategoriesThunk());
         return res.data;
     }
-);
+);*/
 
-export const addMaterialThunk = createAsyncThunk(
+/*export const addMaterialThunk = createAsyncThunk(
     'materials/addMaterialThunk',
     async (parentContentId: IdFiledType, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.addMaterial(parentContentId);
@@ -68,34 +66,23 @@ export const addMaterialThunk = createAsyncThunk(
         dispatch(getAllCategoriesThunk());
         return res.data;
     }
-);
+);*/
 
 export const materialsSlice = createSlice({
     name: 'materials',
     initialState,
     reducers: {
-        /*setAllMaterialsAC: (state: InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
-            state.materials = action.payload;
-        },
-        addIdToFavoritesMaterialsAC: (state: InitStateMaterialsType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteMaterialIds = [...state.favoriteMaterialIds, action.payload]
-        },
-        deleteIdFromFavoritesMaterialsAC: (state: InitStateMaterialsType, action: PayloadAction<IdFiledType>) => {
-            state.favoriteMaterialIds = state.favoriteMaterialIds.filter(el => String(el) !== String(action.payload))
-        }*/
     },
     extraReducers: (builder) => {
-        builder.addCase(getAllMaterialsThunk.pending, (state: InitStateMaterialsType) => {
+        /*builder.addCase(getAllMaterialsThunk.pending, (state: InitStateMaterialsType) => {
             state.isLoading = true;
         })
         builder.addCase(getAllMaterialsThunk.fulfilled, (state: InitStateMaterialsType, action: PayloadAction<MaterialType[]>) => {
-            //console.log('MaterialSlice / getAllMaterials.fulfilled / action.payload=', action.payload)
             state.materials = [...action.payload];
             state.isLoading = false;
         })
         builder.addCase(getAllMaterialsThunk.rejected, (state: InitStateMaterialsType)=>{
             state.isLoading = false;
-            console.log('extraReducers / getAllMaterials.rejected');
         })
 
         builder.addCase(renameMaterialThunk.pending, (state: InitStateMaterialsType) => {state.isLoading = true})
@@ -104,15 +91,11 @@ export const materialsSlice = createSlice({
 
         builder.addCase(addMaterialThunk.pending, (state: InitStateMaterialsType) => {state.isLoading = true})
         builder.addCase(addMaterialThunk.fulfilled, (state: InitStateMaterialsType) => {state.isLoading = false})
-        builder.addCase(addMaterialThunk.rejected, (state: InitStateMaterialsType) => {state.isLoading = false})
+        builder.addCase(addMaterialThunk.rejected, (state: InitStateMaterialsType) => {state.isLoading = false})*/
 
     },
 })
 
-export const {
-    /*addIdToFavoritesMaterialsAC,
-    deleteIdFromFavoritesMaterialsAC*/
-} = materialsSlice.actions;
-
+//export const {} = materialsSlice.actions;
 
 export default materialsSlice.reducer;

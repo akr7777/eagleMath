@@ -5,7 +5,7 @@ import NewChapterTypeOptions from "./new-chapter-type";
 import NewChapterTitle from "./new-chapter-title";
 import NewChapterText from "./new-chapter-text";
 import NewChapterImage from "./new-chapter-image";
-import {ContentType} from "../../features/contentSlice";
+import {ContentType} from "../../../store/features/contentSlice";
 import {useSelector} from "react-redux";
 import Container from "@mui/material/Container";
 import s from "../../common/commonCSS.module.css";

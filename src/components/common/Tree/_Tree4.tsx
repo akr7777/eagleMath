@@ -1,7 +1,7 @@
 import Tree, {NodeId} from '@naisutech/react-tree'
-import { MaterialType} from "../../features/materialsSlice";
+import { MaterialType} from "../../../store/features/materialsSlice";
 import myTheme from "./_TreeTheme";
-import {CategoryType} from "../../features/categoriesSlice";
+import {CategoryType} from "../../../store/features/categoriesSlice";
 
 export type Tree4PropsType = {
     categories: Array<CategoryType>,

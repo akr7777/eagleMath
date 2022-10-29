@@ -2,15 +2,15 @@ import {useNavigate, useParams} from "react-router-dom";
 import css from '../../content.module.css';
 import {RootState, useAppDispatch} from "../../../../store/store";
 import {useEffect} from "react";
-import {getTestThunk, pushTestAnswerAC, TestContentType, TestType, TestAnswersType} from "../../../features/tasksSlice";
+import {pushTestAnswerAC, TestContentType, TestType, TestAnswersType} from "../../../../store/features/tasksSlice";
 import {useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
 import {MouseEvent} from "react";
 import TestResults from "./test-results";
 import TestContentButton from "./test-content-button";
-import Button from "@mui/material/Button";
 import {PATHS} from "../../../AppBar/AppBar";
 import CreateTwoToneIcon from '@mui/icons-material/CreateTwoTone';
+import {getTestThunk} from "../../../../store/features/tasksThunks";
 
 const TestContent = () => {
     const {contentId} = useParams();

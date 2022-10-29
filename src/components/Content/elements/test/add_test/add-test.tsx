@@ -1,10 +1,11 @@
 import Container from "@mui/material/Container";
 import s from "../../../../common/commonCSS.module.css";
-import {IdFiledType} from "../../../../features/categoriesSlice";
+import {IdFiledType} from "../../../../../store/features/categoriesSlice";
 import AddTestAllTasksList from "./add-test-all-tasks-list";
 import Typography from "@mui/material/Typography";
 import {useState} from "react";
-import {TaskType, TestContentType, addNewTestToDataBaseThunk} from "../../../../features/tasksSlice";
+import {TestContentType} from "../../../../../store/features/tasksSlice";
+import {addNewTestToDataBaseThunk} from "../../../../../store/features/tasksThunks";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../../../store/store";
 import AddTestAddNewQuestion from "./add-test-add-new-question";

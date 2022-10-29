@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import {ChangeEvent, useState} from "react";
 import CustomColorButton from "../common/CustomColorButton";
 import {RootState, useAppDispatch} from "../../store/store";
-import {resetSingUpResultCodeAC} from "../features/authSlice";
+import {resetSingUpResultCodeAC} from "../../store/features/authSlice";
 import Preloader from "../common/Preloader";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
@@ -14,7 +14,7 @@ import {NavLink} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import Button from "@mui/material/Button";
 import {ResultCodesEnum} from "../common/resultCodes";
-import {registrationThunk} from "../features/authThunks";
+import {registrationThunk} from "../../store/features/authThunks";
 
 type ErrorObjectType = {
     name: string,

@@ -8,14 +8,14 @@ import {RootState, useAppDispatch} from "../../store/store";
 import TextField from "@mui/material/TextField";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import SaveIcon from '@mui/icons-material/Save';
-import {updateEmailThunk, uploadAvatarThunk} from "../features/authThunks"
+import {updateEmailThunk, uploadAvatarThunk} from "../../store/features/authThunks"
 import ChangePasswordAccordion from "./ChangePasswordAccordion";
 import Button from "@mui/material/Button";
 import {PATHS} from "../AppBar/AppBar";
 import Preloader from "../common/Preloader";
-import {IdFiledType} from "../features/categoriesSlice";
+import {IdFiledType} from "../../store/features/categoriesSlice";
 import {NavLink} from "react-router-dom";
-import {baseAvatarPhotoUrl} from "../../assets/env";
+import {baseAvatarPhotoUrl} from "../../env";
 
 export default function Profile() {
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);

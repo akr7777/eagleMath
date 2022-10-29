@@ -10,7 +10,7 @@ import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import {CategoryLongType, dataMutation} from "./Tree/Tree5";
-import {CategoryType, changeParentIdThunk, IdFiledType} from "../features/categoriesSlice";
+import {CategoryType, changeParentIdThunk, IdFiledType} from "../../store/features/categoriesSlice";
 import s1 from "./change-parent.module.css";
 import {useState} from "react";
 import Typography from "@mui/material/Typography";

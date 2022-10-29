@@ -1,8 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {CategoriesAPI, ContentAPI} from "../api/api";
-import {getAllMaterialsThunk, getFavoritesThunk, MaterialType} from "./materialsSlice";
-import {getAllTasksThunk, TaskType} from "./tasksSlice";
+import {CategoriesAPI, ContentAPI} from "../../components/api/api";
+import {getAllMaterialsThunk, getFavoritesThunk, getAllTasksThunk} from "./tasksThunks";
 
 export type IdFiledType = string | number;
 export type CategoryType = {

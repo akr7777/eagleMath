@@ -1,15 +1,15 @@
 import {configureStore, ThunkDispatch, AnyAction} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
 
-import authorSlice from "../components/features/authorSlice";
-import authSlice from "../components/features/authSlice";
-import contactsSlice from "../components/features/contactsSlice";
-import tasksSlice from "../components/features/tasksSlice";
-import materialsSlice from "../components/features/materialsSlice";
-import categoriesSlice from "../components/features/categoriesSlice";
-import dashboardSlice from "../components/features/dashboardSlice";
-import contentSlice from "../components/features/contentSlice";
-import usersSlice from "../components/features/usersSlice";
+import authorSlice from "./features/authorSlice";
+import authSlice from "./features/authSlice";
+import contactsSlice from "./features/contactsSlice";
+import tasksSlice from "./features/tasksSlice";
+//import materialsSlice from "./features/materialsSlice";
+import categoriesSlice from "./features/categoriesSlice";
+import dashboardSlice from "./features/dashboardSlice";
+import contentSlice from "./features/contentSlice";
+import usersSlice from "./features/usersSlice";
 
 
 export const store = configureStore({
@@ -18,7 +18,7 @@ export const store = configureStore({
         auth: authSlice,
         contacts: contactsSlice,
         tasks: tasksSlice,
-        materials: materialsSlice,
+        //materials: materialsSlice,
         categories: categoriesSlice,
         dashboard: dashboardSlice,
         content: contentSlice,

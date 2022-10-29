@@ -9,14 +9,14 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import TextField from '@mui/material/TextField';
 import Accordion from "@mui/material/Accordion";
 import React, {useEffect, useState} from "react";
-import {IdFiledType} from "../../features/categoriesSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {
     changeNoteStatusThunk,
     changeSearchText, deleteNoteThunk,
     getNotesThunk,
     NoteType,
     setNotesThunk
-} from "../../features/dashboardSlice";
+} from "../../../store/features/dashboardSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {v4} from "uuid";

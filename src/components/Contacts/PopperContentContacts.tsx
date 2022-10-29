@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 //import {setTitleAC, setDescriptionAC, setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} from "../features/contactsSlice";
 import s from './contacts.module.css';
-import {getContactsThunk, setContactsThunk} from "../features/contactsSlice";
+import {getContactsThunk, setContactsThunk} from "../../store/features/contactsSlice";
 
 
 type PopperContentPropsType = {

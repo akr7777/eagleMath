@@ -2,7 +2,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select, {SelectChangeEvent} from '@mui/material/Select';
 import {ChangeEvent, useState} from "react";
-import {changeNotesFilterStatus, NotesStatusType} from "../../features/dashboardSlice";
+import {changeNotesFilterStatus, NotesStatusType} from "../../../store/features/dashboardSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import elementCSS from "./elements.module.css"

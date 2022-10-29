@@ -1,9 +1,9 @@
-import {CategoryType, IdFiledType} from "../../features/categoriesSlice";
-import {MaterialType} from "../../features/materialsSlice";
-import {TaskType} from "../../features/tasksSlice";
+import {CategoryType, IdFiledType} from "../../../store/features/categoriesSlice";
+import {MaterialType} from "../../../store/features/materialsSlice";
+import {TaskType} from "../../../store/features/tasksSlice";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store/store";
-import {ContentTypes} from "../../features/dashboardSlice";
+import {ContentTypes} from "../../../store/features/dashboardSlice";
 
 export type FavoriteContentOutputType = {
     type: ContentTypes,
@@ -15,7 +15,7 @@ export const FavoriteContent = (/*categories: CategoryType, materials: MaterialT
     const favoriteIds:IdFiledType[] = useSelector((state: RootState) => state.dashboard.favoriteContent);
     const categories:CategoryType[] = useSelector((state:RootState) => state.categories.categories);
     const tasks:TaskType[] = useSelector((state:RootState) => state.tasks.tasks);
-    const materials:MaterialType[] = useSelector((state:RootState) => state.materials.materials);
+    const materials:MaterialType[] = useSelector((state:RootState) => state.tasks.materials);
 
     const result:Array<FavoriteContentOutputType> = [];
 

@@ -1,4 +1,4 @@
-import {ContentType} from "../../features/contentSlice";
+import {ContentType} from "../../../store/features/contentSlice";
 
 const reassignContentIndexes = (content: ContentType[], newChapter: ContentType, index: number):ContentType[] => {
    /* const result = content.slice(0, newChapter.index);

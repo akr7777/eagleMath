@@ -9,7 +9,7 @@ import s from "../common/commonCSS.module.css";
 import Preloader from "../common/Preloader";
 import Container from '@mui/material/Container';
 import PopperContentContacts from "./PopperContentContacts";
-import {getContactsThunk} from "../features/contactsSlice";
+import {getContactsThunk} from "../../store/features/contactsSlice";
 
 function phoneFormat(phone: string) {
     if (phone.length === 12)

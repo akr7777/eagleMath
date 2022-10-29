@@ -1,5 +1,5 @@
 import s1 from "../content.module.css";
-import {baseContentImageUrl, ContentType, moveParagraphThunk} from "../../features/contentSlice";
+import {baseContentImageUrl, ContentType, moveParagraphThunk} from "../../../store/features/contentSlice";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import React from "react";

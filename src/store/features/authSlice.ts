@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {IdFiledType} from "./categoriesSlice";
-import {ResultCodesEnum, ResultCodesEnum as resultCodes} from "../common/resultCodes";
+import {ResultCodesEnum, ResultCodesEnum as resultCodes} from "../../components/common/resultCodes";
 import {
     loginThunk,
     logoutThunk,

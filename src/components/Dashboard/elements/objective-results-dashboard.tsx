@@ -11,9 +11,9 @@ import {RootState, useAppDispatch} from "../../../store/store";
 import {
     getObjectiveResultsByUserId,
     getUserListThunk, ObjectiveResultsType,
-} from "../../features/dashboardSlice";
-import {IdFiledType} from "../../features/categoriesSlice";
-import {UserType} from "../../features/usersSlice";
+} from "../../../store/features/dashboardSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
+import {UserType} from "../../../store/features/usersSlice";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
 import {Dayjs} from "dayjs";
 import ObjectiveResultsDashboardFilter from "./objective-result-dashboard-filters";

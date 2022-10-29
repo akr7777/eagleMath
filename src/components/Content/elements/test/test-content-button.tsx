@@ -1,5 +1,5 @@
 import css from "../../content.module.css";
-import {TestAnswersType, TestContentType} from "../../../features/tasksSlice";
+import {TestAnswersType, TestContentType} from "../../../../store/features/tasksSlice";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store/store";
 import {MouseEvent} from "react";

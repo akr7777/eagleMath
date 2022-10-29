@@ -7,7 +7,7 @@ import {
     deleteCategoryThunk,
     deleteFromFavoritesThunk, getAllCategoriesThunk,
     IdFiledType, setEditNameIdAC, setNewContentName
-} from "../../features/categoriesSlice";
+} from "../../../store/features/categoriesSlice";
 import {contentTypeType} from "../line";
 import {NavLink} from "react-router-dom";
 import s from "./tree5.module.css";
@@ -15,15 +15,13 @@ import ReadThisMaterial from "@mui/icons-material/AutoStories";
 import StarIcon from "@mui/icons-material/Star";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import DraggableDialog, {PaperComponent1} from "../change-parent";
+import DraggableDialog from "../change-parent";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
-import {ChangeEvent, useState} from "react";
-import {addMaterialThunk, renameMaterialThunk} from "../../features/materialsSlice";
-import {addTaskThunk} from "../../features/tasksSlice";
+import {addMaterialThunk, renameMaterialThunk, addTaskThunk} from "../../../store/features/tasksThunks";
 
 type MouseLineClickType = {
     contentId: IdFiledType,
@@ -32,40 +30,19 @@ type MouseLineClickType = {
     contentType: contentTypeType,
 }
 const HiddenMenu = (props: MouseLineClickType) => {
-
     const dispatch = useAppDispatch();
-
-    /*useEffect(()=>{
-        dispatch(contentTypeThunk(props.contentId));
-    }, []);
-    const contentType:ContentTypeVariantsTypes = useSelector((state: RootState) => state.content.contentType);*/
 
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
 
-    const contentName = useSelector((state:RootState) => state.categories.newContentName);
-    /*const editNameId = useSelector((state: RootState) => state.categories.editNameId);
+    //const contentName = useSelector((state:RootState) => state.categories.newContentName);
 
-    const onContentNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
-        dispatch(setNewContentName(e.currentTarget.value));//setContentName(e.currentTarget.value);*/
     const editContentTumbler = () => {
         dispatch(setEditNameIdAC(props.contentId));
         dispatch(setNewContentName(props.label));
     }
-    /*const cancelEditing = () => {
-        //setContentName(props.label);
-        //setIsEditContentName(false);
-        dispatch(setNewContentName(props.label));
-        dispatch(setEditNameIdAC("-1"));
-    }
-    const changeContentName = () => {
-        dispatch(renameMaterialThunk({contentId: props.contentId, newName: contentName}));
-        //setIsEditContentName(false);
-        //dispatch(setEditNameIdAC(props.contentId));
-        dispatch(setEditNameIdAC("-1"));
-    }*/
 
     const deleteCategory = () => {
         dispatch(deleteCategoryThunk(props.contentId));

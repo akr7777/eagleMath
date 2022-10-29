@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {authAPI} from "../api/api";
+import {authAPI} from "../../components/api/api";
 import {IdFiledType} from "./categoriesSlice";
 
 type LoginDataType = { email: string, password: string }

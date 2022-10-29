@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {descriptionAPI} from "../api/api";
+import {descriptionAPI} from "../../components/api/api";
 
 export const getDescriptionThunk = createAsyncThunk(
     'author/getDescription',

@@ -9,8 +9,8 @@ import {
     changeNoteTextOrTitleThunk,
     deleteNoteThunk,
     NoteType
-} from "../../features/dashboardSlice";
-import {IdFiledType} from "../../features/categoriesSlice";
+} from "../../../store/features/dashboardSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {useAppDispatch} from "../../../store/store";
 import TextField from '@mui/material/TextField';
 

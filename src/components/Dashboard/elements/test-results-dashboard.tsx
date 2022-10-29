@@ -15,9 +15,9 @@ import {
     getUserListThunk,
     TestResultProtocolType,
     TestResultType
-} from "../../features/dashboardSlice";
-import {IdFiledType} from "../../features/categoriesSlice";
-import {UserType} from "../../features/usersSlice";
+} from "../../../store/features/dashboardSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
+import {UserType} from "../../../store/features/usersSlice";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
 import TestResultDashboardFilters from "./test-result-dashboard-filters";
 import {Dayjs} from "dayjs";

@@ -1,4 +1,4 @@
-import {UserType} from "../../features/usersSlice";
+import {UserType} from "../../../store/features/usersSlice";
 import React, {ChangeEvent} from "react";
 import TextField from "@mui/material/TextField";
 import s1 from "./elements.module.css";

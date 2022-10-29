@@ -10,9 +10,9 @@ import Button from "@mui/material/Button";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
-import {changePasswordResultCodeAC} from "../features/authSlice";
+import {changePasswordResultCodeAC} from "../../store/features/authSlice";
 import {ResultCodesEnum} from "../common/resultCodes";
-import {updatePasswordThunk} from "../features/authThunks";
+import {updatePasswordThunk} from "../../store/features/authThunks";
 
 export default function ChangePasswordAccordion() {
     const dispatch = useAppDispatch();

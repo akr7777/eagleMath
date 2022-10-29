@@ -1,9 +1,28 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {ContentAPI, objectiveAPI, testAPI} from "../api/api";
+import {ContentAPI, objectiveAPI, testAPI} from "../../components/api/api";
 import {getAllCategoriesThunk, IdFiledType} from "./categoriesSlice";
-import {getAllMaterialsThunk} from "./materialsSlice";
-import {ResultCodesEnum, ResultCodesEnum as resultCodes} from './../common/resultCodes';
+//import {getAllMaterialsThunk} from "./materialsSlice";
+import {ResultCodesEnum, ResultCodesEnum as resultCodes} from '../../components/common/resultCodes';
+import {
+    renameMaterialThunk,
+    getAllTasksThunk,
+    getAllMaterialsThunk,
+    addMaterialThunk,
+    getFavoritesThunk,
+    getTestThunk,
+    getTestByIdThunk,
+    getAllTestsContentIdsThunk,
+    setTestResultThunk,
+    setObjectiveResultThunk,
+    addTaskToFavoritesThunk,
+    deleteTaskFromFavoritesThunk,
+    addNewTestToDataBaseThunk,
+    editTestInDataBaseThunk,
+    addTaskThunk,
+    getObjectiveByContentIdThunk,
+    addNewObjectiveThunk
+} from "./tasksThunks";
 
 export type TestAnswersType = {questionId: string, receivedAnswer: string, isRight: boolean}
 //type AddTestType = {contentId: IdFiledType, content: Array<TestContentType>}
@@ -32,19 +51,25 @@ export type ObjectiveType = {
     content: string,
     answer: string,
 }
+export type MaterialType = {
+    id: IdFiledType,
+    parentId: IdFiledType,
+    label: string,
+}
 type InitStateTasksType = {
     tasks: Array<TaskType>,
+    materials: Array<MaterialType>,
     favoriteTasksIds: Array<IdFiledType>,
     isLoading: boolean,
     test: TestType,
     testAnswers: Array<TestAnswersType>,
-    //addTest: AddTestType,
     testContentIds: Array<IdFiledType>,
     objectives: Array<ObjectiveType>,
 }
 
 let initialState: InitStateTasksType = {
     tasks: [],
+    materials: [],
     favoriteTasksIds: [],
     isLoading: true,
     test: {
@@ -54,26 +79,55 @@ let initialState: InitStateTasksType = {
         content: []
     },
     testAnswers: [],
-    /*addTest: {
-        contentId: "",
-        content: [],
-    },*/
     testContentIds: [],
     objectives: [],
 }
-
+/*
 export const getAllTasksThunk = createAsyncThunk(
     'tasks/getAllTasks',
     async (_, {rejectWithValue, dispatch}) => {
         const res = await ContentAPI.getAllTasks();
         if (res.data) {
             return res.data;
-            /*const result: CategoryType[] = [];
-            for (let i = 0; i < res.data.length; i++)
-                result.push({id: res.data[i].id, parentId: res.data[i].parentid, label: res.data[i].label});
-            return result;*/
         } else
             return [];
+    }
+);
+export const getAllMaterialsThunk = createAsyncThunk(
+    'tasks/getAllMaterialsThunk',
+    async (_, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.getAllMaterials();
+        if (res.data) {
+            return res.data;
+        } else
+            return [];
+    }
+);
+
+type RenameMaterialType = {
+    contentId: IdFiledType,
+    newName: string,
+}
+export const renameMaterialThunk = createAsyncThunk(
+    'tasks/renameMaterialThunk',
+    async (data: RenameMaterialType, {rejectWithValue, dispatch}) => {
+        const {contentId, newName} = data;
+        const res = await ContentAPI.renameMaterial(contentId, newName);
+        dispatch(getAllMaterialsThunk());
+        dispatch(getAllTasksThunk());
+        dispatch(getAllCategoriesThunk());
+        return res.data;
+    }
+);
+
+export const addMaterialThunk = createAsyncThunk(
+    'materials/addMaterialThunk',
+    async (parentContentId: IdFiledType, {rejectWithValue, dispatch}) => {
+        const res = await ContentAPI.addMaterial(parentContentId);
+        dispatch(getAllMaterialsThunk());
+        dispatch(getAllTasksThunk());
+        dispatch(getAllCategoriesThunk());
+        return res.data;
     }
 );
 
@@ -204,7 +258,7 @@ export const addNewObjectiveThunk = createAsyncThunk(
         const res = await objectiveAPI.addNewObjective({...data});
         return res.data; //возывращает массив id Array<IdFieldType>
     }
-);
+);*/
 
 export const tasksSlice = createSlice({
     name: 'tasks',
@@ -340,6 +394,25 @@ export const tasksSlice = createSlice({
         builder.addCase(setObjectiveResultThunk.pending, (state: InitStateTasksType) => {state.isLoading = true;})
         builder.addCase(setObjectiveResultThunk.fulfilled, (state: InitStateTasksType) => {state.isLoading = false;})
         builder.addCase(setObjectiveResultThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false;})
+
+        builder.addCase(getAllMaterialsThunk.pending, (state: InitStateTasksType) => {
+            state.isLoading = true;
+        })
+        builder.addCase(getAllMaterialsThunk.fulfilled, (state: InitStateTasksType, action: PayloadAction<MaterialType[]>) => {
+            state.materials = [...action.payload];
+            state.isLoading = false;
+        })
+        builder.addCase(getAllMaterialsThunk.rejected, (state: InitStateTasksType)=>{
+            state.isLoading = false;
+        })
+
+        builder.addCase(renameMaterialThunk.pending, (state: InitStateTasksType) => {state.isLoading = true})
+        builder.addCase(renameMaterialThunk.fulfilled, (state: InitStateTasksType) => {state.isLoading = false})
+        builder.addCase(renameMaterialThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false})
+
+        builder.addCase(addMaterialThunk.pending, (state: InitStateTasksType) => {state.isLoading = true})
+        builder.addCase(addMaterialThunk.fulfilled, (state: InitStateTasksType) => {state.isLoading = false})
+        builder.addCase(addMaterialThunk.rejected, (state: InitStateTasksType) => {state.isLoading = false})
     },
 })
 

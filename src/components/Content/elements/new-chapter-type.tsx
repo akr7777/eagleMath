@@ -1,6 +1,6 @@
 import {Typography} from "@mui/material";
 import Button from "@mui/material/Button";
-import {changeContent, ContentType, newChapterChange} from "../../features/contentSlice";
+import {changeContent, ContentType, newChapterChange} from "../../../store/features/contentSlice";
 import React from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";

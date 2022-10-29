@@ -10,14 +10,14 @@ import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
-import {IdFiledType} from "../../features/categoriesSlice";
-import {UserType} from "../../features/usersSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
+import {UserType} from "../../../store/features/usersSlice";
 import {
     getFullStudiedContentThunk,
     getUserListThunk,
     StudiesContentType
-} from "../../features/dashboardSlice";
-import {getStudiedMaterialsThunk} from "../../features/contentSlice";
+} from "../../../store/features/dashboardSlice";
+import {getStudiedMaterialsThunk} from "../../../store/features/contentSlice";
 import TextField from "@mui/material/TextField";
 import ReadThisMaterial from "@mui/icons-material/AutoStories";
 import {NavLink} from "react-router-dom";

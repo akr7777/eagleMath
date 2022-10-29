@@ -10,7 +10,7 @@ import {
     getDescriptionPhotoThunk,
     setDescriptionPhotoThunk,
     setDescriptionThunk,
-} from "../features/authorThunks";
+} from "../../store/features/authorThunks";
 
 
 type PopperContentPropsType = {

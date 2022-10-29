@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {getAllTasksThunk} from "../../features/tasksSlice";
-import {getAllCategoriesThunk, IdFiledType} from "../../features/categoriesSlice";
+import {getAllTasksThunk, getAllMaterialsThunk} from "../../../store/features/tasksThunks";
+import {getAllCategoriesThunk, IdFiledType} from "../../../store/features/categoriesSlice";
 import {FavoriteContent, FavoriteContentOutputType} from "../utils/utils";
-import {getAllMaterialsThunk} from "../../features/materialsSlice";
 import s1 from '../styles.module.css';
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -14,9 +13,9 @@ import IconMaterial from '@mui/icons-material/AutoStories';
 import IconTask from '@mui/icons-material/AppRegistration';
 import Line from "../../common/line";
 import s2 from "./elements.module.css"
-import {getFavoritesThunk} from "../../features/dashboardSlice";
+import {getFavoritesThunk} from "../../../store/features/dashboardSlice";
 import TextField from "@mui/material/TextField";
-import {getStudiedMaterialsThunk} from "../../features/contentSlice";
+import {getStudiedMaterialsThunk} from "../../../store/features/contentSlice";
 import {useSelector} from "react-redux";
 
 type FavoriteMaterialsPropsType = {userId: IdFiledType}

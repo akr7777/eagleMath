@@ -1,4 +1,4 @@
-import {ContentType, newChapterChange} from "../../features/contentSlice";
+import {ContentType, newChapterChange} from "../../../store/features/contentSlice";
 import {initNewChapter} from "../Content";
 import Button from "@mui/material/Button";
 import React from "react";

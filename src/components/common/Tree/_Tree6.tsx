@@ -1,10 +1,10 @@
-import {MaterialType} from "../../features/materialsSlice";
+import {MaterialType} from "../../../store/features/materialsSlice";
 import React, {useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import s from "./tree5.module.css";
-import {TaskType} from "../../features/tasksSlice";
-import {CategoryType, IdFiledType} from "../../features/categoriesSlice";
+import {TaskType} from "../../../store/features/tasksSlice";
+import {CategoryType, IdFiledType} from "../../../store/features/categoriesSlice";
 
 import {NavLink} from "react-router-dom";
 
@@ -132,7 +132,7 @@ export const _Tree6: React.FC<TreePropsType> = (props) => {
     }
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
     const materialIds: Array<IdFiledType> = [...props.materials.map(m => m.id)];
-    const favoritesIds = useSelector((state: RootState) => state.materials.favoriteMaterialIds);
+    const favoritesIds = useSelector((state: RootState) => state.tasks.favoriteTasksIds);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     return <div className={s.wrappedDiv}>
         {

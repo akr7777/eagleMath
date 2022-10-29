@@ -1,12 +1,13 @@
 import {RootState, useAppDispatch} from "../../../../store/store";
 import {ChangeEvent, useEffect, useState} from "react";
-import {getObjectiveByContentIdThunk, ObjectiveType, setObjectiveResultThunk} from "../../../features/tasksSlice";
+import {ObjectiveType} from "../../../../store/features/tasksSlice";
+import {getObjectiveByContentIdThunk, setObjectiveResultThunk} from "../../../../store/features/tasksThunks";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
 import s1 from "./objective.module.css";
 import Button from "@mui/material/Button";
-import {baseObjectiveImageUrl} from "../../../features/contentSlice";
+import {baseObjectiveImageUrl} from "../../../../store/features/contentSlice";
 
 type AnswerType = {objId: string, answer: string, isGiven: boolean, isRight: boolean}
 const ObjectiveContent = () => {

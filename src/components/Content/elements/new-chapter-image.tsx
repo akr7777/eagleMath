@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import {Navigate, useNavigate} from "react-router-dom";
 import {PATHS} from "../../AppBar/AppBar";
 import {useSelector} from "react-redux";
-import {ContentType, newChapterChange, setContentThunk, uploadContentImage} from "../../features/contentSlice";
+import {ContentType, newChapterChange, setContentThunk, uploadContentImage} from "../../../store/features/contentSlice";
 import {v4} from 'uuid';
 import reassignContentIndexes from "./reassign-content-indexes";
 import {initNewChapter} from "../Content";

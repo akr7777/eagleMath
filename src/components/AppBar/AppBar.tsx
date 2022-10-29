@@ -21,7 +21,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
-import {baseAvatarPhotoUrl} from "../../assets/env";
+import {baseAvatarPhotoUrl} from "../../env";
 
 interface Props {
     /**

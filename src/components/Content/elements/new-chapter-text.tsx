@@ -7,7 +7,7 @@ import {
     ContentType,
     newChapterChange,
     setContentThunk
-} from "../../features/contentSlice";
+} from "../../../store/features/contentSlice";
 import React, {ChangeEvent} from "react";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";

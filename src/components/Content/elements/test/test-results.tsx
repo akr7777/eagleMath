@@ -1,22 +1,15 @@
 import {
     clearTestAnswersAC,
-    setTestResultThunk,
     TestAnswersType, TestContentType,
     TestType
-} from "../../../features/tasksSlice";
+} from "../../../../store/features/tasksSlice";
+import {setTestResultThunk} from "../../../../store/features/tasksThunks";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../../store/store";
 import css from "../../content.module.css";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-/*type ProtocolType = {
-    questionId: string,
-    question: string,
-    options: Array<any>,
-    answer: string,
-    receivedAnswer: string | undefined,
-}*/
 const TestResults = () => {
     const dispatch = useAppDispatch();
     const test: TestType = useSelector((state: RootState) => state.tasks.test);

@@ -6,9 +6,10 @@ import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../../store/store";
 import TextField from "@mui/material/TextField";
 import {useEffect, useState} from "react";
-import {IdFiledType} from "../../../features/categoriesSlice";
+import {IdFiledType} from "../../../../store/features/categoriesSlice";
 import Button from "@mui/material/Button";
-import {addNewObjectiveThunk, getAllTasksThunk, TaskType} from "../../../features/tasksSlice";
+import {TaskType} from "../../../../store/features/tasksSlice";
+import {addNewObjectiveThunk, getAllTasksThunk} from "../../../../store/features/tasksThunks";
 import {useNavigate} from "react-router-dom";
 import {PATHS} from "../../../AppBar/AppBar";
 

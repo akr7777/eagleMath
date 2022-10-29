@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import s1 from "./elements.module.css";
 import Typography from "@mui/material/Typography";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {deleteUserThunk, makeUserAdmin, makeUserAsUser, UserType} from "../../features/usersSlice";
+import {deleteUserThunk, makeUserAdmin, makeUserAsUser, UserType} from "../../../store/features/usersSlice";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {PATHS} from "../../AppBar/AppBar";

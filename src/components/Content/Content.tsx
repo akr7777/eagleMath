@@ -7,7 +7,7 @@ import {
     newChapterChange,
     setContentThunk,
     getStudiedMaterialsThunk, getContentTitleByIdThunk
-} from "../features/contentSlice";
+} from "../../store/features/contentSlice";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
@@ -15,16 +15,17 @@ import s from "../common/commonCSS.module.css";
 import s1 from "../Content/content.module.css";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {useNavigate} from "react-router-dom";
-import {changeNewChapterIndex} from "../features/contentSlice";
+import {changeNewChapterIndex} from "../../store/features/contentSlice";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ContentHead from "./elements/content-head";
 import TestContent from "./elements/test/test-content";
 import {PATHS} from "../AppBar/AppBar";
 import ContentParagraph from "./elements/content-paragraph";
 import ObjectiveContent from "./elements/objective/objective-content";
-import {getObjectiveByContentIdThunk, getTestThunk, ObjectiveType, TestType} from "../features/tasksSlice";
+import {ObjectiveType, TestType} from "../../store/features/tasksSlice";
+import {getObjectiveByContentIdThunk, getTestThunk} from "../../store/features/tasksThunks";
 import AddRemoveContentStudied from "./elements/add-remove-content-studied";
-import {IdFiledType} from "../features/categoriesSlice";
+import {IdFiledType} from "../../store/features/categoriesSlice";
 import { Typography } from '@mui/material';
 import Switch from "@mui/material/Switch";
 

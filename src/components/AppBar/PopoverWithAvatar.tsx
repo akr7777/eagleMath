@@ -15,7 +15,7 @@ import {PATHS} from "./AppBar";
 import s from './appbar.module.css';
 import {RootState} from "../../store/store";
 import {useSelector} from "react-redux";
-import {baseAvatarPhotoUrl} from "../../assets/env";
+import {baseAvatarPhotoUrl} from "../../env";
 
 export default function PopoverWithAvatar() {
 

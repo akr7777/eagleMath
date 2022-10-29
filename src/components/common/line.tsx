@@ -18,14 +18,13 @@ import {
     addToFavoritesThunk, deleteCategoryThunk,
     deleteFromFavoritesThunk, getAllCategoriesThunk,
     IdFiledType, setEditNameIdAC, setNewContentName
-} from "../features/categoriesSlice";
+} from "../../store/features/categoriesSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import {addMaterialThunk, renameMaterialThunk} from "../features/materialsSlice";
+import {addMaterialThunk, renameMaterialThunk, addTaskThunk} from "../../store/features/tasksThunks";
 import DraggableDialog from "./change-parent";
-import {addTaskThunk} from "../features/tasksSlice";
 
 export type contentTypeType = "M" | "T" | "C" | undefined;
 

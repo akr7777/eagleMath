@@ -5,14 +5,11 @@ import {Typography} from '@mui/material';
 import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
-import {
-    clearTestAnswersAC,
-    getAllTasksThunk,
-    getFavoritesThunk,
-} from "../features/tasksSlice";
-import {getAllCategoriesThunk} from "../features/categoriesSlice";
+import {clearTestAnswersAC} from "../../store/features/tasksSlice";
+import {getAllCategoriesThunk} from "../../store/features/categoriesSlice";
 import Preloader from "../common/Preloader";
 import MaterialTaskHead from "../common/material-task-head";
+import {getAllTasksThunk, getFavoritesThunk} from "../../store/features/tasksThunks";
 
 export const Tasks = () => {
 

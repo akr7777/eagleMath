@@ -1,6 +1,6 @@
 import {useAppDispatch} from "../../store/store";
-import {renameMaterialThunk} from "../features/materialsSlice";
-import {IdFiledType} from "../features/categoriesSlice";
+import {renameMaterialThunk} from "../../store/features/tasksThunks";
+import {IdFiledType} from "../../store/features/categoriesSlice";
 
 const CorrectContentName = (contentId: IdFiledType, newName: string) => {
     const dispatch = useAppDispatch();

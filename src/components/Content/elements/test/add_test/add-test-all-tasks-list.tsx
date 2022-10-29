@@ -1,8 +1,9 @@
 import {RootState, useAppDispatch} from "../../../../../store/store";
-import {getAllTasksThunk, getAllTestsContentIdsThunk, TaskType} from "../../../../features/tasksSlice";
+import {TaskType} from "../../../../../store/features/tasksSlice";
+import {getAllTasksThunk, getAllTestsContentIdsThunk} from "../../../../../store/features/tasksThunks";
 import {useSelector} from "react-redux";
-import {ChangeEvent, useEffect, useState} from "react";
-import {IdFiledType} from "../../../../features/categoriesSlice";
+import {ChangeEvent, useEffect} from "react";
+import {IdFiledType} from "../../../../../store/features/categoriesSlice";
 import s1 from "../../../content.module.css";
 import Typography from "@mui/material/Typography";
 
