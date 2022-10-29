@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Popover from '@mui/material/Popover';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -11,14 +10,12 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
-
 import {NavLink} from "react-router-dom";
 import {PATHS} from "./AppBar";
-
 import s from './appbar.module.css';
 import {RootState} from "../../store/store";
 import {useSelector} from "react-redux";
-import {baseAvatarPhotoUrl} from "../features/authSlice";
+import {baseAvatarPhotoUrl} from "../../assets/env";
 
 export default function PopoverWithAvatar() {
 
@@ -84,9 +81,6 @@ export default function PopoverWithAvatar() {
                             </ListItem>
                         </List>
                     </Box>
-                   {/* <NavLink to={PATHS.profile}>Профайл</NavLink>
-                    <NavLink to={PATHS.logout}>Выйти</NavLink>*/}
-                {/*</Typography>*/}
             </Popover>
         </div>
     );

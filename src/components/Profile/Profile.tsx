@@ -8,7 +8,6 @@ import {RootState, useAppDispatch} from "../../store/store";
 import TextField from "@mui/material/TextField";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import SaveIcon from '@mui/icons-material/Save';
-import {baseAvatarPhotoUrl} from "../features/authSlice";
 import {updateEmailThunk, uploadAvatarThunk} from "../features/authThunks"
 import ChangePasswordAccordion from "./ChangePasswordAccordion";
 import Button from "@mui/material/Button";
@@ -16,6 +15,7 @@ import {PATHS} from "../AppBar/AppBar";
 import Preloader from "../common/Preloader";
 import {IdFiledType} from "../features/categoriesSlice";
 import {NavLink} from "react-router-dom";
+import {baseAvatarPhotoUrl} from "../../assets/env";
 
 export default function Profile() {
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
@@ -25,7 +25,7 @@ export default function Profile() {
 
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
-    const avaPhoto = baseAvatarPhotoUrl+userId;//useSelector((state: RootState) => state.auth.user.photo);
+    const avaPhoto = baseAvatarPhotoUrl+userId;
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isActivated = useSelector((state: RootState) => state.auth.user.isActivated);
     const activationLink = useSelector((state: RootState) => state.auth.activationLink);

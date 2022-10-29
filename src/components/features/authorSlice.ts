@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {getDescriptionPhotoThunk, getDescriptionThunk, setDescriptionThunk} from './authorThunks';
+import {baseDescriptionPhotoUrl} from "../../assets/env";
 
-export const baseDescriptionPhotoUrl = 'http://localhost:4001/content/getDescriptionPhoto';
+//export const baseDescriptionPhotoUrl = 'http://localhost:4001/content/getDescriptionPhoto';
 
 const initContent = {
     title: '',

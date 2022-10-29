@@ -21,7 +21,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import LogoutIcon from "@mui/icons-material/Logout";
-import {baseAvatarPhotoUrl} from "../features/authSlice";
+import {baseAvatarPhotoUrl} from "../../assets/env";
 
 interface Props {
     /**
@@ -51,13 +51,6 @@ export const PATHS = {
     dashboard: '/dashboard',
 }
 
-
-/*const isAuth: boolean = useSelector((state: RootState) => state.auth.isAuth);
-if (isAuth) {
-    navItemsDesctop.push(<NavLink className={s.NavLinkCSSDesctop} to={PATHS.dashboard}>DashBoard</NavLink>);
-    navItemsMobile.push(<NavLink className={s.NavLinkCSSMobile} to={PATHS.dashboard}>DashBoard</NavLink>);
-}*/
-
 const navItemsMobileExtra = [
     <NavLink className={s.NavLinkCSSMobile} to={PATHS.profile}>
         <ManageAccountsIcon/> Профайл
@@ -66,7 +59,6 @@ const navItemsMobileExtra = [
         <LogoutIcon/>
         <label>Выйти</label>
     </NavLink>,
-    /*<Button variant={'text'}><LogoutIcon/>Выйти</Button>,*/
 ];
 
 export default function MyAppBar(props: Props) {
