@@ -2,7 +2,15 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {authAPI} from "../api/api";
 import {IdFiledType} from "./categoriesSlice";
-import {ResultCodesEnum as resultCodes} from "../common/resultCodes";
+import {ResultCodesEnum, ResultCodesEnum as resultCodes} from "../common/resultCodes";
+import {
+    loginThunk,
+    logoutThunk,
+    refreshThunk, registrationThunk,
+    updateEmailThunk,
+    updatePasswordThunk,
+    uploadAvatarThunk
+} from "./authThunks";
 
 export const baseAvatarPhotoUrl = 'http://localhost:4001/auth/getAvatar?id=';
 
@@ -14,7 +22,7 @@ type UserType = {
     isActivated: boolean,
 
 }
-export type AuthStateType = {
+/*export type AuthStateType = {
     user: UserType,
     isAuth: boolean,
     loginServerError: string,
@@ -22,22 +30,24 @@ export type AuthStateType = {
     changePasswordResultCode: number,
     singUpResultCode: number,
     activationLink: string,
-}
-const initialState: AuthStateType = {
+}*/
+const initialState = {
     user: {
         id: '0',
         email: '',
         name: '',
         isAdmin: false,
         isActivated: false,
-    },
+    } as UserType,
     isAuth: false,
     loginServerError: '',
     isLoading: false,
     changePasswordResultCode: -1,
     singUpResultCode: -1,
-    activationLink: 'http://'
+    activationLink: ''
 }
+type AuthStateType = typeof initialState;
+/*
 
 type LoginDataType = { email: string, password: string }
 export const loginThunk = createAsyncThunk(
@@ -126,6 +136,7 @@ export const updatePasswordThunk = createAsyncThunk(
         }
     }
 );
+*/
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -140,38 +151,21 @@ export const authSlice = createSlice({
         resetSingUpResultCodeAC: (state: AuthStateType): void => {
             state.singUpResultCode = -1;
         },
-        /*logout: (state: AuthStateType): void => {
-            state.user.id = '0';
-            state.user.isAdmin = false;
-            state.user.email = '';
-            //state.user.photo = '';
-            state.isAuth = false;
-            state.loginServerError = '';
-        },*/
     },
 
 
     extraReducers: (builder) => {
-        builder.addCase(loginThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
-        })
+        builder.addCase(loginThunk.pending, (state: AuthStateType) => {state.isLoading = true})
         builder.addCase(loginThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{
             accessToken: string,
             refreshToken: string,
-            userInfo: {
-                id: string,
-                name: string,
-                email: string,
-                isAdmin: boolean,
-                isActivated: boolean,
-            },
+            userInfo: UserType,
             resultCode: number,
             message?: string
         }>) => {
             if (action.payload.resultCode === resultCodes.Success) {
                 if (action.payload.accessToken) {
                     localStorage.setItem("accessToken", action.payload.accessToken);
-                    //localStorage.setItem("refreshToken", action.payload.refreshToken);
                     state.user.id = action.payload.userInfo.id;
                     state.user.email = action.payload.userInfo.email;
                     state.user.name = action.payload.userInfo.name;
@@ -191,8 +185,7 @@ export const authSlice = createSlice({
             state.isLoading = false;
         })
 
-        builder.addCase(logoutThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
+        builder.addCase(logoutThunk.pending, (state: AuthStateType) => {state.isLoading = true;
         })
         builder.addCase(logoutThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{token: any, resultCode: resultCodes}>) => {
             if (action.payload.resultCode === resultCodes.Success) {
@@ -205,23 +198,20 @@ export const authSlice = createSlice({
                 state.user.isActivated = false;
                 state.user.isAdmin = false;
                 state.isLoading = false;
+                //state = {...state, ...initialState}
             }
             state.isLoading = false;
         })
-        builder.addCase(logoutThunk.rejected, (state: AuthStateType) => {
-            state.isLoading = false;
+        builder.addCase(logoutThunk.rejected, (state: AuthStateType) => {state.isLoading = false;
         })
 
-        builder.addCase(refreshThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
-        })
+        builder.addCase(refreshThunk.pending, (state: AuthStateType) => {state.isLoading = true;})
         builder.addCase(refreshThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{
             user: UserType & {activationLink: string},
             resultCode: resultCodes,
             accessToken: string,
             refreshToken: string,
         }>) => {
-            //console.log('authSlice / refreshThunk / action.payload=', action.payload)
             if (action.payload.resultCode === resultCodes.Success) {
                 state.isAuth = true;
                 state.activationLink = action.payload.user.activationLink;
@@ -233,61 +223,35 @@ export const authSlice = createSlice({
                     isAdmin: action.payload.user.isAdmin,
                     isActivated: action.payload.user.isActivated
                 }
-                /*state.user.email = action.payload.user.email;
-                state.user.name = action.payload.user.name;
-                state.user.id = action.payload.user.id;
-                state.user.isActivated = action.payload.user.isActivated;
-                state.user.isAdmin = action.payload.user.isAdmin;*/
                 state.isLoading = false;
             }
         })
-        builder.addCase(refreshThunk.rejected, (state: AuthStateType) => {
-            state.isLoading = false;
-        })
+        builder.addCase(refreshThunk.rejected, (state: AuthStateType) => {state.isLoading = false;})
 
-        builder.addCase(uploadAvatarThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
-        })
-        builder.addCase(uploadAvatarThunk.fulfilled, (state: AuthStateType, action: PayloadAction<string>) => {
-            state.isLoading = false;
-        })
-        builder.addCase(uploadAvatarThunk.rejected, (state: AuthStateType) => {
-            state.isLoading = false;
-        })
+        builder.addCase(uploadAvatarThunk.pending, (state: AuthStateType) => {state.isLoading = true;})
+        builder.addCase(uploadAvatarThunk.fulfilled, (state: AuthStateType, action: PayloadAction<string>) => {state.isLoading = false;})
+        builder.addCase(uploadAvatarThunk.rejected, (state: AuthStateType) => {state.isLoading = false;})
 
-
-        builder.addCase(updateEmailThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
-        })
-        builder.addCase(updateEmailThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{ resultCode: number, newEmail: string }>) => {
+        builder.addCase(updateEmailThunk.pending, (state: AuthStateType) => {state.isLoading = true;})
+        builder.addCase(updateEmailThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{ resultCode: ResultCodesEnum, newEmail: string }>) => {
             state.user.email = action.payload.newEmail;
             state.isLoading = false;
         })
-        builder.addCase(updateEmailThunk.rejected, (state: AuthStateType) => {
-            state.isLoading = false;
-        })
+        builder.addCase(updateEmailThunk.rejected, (state: AuthStateType) => {state.isLoading = false;})
 
-        builder.addCase(updatePasswordThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
-        })
-        builder.addCase(updatePasswordThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{resultCode: number}>) => {
+        builder.addCase(updatePasswordThunk.pending, (state: AuthStateType) => {state.isLoading = true;})
+        builder.addCase(updatePasswordThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{resultCode: ResultCodesEnum}>) => {
             state.changePasswordResultCode = action.payload.resultCode;
             state.isLoading = false;
         })
-        builder.addCase(updatePasswordThunk.rejected, (state: AuthStateType) => {
-            state.isLoading = false;
-        })
+        builder.addCase(updatePasswordThunk.rejected, (state: AuthStateType) => {state.isLoading = false;})
 
-        builder.addCase(registrationThunk.pending, (state: AuthStateType) => {
-            state.isLoading = true;
-        })
-        builder.addCase(registrationThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{resultCode: number}>) => {
+        builder.addCase(registrationThunk.pending, (state: AuthStateType) => {state.isLoading = true;})
+        builder.addCase(registrationThunk.fulfilled, (state: AuthStateType, action: PayloadAction<{resultCode: ResultCodesEnum}>) => {
             state.singUpResultCode = action.payload.resultCode;
             state.isLoading = false;
         })
-        builder.addCase(registrationThunk.rejected, (state: AuthStateType) => {
-            state.isLoading = false;
-        })
+        builder.addCase(registrationThunk.rejected, (state: AuthStateType) => {state.isLoading = false;})
     }
 })
 export const {changePasswordResultCodeAC, resetLoginServerErrorAC, resetSingUpResultCodeAC} = authSlice.actions;

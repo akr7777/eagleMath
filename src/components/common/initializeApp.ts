@@ -1,5 +1,5 @@
 import {useAppDispatch} from "../../store/store";
-import {refreshThunk} from "../features/authSlice";
+import {refreshThunk} from "../features/authThunks";
 
 const InitializeApp = () => {
     const dispatch = useAppDispatch();

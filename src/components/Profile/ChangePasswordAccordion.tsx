@@ -10,8 +10,9 @@ import Button from "@mui/material/Button";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
 import Alert from '@mui/material/Alert';
-import {changePasswordResultCodeAC, updatePasswordThunk} from "../features/authSlice";
+import {changePasswordResultCodeAC} from "../features/authSlice";
 import {ResultCodesEnum} from "../common/resultCodes";
+import {updatePasswordThunk} from "../features/authThunks";
 
 export default function ChangePasswordAccordion() {
     const dispatch = useAppDispatch();
@@ -47,8 +48,6 @@ export default function ChangePasswordAccordion() {
         if (newPass1 === newPass2 && newPass1 !== '' && newPass1.length>5) {
             //alert('Меняем пароль!!!');
             dispatch(updatePasswordThunk({id: userId, oldPass: oldPass, newPass: newPass1}));
-            //const action: ChangePasswordActionType = {email: userEmail, oldPassword: oldPass, newPassword: newPass1}
-            //dispatch(changeUserPassword(action));
         } else {
             if (!oldPass) setError('Поле "Старый пароль" должно быть заполнено');
             else if (!newPass1) setError('Поле "Новый пароль" должно быть заполнено');

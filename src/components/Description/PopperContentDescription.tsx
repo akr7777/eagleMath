@@ -8,9 +8,9 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import s from './description.module.css';
 import {
     getDescriptionPhotoThunk,
-    getDescriptionThunk, setDescriptionPhotoThunk,
+    setDescriptionPhotoThunk,
     setDescriptionThunk,
-} from "../features/authorSlice";
+} from "../features/authorThunks";
 
 
 type PopperContentPropsType = {

@@ -1,20 +1,18 @@
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-
 import s from './authPage.module.css';
 import React, {ChangeEvent, useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import CustomColorButton from "../common/CustomColorButton";
-import {Navigate, NavLink, useNavigate} from "react-router-dom";
-
+import {Navigate, NavLink} from "react-router-dom";
 import {PATHS} from "../AppBar/AppBar";
 import {RootState, useAppDispatch} from "../../store/store";
 import {useSelector} from "react-redux";
-import {loginThunk, resetLoginServerErrorAC} from "../features/authSlice";
+import {resetLoginServerErrorAC} from "../features/authSlice";
 import Alert from "@mui/material/Alert";
 import Preloader from "../common/Preloader";
+import {loginThunk} from "../features/authThunks";
 
 const Login = () => {
     const [error, setError] = useState<string>('');
@@ -25,7 +23,6 @@ const Login = () => {
     const dispatch = useAppDispatch();
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const isLoading = useSelector((state: RootState) => state.auth.isLoading);
-    //let navigate = useNavigate();
 
     useEffect(()=>{
         return ()=>{

@@ -1,7 +1,7 @@
 import {Navigate} from "react-router-dom";
 import {useAppDispatch} from "../../store/store";
-import {logoutThunk} from "../features/authSlice";
 import {PATHS} from "../AppBar/AppBar";
+import {logoutThunk} from "../features/authThunks";
 
 const Logout = () => {
     const dispatch = useAppDispatch();

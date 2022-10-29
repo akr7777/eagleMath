@@ -8,11 +8,8 @@ import {RootState, useAppDispatch} from "../../store/store";
 import TextField from "@mui/material/TextField";
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import SaveIcon from '@mui/icons-material/Save';
-import {
-    baseAvatarPhotoUrl,
-    updateEmailThunk, /*getAvatarThunk, saveNewEmail,*/
-    uploadAvatarThunk
-} from "../features/authSlice";
+import {baseAvatarPhotoUrl} from "../features/authSlice";
+import {updateEmailThunk, uploadAvatarThunk} from "../features/authThunks"
 import ChangePasswordAccordion from "./ChangePasswordAccordion";
 import Button from "@mui/material/Button";
 import {PATHS} from "../AppBar/AppBar";
@@ -25,12 +22,6 @@ export default function Profile() {
     const userId:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
 
     const dispatch = useAppDispatch();
-    /*useEffect(()=>{
-        if (String(userID) !== '0')
-            dispatch(getAvatar(userID));
-    },[])*/
-
-    //console.log('Profile.tsx state.auth.user=', useSelector((state: RootState) => state.auth.user));
 
     const [emailDisabled, setEmailDisabled] = useState<boolean>(true);
     const [emailValue, setEmailValue] = useState<string>(useSelector((state: RootState) => state.auth.user.email));
@@ -53,7 +44,6 @@ export default function Profile() {
     const fileUploadInputChange = (f: any) => {
         if (f.target.files.length) {
             dispatch(uploadAvatarThunk({file: f.target.files[0], id: userId}))
-            //dispatch(getAvatarThunk(userID));
         }
     }
 
@@ -63,7 +53,6 @@ export default function Profile() {
             isLoading
                 ? <Preloader/>
                 : <Container className={s.wrappedDiv}>
-                    {/*{ !isAuth && <Navigate to={PATHS.login}/>}*/}
                     <div>
                         <Typography variant={'h4'}>
                             Профайл
@@ -72,7 +61,6 @@ export default function Profile() {
                     <div className={s.someDiv2}>
                         <img className={s.profile_ava_img} src={avaPhoto} alt={'Avatar'}></img>
 
-                        {/*<ChangeCircleIcon></ChangeCircleIcon>*/}
                         <input
                             accept="image/*"
                             style={{display: 'none'}}

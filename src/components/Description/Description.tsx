@@ -6,7 +6,8 @@ import {Typography} from "@mui/material";
 import s1 from './description.module.css';
 import s from "../common/commonCSS.module.css";
 import EditDescritionPopper from "./EditDescritionPopper";
-import {baseDescriptionPhotoUrl, getDescriptionPhotoThunk, getDescriptionThunk} from "../features/authorSlice";
+import {baseDescriptionPhotoUrl} from "../features/authorSlice";
+import {getDescriptionPhotoThunk, getDescriptionThunk} from '../features/authorThunks';
 import Preloader from "../common/Preloader";
 
 
