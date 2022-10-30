@@ -9,7 +9,7 @@ import Draggable from 'react-draggable';
 import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
-import {CategoryLongType, dataMutation} from "./Tree/Tree5";
+import {CategoryLongType, dataMutation} from "./Tree/data-mutation";
 import {CategoryType, changeParentIdThunk, IdFiledType} from "../../store/features/categoriesSlice";
 import s1 from "./change-parent.module.css";
 import {useState} from "react";
@@ -72,17 +72,10 @@ export default function DraggableDialog(props: DraggableDialogPropsType) {
 
     return (
         <div>
-            {/* <Button variant="outlined" onClick={handleClickOpen}>
-                Open draggable dialog
-            </Button>*/}
             <DriveFileMoveIcon
                 onClick={handleClickOpen}
                 cursor={'pointer'}
             />
-
-            {/*<div onClick={handleClickOpen}>
-                <Typography>Переместить</Typography>
-            </div>*/}
 
             <Dialog
                 open={open}
@@ -94,8 +87,6 @@ export default function DraggableDialog(props: DraggableDialogPropsType) {
                     Выберите новую категорию
                 </DialogTitle>
                 <DialogContent>
-                    {/*<DialogContentText>*/}
-
                     <div
                         onClick={() => setSelected("0")}
                         className={"0" === selected ? s1.treeLine + ' ' + s1.selectedLine : s1.treeLine}

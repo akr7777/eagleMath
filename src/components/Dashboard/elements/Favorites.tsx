@@ -15,7 +15,7 @@ import Line from "../../common/line";
 import s2 from "./elements.module.css"
 import {getFavoritesThunk} from "../../../store/features/dashboardSlice";
 import TextField from "@mui/material/TextField";
-import {getStudiedMaterialsThunk} from "../../../store/features/contentSlice";
+import {getStudiedMaterialsThunk} from "../../../store/features/contentThunks";
 import {useSelector} from "react-redux";
 
 type FavoriteMaterialsPropsType = {userId: IdFiledType}

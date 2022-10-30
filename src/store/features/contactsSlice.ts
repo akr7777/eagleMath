@@ -1,9 +1,9 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {contactsAPI} from "../../components/api/api";
+import {getContactsThunk, setContactsThunk} from "./contactsThunks";
 
-export type ContactsType = ContactsDataType & { isLoading: boolean }
-let initialState: ContactsType = {
+//export type ContactsType = ContactsDataType & { isLoading: boolean }
+let initialState = {
     title: ':',
     description: ':',
     phone: '',
@@ -13,8 +13,8 @@ let initialState: ContactsType = {
     skype: '',
     isLoading: false,
 }
-
-type ContactsDataType = {
+export type ContactsType = typeof initialState;
+/*type ContactsDataType = {
     title: string,
     description: string,
     phone: string,
@@ -22,61 +22,20 @@ type ContactsDataType = {
     whatsapp: string,
     email: string,
     skype: string,
-}
-export const getContactsThunk = createAsyncThunk(
-    'contacts/getContactsThunk',
-    async (_, {rejectWithValue, dispatch}) => {
-        const res = await contactsAPI.getContacts();
-        if (res.data.resultCode === 0) {
-            return res.data;
-        } else
-            return 'ERROR from server';
-    }
-);
+}*/
 
-export const setContactsThunk = createAsyncThunk(
-    'contacts/setContactsThunk',
-    async (contactsData: ContactsDataType, {rejectWithValue, dispatch}) => {
-        const {title, description, phone, telegram, whatsapp, email, skype} = contactsData;
-        const res = await contactsAPI.setContacts(title, description, phone, telegram, whatsapp, email, skype);
-        if (res.data.resultCode === 0) {
-            return res.data;
-        } else
-            return 'ERROR from server';
-    }
-);
 
 export const contactsSlice = createSlice({
     name: 'contacts',
     initialState: initialState,
     reducers: {
-        /*setTitleAC: (state:ContactsType, action: PayloadAction<string>): void => {
-            state.title = action.payload;
-        },
-        setDescriptionAC: (state:ContactsType, action: PayloadAction<string>): void => {
-            state.description = action.payload;
-        },
-        setPhoneAC: (state: ContactsType, action: PayloadAction<string>): void => {
-            state.phone = action.payload;
-        },
-        setTelegramAC: (state: ContactsType, action: PayloadAction<string>): void => {
-            state.telegram = action.payload;
-        },
-        setWhatsappAC: (state: ContactsType, action: PayloadAction<string>): void => {
-            state.whatsapp = action.payload;
-        },
-        setEmailAC: (state: ContactsType, action: PayloadAction<string>): void => {
-            state.email = action.payload;
-        },
-        setSkypeAC: (state: ContactsType, action: PayloadAction<string>): void => {
-            state.skype = action.payload;
-        },*/
     },
     extraReducers: builder => {
         builder.addCase(getContactsThunk.pending, (state:ContactsType) => {
             state.isLoading = true;
         })
-        builder.addCase(getContactsThunk.fulfilled, (state:ContactsType, action: PayloadAction<ContactsDataType>) => {
+        builder.addCase(getContactsThunk.fulfilled, (state:ContactsType,
+                                                     action: PayloadAction<Omit<ContactsType, 'isLoading'>>) => {
             state.title = action.payload.title;
             state.description = action.payload.description;
             state.phone = action.payload.phone;
@@ -93,7 +52,7 @@ export const contactsSlice = createSlice({
         builder.addCase(setContactsThunk.pending, (state:ContactsType) => {
             state.isLoading = true;
         })
-        builder.addCase(setContactsThunk.fulfilled, (state:ContactsType, action: PayloadAction<ContactsDataType>) => {
+        builder.addCase(setContactsThunk.fulfilled, (state:ContactsType, action: PayloadAction<Omit<ContactsType, 'isLoading'>>) => {
             state.title = action.payload.title;
             state.description = action.payload.description;
             state.phone = action.payload.phone;
@@ -108,6 +67,6 @@ export const contactsSlice = createSlice({
         })
     }
 })
-export const {/*setTitleAC, setDescriptionAC, setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC*/} = contactsSlice.actions;
+//export const {} = contactsSlice.actions;
 
 export default contactsSlice.reducer;

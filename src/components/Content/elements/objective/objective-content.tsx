@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import Typography from "@mui/material/Typography";
 import s1 from "./objective.module.css";
 import Button from "@mui/material/Button";
-import {baseObjectiveImageUrl} from "../../../../store/features/contentSlice";
+import {baseObjectiveImageUrl} from "../../../../env";
 
 type AnswerType = {objId: string, answer: string, isGiven: boolean, isRight: boolean}
 const ObjectiveContent = () => {

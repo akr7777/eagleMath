@@ -1,13 +1,13 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import Container from "@mui/material/Container";
 import {RootState, useAppDispatch} from "../../store/store";
+import {ContentType, newChapterChange} from "../../store/features/contentSlice";
 import {
-    ContentType,
     getContentThunk,
-    newChapterChange,
     setContentThunk,
-    getStudiedMaterialsThunk, getContentTitleByIdThunk
-} from "../../store/features/contentSlice";
+    getStudiedMaterialsThunk,
+    getContentTitleByIdThunk
+} from "../../store/features/contentThunks";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
@@ -53,8 +53,6 @@ const Content = () => {
         dispatch(getContentTitleByIdThunk(contentId || ""));
     }, []);
 
-    //const studiedMaterials: Array<IdFiledType> = useSelector((state: RootState) => state.content.studiedMaterials);
-
     const test: TestType = useSelector((state: RootState) => state.tasks.test);
     const objectives: Array<ObjectiveType> = useSelector((state: RootState) => state.tasks.objectives);
     const contentTitle:string = useSelector((state:RootState) => state.content.contentTitle);
@@ -97,13 +95,9 @@ const Content = () => {
                     <Typography variant={'h4'}>{contentTitle}</Typography>
 
                     { isAuth && <ContentHead/> }
-                    {/*<Typography variant={'h4'}>Содержание:</Typography>*/}
                     {
                         content.map((el, indexArr) => {
                             return <div key={indexArr} className={s1.someDiv}>
-
-                                {/*<label>indexArr: {indexArr}</label>*/}
-
                                 {/*Если уже есть контент*/}
                                 <ContentParagraph content={el.content} type={el.type} elementIndex={indexArr}/>
 
@@ -119,12 +113,6 @@ const Content = () => {
                                         />
                                     </div>
                                 }
-                                {/*{isAdmin &&
-                                    <div>
-                                        <AddCircleOutlineIcon onClick={() => addChapterInside(indexArr)}/>
-                                    </div>
-                                }*/}
-
                             </div>
                         })
                     }
@@ -142,7 +130,6 @@ const Content = () => {
                         isAuth && <AddRemoveContentStudied
                             userId={userId}
                             contentId={contentId || ""}
-                            //isMaterialStudied={studiedMaterials && studiedMaterials.some(elem => elem === contentId)}
                         />
                     }
 

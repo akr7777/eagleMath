@@ -4,9 +4,8 @@ import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-//import {setTitleAC, setDescriptionAC, setPhoneAC, setTelegramAC, setWhatsappAC, setEmailAC, setSkypeAC} from "../features/contactsSlice";
 import s from './contacts.module.css';
-import {getContactsThunk, setContactsThunk} from "../../store/features/contactsSlice";
+import {getContactsThunk, setContactsThunk} from "../../store/features/contactsThunks";
 
 
 type PopperContentPropsType = {
@@ -25,14 +24,6 @@ const PopperContentContacts = (props: PopperContentPropsType) => {
     const dispatch = useAppDispatch()
 
     const saveButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-        /* dispatch(setTitleAC(title));
-         dispatch(setDescriptionAC(description));
-         dispatch(setPhoneAC(phone));
-         dispatch(setTelegramAC(telegram));
-         dispatch(setWhatsappAC(whatsapp));
-         dispatch(setEmailAC(email));
-         dispatch(setSkypeAC(skype));*/
-        console.log('PopperContentContacts / saveButtonClickHandler', title, description)
         dispatch(setContactsThunk({
             title: title,
             description: description,

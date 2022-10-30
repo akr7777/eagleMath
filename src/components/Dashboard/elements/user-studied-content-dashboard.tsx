@@ -17,7 +17,7 @@ import {
     getUserListThunk,
     StudiesContentType
 } from "../../../store/features/dashboardSlice";
-import {getStudiedMaterialsThunk} from "../../../store/features/contentSlice";
+import {getStudiedMaterialsThunk} from "../../../store/features/contentThunks";
 import TextField from "@mui/material/TextField";
 import ReadThisMaterial from "@mui/icons-material/AutoStories";
 import {NavLink} from "react-router-dom";

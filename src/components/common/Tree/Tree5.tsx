@@ -1,5 +1,4 @@
 import s from './tree5.module.css';
-import {MaterialType} from "../../../store/features/materialsSlice";
 import PlusIcon from '@mui/icons-material/ControlPoint';
 import MinusIcon from '@mui/icons-material/RemoveCircleOutline';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -11,33 +10,9 @@ import {addToShownCats, deleteFromShownCats, IdFiledType} from "../../../store/f
 import {CategoryType} from "../../../store/features/categoriesSlice";
 import Line, {contentTypeType} from "../line";
 import HiddenMenu from "./hiddenMenu";
-import {getStudiedMaterialsThunk} from "../../../store/features/contentSlice";
+import {getStudiedMaterialsThunk} from "../../../store/features/contentThunks";
+import {dataMutation, CategoryLongType} from "./data-mutation";
 
-export type CategoryLongType = {id: IdFiledType, parentId: IdFiledType, label: string, items: Array<CategoryLongType>}
-
-type DataMutationPropsType = {
-    categories: Array<CategoryType>,
-    materials: Array<MaterialType> | Array<TaskType>,
-}
-
-export function dataMutation(props: DataMutationPropsType):CategoryLongType[] {
-    //add items to every category
-    let categories1:Array<CategoryLongType> = [];
-    [...props.categories].forEach(c => {
-        categories1.push({id: c.id, parentId: c.parentId, label: c.label, items: []});
-    });
-    [...props.materials].forEach(m => {
-        categories1 = [...categories1, {id: m.id, parentId: m.parentId, label: m.label, items: []}]
-    });
-
-    //For the first we add materials fileds in items object of the categories
-    const nodeData:Array<CategoryLongType> = [...categories1.map(c => {
-        c.items = [...categories1.filter(sc => String(c.id) === String(sc.parentId))];
-        return c;
-    })].filter(pc => pc.parentId === null || String(pc.parentId) === "0")
-
-    return nodeData;
-}
 
 type DrawTreePropsType = {
     items: Array<CategoryLongType>,
@@ -144,11 +119,11 @@ type TreePropsType = {
     contentType: contentTypeType,
 }
 export const Tree5 = (props:TreePropsType) => {
-    const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);//[]//[...categoriesAPI];
+    const categories: CategoryType[] = useSelector((state: RootState) => state.categories.categories);
 
-    let materials: TaskType[] | MaterialType[] = [];
-    const t = useSelector((state: RootState) => state.tasks.tasks);//[]//[...tasksAPI];
-    const m = useSelector((state: RootState) => state.tasks.materials);//[]//[...tasksAPI];
+    let materials: TaskType[] = [];
+    const t = useSelector((state: RootState) => state.tasks.tasks);
+    const m = useSelector((state: RootState) => state.tasks.materials);
 
     if (props.contentType === "T")
         materials = t;

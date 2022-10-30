@@ -1,16 +1,18 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {ContentAPI} from "../../components/api/api";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IdFiledType} from "./categoriesSlice";
 import {ResultCodesEnum} from "../../components/common/resultCodes";
-
-export const baseContentImageUrl = 'http://localhost:4001/content/getContentImage?name=';
-export const baseObjectiveImageUrl = 'http://localhost:4001/objectives/getObjectiveImage?name=';
+import {
+    deleteContentThunk,
+    getContentThunk, getContentTitleByIdThunk,
+    getStudiedMaterialsThunk,
+    moveParagraphThunk,
+    setContentThunk, setMaterialStudiedThunk
+} from "./contentThunks";
 
 export type ContentTypeVariantsTypes = "Material" | "Task" | "Category" | undefined;
 export type ContentType = {
     contentId: string,
-    //index: number,
-    type: "Title" | "Text" | "Image" /*| "New" */| null,
+    type: "Title" | "Text" | "Image" | null,
     content: string,
 }
 export type SetContentDataType = {
@@ -18,7 +20,7 @@ export type SetContentDataType = {
     contentId: IdFiledType,
 }
 
-export type ContentInitStateType = {
+/*export type ContentInitStateType = {
     content: Array<ContentType>,
     isLoading: boolean,
     newChapter: ContentType,
@@ -26,111 +28,22 @@ export type ContentInitStateType = {
     contentType: ContentTypeVariantsTypes,
     studiedMaterials: Array<IdFiledType>,
     contentTitle: string,
-}
-const contentInitState:ContentInitStateType = {
-    content: [],
+}*/
+const contentInitState = {
+    content: [] as Array<ContentType>,
     isLoading: false,
     newChapter: {
         contentId: '',
         type: null,
         content: '',
-    },
+    } as ContentType,
     newChapterIndex: -1,
-    contentType: undefined,
-    studiedMaterials: [],
+    contentType: undefined as ContentTypeVariantsTypes,
+    studiedMaterials: [] as Array<IdFiledType>,
     contentTitle: '',
 }
 
-export const getContentThunk = createAsyncThunk(
-    'Content/getContent',
-    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.getContent(contentId);
-        return res.data;
-    }
-);
-export const getContentTitleByIdThunk = createAsyncThunk(
-    'Content/getContentTitleById',
-    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.getContentTitleById(contentId);
-        return res.data;
-    }
-);
-
-export const setContentThunk = createAsyncThunk(
-    'Content/setContent',
-    async (data: SetContentDataType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.setContent(data.content, data.contentId);
-        return res.data;
-    }
-);
-
-export const deleteContentThunk = createAsyncThunk(
-    'Content/deleteContentThunk',
-    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.deleteContent(contentId);
-        return res.data;
-    }
-);
-
-export const moveParagraphThunk = createAsyncThunk(
-    'Content/moveParagraphThunk',
-    async (data: {contentId: IdFiledType, elementIndex: number, direction: "up"|"down"}, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.moveParagraph(data.contentId, data.elementIndex, data.direction);
-        return res.data;
-    }
-);
-
-/*
-export const setNewContent = createAsyncThunk(
-    'Content/setNewContent',
-    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.deleteContent(contentId);
-        return res.data;
-    }
-);
-*/
-
-/*export const contentTypeThunk = createAsyncThunk(
-    'Content/contentType',
-    async (contentId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.contentType(contentId);
-        return res.data;
-    }
-);*/
-
-type UploadContentImage = { file: any, fileName: string }
-export const uploadContentImage = createAsyncThunk(
-    'content/uploadContentImage',
-    async (dataSend: UploadContentImage, {rejectWithValue, dispatch}) => {
-        try {
-            const {file, fileName} = dataSend;
-            const res = await ContentAPI.uploadContentImage(file, fileName);
-            if (res.data.resultCode === 0) {
-                return res.data;
-            } else
-                return 'ERROR from server';
-        } catch (e) {
-            console.log('!!!uploadAvatarThunk / error!!!=', e)
-        }
-    }
-);
-
-export const getStudiedMaterialsThunk = createAsyncThunk(
-    'content/studiedMaterialsThunk',
-    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.studiedMaterials(userId);
-        return res.data;
-    }
-);
-export const setMaterialStudiedThunk = createAsyncThunk(
-    'content/setMaterialStudiedThunk',
-    async (data: {userId: IdFiledType, contentId: IdFiledType, value: boolean}, {rejectWithValue, dispatch}) => {
-        const res = await ContentAPI.setMaterialStudied(data.userId, data.contentId, data.value);
-        return res.data;
-    }
-);
-
-
+type ContentInitStateType = typeof contentInitState;
 
 export const contentSlice = createSlice({
     name: 'content',
@@ -148,12 +61,6 @@ export const contentSlice = createSlice({
         changeNewChapterIndex: (state: ContentInitStateType, action: PayloadAction<number>) => {
             state.newChapterIndex = action.payload;
         },
-       /* changeNewChapterTitle: (state: ContentInitStateType, action: PayloadAction<string>) => {
-            state.newChapter.title = action.payload;
-        },
-        changeNewChapterText: (state: ContentInitStateType, action: PayloadAction<string>) => {
-            state.newChapter.text = action.payload;
-        },*/
     },
     extraReducers: builder => {
         builder.addCase(getContentThunk.pending, (state: ContentInitStateType) => {
@@ -244,6 +151,6 @@ export const contentSlice = createSlice({
     }
 });
 
-export const {changeContent, newChapterChange, changeNewChapterContent, changeNewChapterIndex/* changeNewChapterTitle, changeNewChapterText*/} = contentSlice.actions;
+export const {changeContent, newChapterChange, changeNewChapterContent, changeNewChapterIndex} = contentSlice.actions;
 
 export default contentSlice.reducer;

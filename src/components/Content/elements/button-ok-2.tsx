@@ -1,4 +1,5 @@
-import {ContentType, getContentThunk, newChapterChange, setContentThunk} from "../../../store/features/contentSlice";
+import {ContentType, newChapterChange} from "../../../store/features/contentSlice";
+import {setContentThunk, getContentThunk} from "../../../store/features/contentThunks";
 import {initNewChapter} from "../Content";
 import Button from "@mui/material/Button";
 import React from "react";

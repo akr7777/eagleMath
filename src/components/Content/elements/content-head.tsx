@@ -9,10 +9,9 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import Typography from "@mui/material/Typography";
 import DeleteIcon from '@mui/icons-material/Delete';
 import contentCss from "./../content.module.css";
-import {deleteContentThunk} from "../../../store/features/contentSlice";
+import {deleteContentThunk} from "../../../store/features/contentThunks";
 import {PATHS} from "../../AppBar/AppBar";
 
-//type ContentHEadPropsType = {userId: IdFiledType}
 const ContentHead = () => {
     const navigate = useNavigate();
     const {contentId} = useParams();
@@ -27,7 +26,6 @@ const ContentHead = () => {
     const deleteContent = () => {
         const answer = window.confirm("Удалить контент?");
         if (answer) {
-            //console.log('ContentHead / deleteContent / contentId=', contentId)
             dispatch(deleteContentThunk(contentId || ""));
             navigate(PATHS.description);
         }

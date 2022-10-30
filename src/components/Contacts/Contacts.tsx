@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from "react-redux";
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import {RootState, useAppDispatch} from "../../store/store";
 import EditContactsPopper from "./EditContactsPopper";
 import {Typography} from '@mui/material';
@@ -8,8 +7,7 @@ import s1 from './contacts.module.css';
 import s from "../common/commonCSS.module.css";
 import Preloader from "../common/Preloader";
 import Container from '@mui/material/Container';
-import PopperContentContacts from "./PopperContentContacts";
-import {getContactsThunk} from "../../store/features/contactsSlice";
+import {getContactsThunk} from "../../store/features/contactsThunks";
 
 function phoneFormat(phone: string) {
     if (phone.length === 12)
