@@ -1,13 +1,12 @@
 import * as React from 'react';
-import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import {
     addCategoryThunk,
     addToFavoritesThunk,
     deleteCategoryThunk,
-    deleteFromFavoritesThunk, getAllCategoriesThunk,
-    IdFiledType, setEditNameIdAC, setNewContentName
-} from "../../../store/features/categoriesSlice";
+    deleteFromFavoritesThunk, getAllCategoriesThunk
+} from "../../../store/features/categoriesThunks";
+import {IdFiledType, setEditNameIdAC, setNewContentName} from "../../../store/features/categoriesSlice";
 import {contentTypeType} from "../line";
 import {NavLink} from "react-router-dom";
 import s from "./tree5.module.css";
@@ -21,7 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {useSelector} from "react-redux";
-import {addMaterialThunk, renameMaterialThunk, addTaskThunk} from "../../../store/features/tasksThunks";
+import {addMaterialThunk, addTaskThunk} from "../../../store/features/tasksThunks";
 
 type MouseLineClickType = {
     contentId: IdFiledType,
@@ -36,8 +35,6 @@ const HiddenMenu = (props: MouseLineClickType) => {
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const userId = useSelector((state: RootState) => state.auth.user.id);
     const favoritesIds = useSelector((state: RootState) => state.categories.favoriteIds);
-
-    //const contentName = useSelector((state:RootState) => state.categories.newContentName);
 
     const editContentTumbler = () => {
         dispatch(setEditNameIdAC(props.contentId));

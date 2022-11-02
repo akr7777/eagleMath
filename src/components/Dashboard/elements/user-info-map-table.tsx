@@ -7,9 +7,9 @@ import React, {useState} from "react";
 import {
     changeNoteStatusThunk,
     changeNoteTextOrTitleThunk,
-    deleteNoteThunk,
-    NoteType
-} from "../../../store/features/dashboardSlice";
+    deleteNoteThunk
+} from "../../../store/features/dashboardThunks";
+import {NoteType} from "../../../store/features/dashboardSlice";
 import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {useAppDispatch} from "../../../store/store";
 import TextField from '@mui/material/TextField';
@@ -46,10 +46,6 @@ const UserInfoMapTable = (props: UserInfoMapTablePropsType) => {
         setTitleChangeId('');
         setTextChangeId('');
     }
-    /*const toChangeTextHandler = () => {
-        alert(textChangeId);
-        setTextChangeId('');
-    }*/
 
     return <>
         <table className={s1.table_body}>
@@ -98,10 +94,6 @@ const UserInfoMapTable = (props: UserInfoMapTablePropsType) => {
                                     : <Typography><b>{note.text}</b></Typography>
                             }
                         </td>
-
-                        {/*<td className={note.noteId === selectedId ? s1.td_selected + " " + s1.col1_small : s1.col1_small}>
-                            <DeleteIcon onClick={() => deleteNoteClickHandler(note.noteId)}/>
-                        </td>*/}
 
                         <td className={note.noteId === selectedId ? s1.td_selected + " " + s1.col1_small : s1.col1_small}>
                             <DeleteIcon onClick={() => deleteNoteClickHandler(note.noteId)}/>

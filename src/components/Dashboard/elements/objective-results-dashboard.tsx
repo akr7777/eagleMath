@@ -8,10 +8,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {
-    getObjectiveResultsByUserId,
-    getUserListThunk, ObjectiveResultsType,
-} from "../../../store/features/dashboardSlice";
+import {ObjectiveResultsType} from "../../../store/features/dashboardSlice";
+import {getObjectiveResultsByUserId, getUserListThunk} from "../../../store/features/dashboardThunks";
 import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {UserType} from "../../../store/features/usersSlice";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
@@ -30,9 +28,7 @@ const ObjectiveResultDashboard = () => {
     const [contentResultFilter, setContentResultFilter] = useState<string>('');
     const [userAnswerFilter, setUserAnswerFilter] = useState<UserAnswerFilterType>("");
 
-    //const objectiveResults: Array<ObjectiveResultsType> = useSelector((state: RootState) => state.dashboard.objectiveResults);
     const objectiveResults: Array<ObjectiveResultsType> = useSelector((state: RootState) => state.dashboard.objectiveResults).filter(el => {
-            //const resultPercent = Math.round(100 * el.result / el.protocol.length);
             if (dateFilterValue) {
                 if (
                     el.title.toLowerCase().includes(titleResultFilter.toLowerCase()) &&
@@ -55,7 +51,6 @@ const ObjectiveResultDashboard = () => {
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const userList: UserType[] = useSelector((state: RootState) => state.dashboard.userList);
 
-    //const [userId, setUserId] = useState<IdFiledType>(useSelector((state: RootState) => state.auth.user.id))
     const uid:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
     const [userId, setUserId] = useState<IdFiledType>(uid);
     if (uid !== '0' && userId === '0') setUserId(uid);

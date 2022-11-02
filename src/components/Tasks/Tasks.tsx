@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import s from "../common/commonCSS.module.css";
 import {Tree5} from "../common/Tree/Tree5";
 import {clearTestAnswersAC} from "../../store/features/tasksSlice";
-import {getAllCategoriesThunk} from "../../store/features/categoriesSlice";
+import {getAllCategoriesThunk} from "../../store/features/categoriesThunks";
 import Preloader from "../common/Preloader";
 import MaterialTaskHead from "../common/material-task-head";
 import {getAllTasksThunk, getFavoritesThunk} from "../../store/features/tasksThunks";

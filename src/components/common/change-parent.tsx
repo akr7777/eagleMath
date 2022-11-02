@@ -10,7 +10,8 @@ import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import {CategoryLongType, dataMutation} from "./Tree/data-mutation";
-import {CategoryType, changeParentIdThunk, IdFiledType} from "../../store/features/categoriesSlice";
+import {CategoryType, IdFiledType} from "../../store/features/categoriesSlice";
+import {changeParentIdThunk} from "../../store/features/categoriesThunks";
 import s1 from "./change-parent.module.css";
 import {useState} from "react";
 import Typography from "@mui/material/Typography";
@@ -96,7 +97,6 @@ export default function DraggableDialog(props: DraggableDialogPropsType) {
 
                     {DrawingCategoriesTree(nodeData, selected, setSelected)}
 
-                    {/*</DialogContentText>*/}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>

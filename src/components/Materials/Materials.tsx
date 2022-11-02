@@ -7,7 +7,7 @@ import React, {useEffect} from "react";
 import {Tree5} from "../common/Tree/Tree5";
 import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
-import {addToFavoritesThunk, deleteFromFavoritesThunk, getAllCategoriesThunk, IdFiledType} from "../../store/features/categoriesSlice";
+import {getAllCategoriesThunk} from "../../store/features/categoriesThunks";
 import MaterialTaskHead from "../common/material-task-head";
 
 const Materials = () => {

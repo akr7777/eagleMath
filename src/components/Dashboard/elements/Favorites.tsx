@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {getAllTasksThunk, getAllMaterialsThunk} from "../../../store/features/tasksThunks";
-import {getAllCategoriesThunk, IdFiledType} from "../../../store/features/categoriesSlice";
+import {IdFiledType} from "../../../store/features/categoriesSlice";
+import {getAllCategoriesThunk} from "../../../store/features/categoriesThunks";
 import {FavoriteContent, FavoriteContentOutputType} from "../utils/utils";
 import s1 from '../styles.module.css';
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -13,7 +14,7 @@ import IconMaterial from '@mui/icons-material/AutoStories';
 import IconTask from '@mui/icons-material/AppRegistration';
 import Line from "../../common/line";
 import s2 from "./elements.module.css"
-import {getFavoritesThunk} from "../../../store/features/dashboardSlice";
+import {getFavoritesThunk} from "../../../store/features/dashboardThunks";
 import TextField from "@mui/material/TextField";
 import {getStudiedMaterialsThunk} from "../../../store/features/contentThunks";
 import {useSelector} from "react-redux";
@@ -22,7 +23,6 @@ type FavoriteMaterialsPropsType = {userId: IdFiledType}
 const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
 
     const dispatch = useAppDispatch();
-    //const userId = useSelector((state: RootState) => state.auth.user.id);
     useEffect(() => {
         dispatch(getAllTasksThunk());
         dispatch(getAllMaterialsThunk());
@@ -36,7 +36,6 @@ const FavoriteMaterials = (props: FavoriteMaterialsPropsType) => {
     const [selectedId, setSelectedId] = useState<IdFiledType>('');
 
     const studiedMaterials = useSelector((state: RootState) => state.content.studiedMaterials);
-    //const isMaterialStudied = studiedMaterials.includes(props.userId)
 
     return <div className={s2.div1}>
         <Accordion className={s1.accordion}>

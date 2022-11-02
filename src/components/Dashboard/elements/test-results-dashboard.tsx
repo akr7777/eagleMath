@@ -10,12 +10,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
-import {
-    getTestResultsByUserId,
-    getUserListThunk,
-    TestResultProtocolType,
-    TestResultType
-} from "../../../store/features/dashboardSlice";
+import {TestResultProtocolType, TestResultType} from "../../../store/features/dashboardSlice";
+import {getTestResultsByUserId, getUserListThunk} from "../../../store/features/dashboardThunks";
 import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {UserType} from "../../../store/features/usersSlice";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
@@ -26,10 +22,6 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 const TestResultsDashboard = () => {
     const dispatch = useAppDispatch();
-
-    //const testResultsResults = useSelector((state: RootState) => state.dashboard.testResult);
-    //const minTestResult = Math.min(...testResultsResults.map(el => el.result));
-    //const maxTestResult = Math.max(...testResultsResults.map(el => el.result));
     const [dateFilterValue, setDateFilterValue] = React.useState<Dayjs | null>(null);
 
     const [testResultTitleFilter, setTestResultTitleFilter] = useState<string>('');
@@ -55,8 +47,6 @@ const TestResultsDashboard = () => {
     const isAdmin = useSelector((state: RootState) => state.auth.user.isAdmin);
     const userList: UserType[] = useSelector((state: RootState) => state.dashboard.userList);
 
-    //let userId: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
-    //const [userId, setUserId] = useState<IdFiledType>(useSelector((state: RootState) => state.auth.user.id));
     const uid:IdFiledType = useSelector((state: RootState) => state.auth.user.id);
     const [userId, setUserId] = useState<IdFiledType>(uid);
     if (uid !== '0' && userId === '0') setUserId(uid);

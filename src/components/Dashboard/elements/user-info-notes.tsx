@@ -10,21 +10,13 @@ import TextField from '@mui/material/TextField';
 import Accordion from "@mui/material/Accordion";
 import React, {useEffect, useState} from "react";
 import {IdFiledType} from "../../../store/features/categoriesSlice";
-import {
-    changeNoteStatusThunk,
-    changeSearchText, deleteNoteThunk,
-    getNotesThunk,
-    NoteType,
-    setNotesThunk
-} from "../../../store/features/dashboardSlice";
+import {changeSearchText, NoteType} from "../../../store/features/dashboardSlice";
+import {getNotesThunk,setNotesThunk} from "../../../store/features/dashboardThunks";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {v4} from "uuid";
 import Button from "@mui/material/Button";
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import UserInfoNotesFilters from "./user-info-notes-filters";
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import DeleteIcon from '@mui/icons-material/Delete';
 import UserInfoMapTable from "./user-info-map-table";
 
 type NotesPropsType = { userId: IdFiledType }
@@ -40,16 +32,11 @@ const Notes = (props: NotesPropsType) => {
         .filter(note => note.title.toLowerCase().includes(searchText.toLowerCase())
             || note.text.toLowerCase().includes(searchText.toLowerCase()));
 
-    //console.log('user-info-notes.tsx / Notes / notes = ', notes)
-
     const notesStatus = useSelector((state: RootState) => state.dashboard.notesStatus);
     if (notesStatus === "Active")
         notes = notes.filter(note => note.isActive);
     if (notesStatus === "Completed")
         notes = notes.filter(note => !note.isActive);
-
-    /*const [selectedId, setSelectedId] = useState<IdFiledType>('');*/
-
 
     const [showAdd, setShowAdd] = useState<boolean>(false);
     const [addTitle, setAddTitle] = useState('');
@@ -70,23 +57,6 @@ const Notes = (props: NotesPropsType) => {
         setAddText('');
         setShowAdd(false);
     }
-    /*const changeNoteTitleClickHandler = () => {
-
-    }
-    const changeNoteStatus = (noteId: IdFiledType, newStatus: boolean) => {
-        dispatch(changeNoteStatusThunk({
-            userId: props.userId,
-            noteId,
-            newStatus
-        }));
-    }
-    const deleteNoteClickHandler = (noteId: IdFiledType) => {
-        dispatch(deleteNoteThunk({
-            userId: props.userId,
-            noteId
-        }));
-    }*/
-
 
     return <div className={s1.div1}>
         <Accordion className={s2.accordion}>
@@ -115,38 +85,6 @@ const Notes = (props: NotesPropsType) => {
 
 
                 <div className={s1.div2_1}>
-                    {/*{
-                        notes.map(note => {
-                            //console.log(note.noteId, note.title, note.text, note.isActive)
-                            return <div key={note.noteId}
-                                        onClick={() => setSelectedId(note.noteId)}
-                                        className={String(note.noteId) === String(selectedId) ? (s2.lineDiv + ' ' + s2.lineDiv_selected) : s2.lineDiv}
-                            >
-                                {note.noteId}
-                                <div className={s1.div4}>
-                                    <Typography><b>{note.title}</b></Typography>
-                                </div>
-                                <div className={s1.div4}>
-                                    <Typography>{note.text}</Typography>
-                                </div>
-
-
-                                <DeleteIcon onClick={() => deleteNoteClickHandler(note.noteId)}/>
-                                {
-                                    note.isActive
-                                        ? <div className={s1.div4}>
-                                            <CheckBoxOutlineBlankIcon onClick={() => changeNoteStatus(note.noteId, false)}/>
-                                        </div>
-                                        : <div className={s1.div4}>
-                                            <CheckBoxIcon onClick={() => changeNoteStatus(note.noteId, true)}/>
-                                        </div>
-                                }
-
-                            </div>
-                        })
-                    }
-*/}
-
                     <UserInfoMapTable notes={notes} userId={props.userId}/>
 
                     {!showAdd && <div className={s1.div3}>

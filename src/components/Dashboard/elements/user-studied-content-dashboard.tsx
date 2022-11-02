@@ -12,11 +12,8 @@ import {RootState, useAppDispatch} from "../../../store/store";
 import TestResultDashboardUserChoose from "./test-result-dashboard-user-choose";
 import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {UserType} from "../../../store/features/usersSlice";
-import {
-    getFullStudiedContentThunk,
-    getUserListThunk,
-    StudiesContentType
-} from "../../../store/features/dashboardSlice";
+import {getFullStudiedContentThunk, getUserListThunk} from "../../../store/features/dashboardThunks";
+import {StudiesContentType} from "../../../store/features/dashboardSlice";
 import {getStudiedMaterialsThunk} from "../../../store/features/contentThunks";
 import TextField from "@mui/material/TextField";
 import ReadThisMaterial from "@mui/icons-material/AutoStories";
@@ -32,7 +29,6 @@ const UserStudiedContentDashboard = () => {
     const uid: IdFiledType = useSelector((state: RootState) => state.auth.user.id);
     const [userId, setUserId] = useState<IdFiledType>(uid);
     if (uid !== '0' && userId === '0') setUserId(uid);
-    //console.log('UserStudiedContentDashboard / uid=', uid, 'userId=', userId);
 
     useEffect(() => {
         dispatch(getUserListThunk());
@@ -72,12 +68,14 @@ const UserStudiedContentDashboard = () => {
                                 />
                             </div>
 
-                            { studiedMaterialContent.length <= 0 && searchField.length === 0 && <Typography>У пользователя нет изученных материалов</Typography> }
-                            { studiedMaterialContent.length <= 0 && searchField.length !== 0 && <Typography>Нет объектов удовлетворяющих критериям поиска</Typography> }
+                            {studiedMaterialContent.length <= 0 && searchField.length === 0 &&
+                                <Typography>У пользователя нет изученных материалов</Typography>}
+                            {studiedMaterialContent.length <= 0 && searchField.length !== 0 &&
+                                <Typography>Нет объектов удовлетворяющих критериям поиска</Typography>}
 
                             <div className={s2.test_results_filter_div}>
-                            {
-                                studiedMaterialContent.length > 0 && studiedMaterialContent.map(c =>
+                                {
+                                    studiedMaterialContent.length > 0 && studiedMaterialContent.map(c =>
                                         <div key={c.contentId}
                                              onClick={() => setSelectedId(c.contentId)}
                                              className={String(c.contentId) === String(selectedId) ? (s1.lineDiv2 + ' ' + s1.lineDiv_selected) : s1.lineDiv2}
@@ -85,13 +83,13 @@ const UserStudiedContentDashboard = () => {
                                             <Typography>{c.content}</Typography>
                                             {
                                                 String(c.contentId) === String(selectedId) &&
-                                                    <NavLink to={PATHS.content+"/"+c.contentId}>
-                                                        <ReadThisMaterial/>
-                                                    </NavLink>
+                                                <NavLink to={PATHS.content + "/" + c.contentId}>
+                                                    <ReadThisMaterial/>
+                                                </NavLink>
                                             }
                                         </div>)
-                            }
-                        </div>
+                                }
+                            </div>
 
                         </div>
                 }

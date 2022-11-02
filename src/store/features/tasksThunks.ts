@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {ContentAPI, objectiveAPI, testAPI} from "../../components/api/api";
-import {getAllCategoriesThunk, IdFiledType} from "./categoriesSlice";
+import {IdFiledType} from "./categoriesSlice";
+import {getAllCategoriesThunk} from "./categoriesThunks";
 import {ObjectiveType, TestContentType} from "./tasksSlice";
 
 export const getAllTasksThunk = createAsyncThunk(

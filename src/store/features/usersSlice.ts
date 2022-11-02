@@ -3,6 +3,7 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 import {usersAPI} from "../../components/api/api";
 import {IdFiledType} from "./categoriesSlice";
 import {ResultCodesEnum as resultCodes} from "../../components/common/resultCodes";
+import {deleteUserThunk, getOneUserThunk, getUsersThunk, makeUserAdmin, makeUserAsUser} from "./usersThunks";
 
 export type UserType = {
     userId: IdFiledType,
@@ -10,60 +11,19 @@ export type UserType = {
     email: string,
     isAdmin: boolean,
 }
-type UsersStateType = {
+/*type UsersStateType = {
     isLoading: boolean,
     users: UserType[],
     searchField: string,
     user: UserType,
-}
-const authInitState:UsersStateType = {
+}*/
+const authInitState = {
     isLoading: false,
-    users: [],
+    users: [] as UserType[],
     searchField: '',
-    user: {userId: '0', name: '', email: '', isAdmin: false}
+    user: {userId: '0', name: '', email: '', isAdmin: false} as UserType
 }
-
-export const getUsersThunk = createAsyncThunk(
-    'users/getUsersThunk',
-    async (_, {rejectWithValue, dispatch}) => {
-        const res = await usersAPI.getUsers();
-        return res.data;
-    }
-)
-
-//type GetOneUserDataType = {userId: IdFiledType}
-export const getOneUserThunk = createAsyncThunk(
-    'users/getOneUserThunk',
-    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await usersAPI.getOneUser(userId);
-        return res.data;
-    }
-)
-
-export const deleteUserThunk = createAsyncThunk(
-    'users/deleteUserThunk',
-    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await usersAPI.deleteUser(userId);
-        return res.data;
-    }
-)
-
-export const makeUserAdmin = createAsyncThunk(
-    'users/makeUserAdmin',
-    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await usersAPI.makeUserAdmin(userId);
-        return res.data;
-    }
-);
-
-//type MakeUserAsUserType = {userId: IdFiledType}
-export const makeUserAsUser = createAsyncThunk(
-    'users/makeUserAsUser',
-    async (userId: IdFiledType, {rejectWithValue, dispatch}) => {
-        const res = await usersAPI.makeUserAsUser(userId);
-        return res.data;
-    }
-)
+type UsersStateType = typeof authInitState;
 
 export const usersSlice = createSlice({
     name: 'users',
@@ -105,7 +65,6 @@ export const usersSlice = createSlice({
             if (action.payload.resultCode === resultCodes.Success) {
                 state.users = [...action.payload.users];
             }
-            //state.user = {...action.payload.user};
             state.isLoading = false;
         })
         builder.addCase(deleteUserThunk.rejected, (state: UsersStateType) => {

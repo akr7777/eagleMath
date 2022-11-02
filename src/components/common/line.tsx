@@ -16,9 +16,9 @@ import React, {ChangeEvent} from "react";
 import {
     addCategoryThunk,
     addToFavoritesThunk, deleteCategoryThunk,
-    deleteFromFavoritesThunk, getAllCategoriesThunk,
-    IdFiledType, setEditNameIdAC, setNewContentName
-} from "../../store/features/categoriesSlice";
+    deleteFromFavoritesThunk, getAllCategoriesThunk
+} from "../../store/features/categoriesThunks";
+import {IdFiledType, setEditNameIdAC, setNewContentName} from "../../store/features/categoriesSlice";
 import {useSelector} from "react-redux";
 import {RootState, useAppDispatch} from "../../store/store";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -54,15 +54,11 @@ const Line = (props: LinePropsType) => {
         dispatch(setNewContentName(props.label));
     }
     const cancelEditing = () => {
-        //setContentName(props.label);
-        //setIsEditContentName(false);
         dispatch(setNewContentName(props.label));
         dispatch(setEditNameIdAC("-1"));
     }
     const changeContentName = () => {
         dispatch(renameMaterialThunk({contentId: props.contentId, newName: contentName}));
-        //setIsEditContentName(false);
-        //dispatch(setEditNameIdAC(props.contentId));
         dispatch(setEditNameIdAC("-1"));
     }
 
@@ -86,7 +82,6 @@ const Line = (props: LinePropsType) => {
             dispatch(addTaskThunk(props.contentId));
     }
 
-    //console.log('isMaterialStudied=',isMaterialStudied, 'label=', props.label, 'contentType=', props.contentType)
 
     return <>
         {/*Label*/}
@@ -133,7 +128,6 @@ const Line = (props: LinePropsType) => {
         }
 
         {/*Edit this material. For admin only*/}
-        {/* { isAdmin && <ModeEditIcon onClick={ () => setIsEditContentName(true) } cursor={'pointer'}/> } */}
         {isAdmin && <ModeEditIcon onClick={editContentTumbler} cursor={'pointer'}/>}
 
         {/*Move to other folder (category)*/}
@@ -149,14 +143,9 @@ const Line = (props: LinePropsType) => {
         {isAdmin && !props.isMaterial && <LibraryAddIcon cursor={'pointer'} onClick={addCategoryClickHandler}/>}
 
         {/*Is material learned*/}
-        {/*{props.contentType} {isMaterialStudied && <Typography>Studied</Typography>}*/}
         {
-            /*(props.contentType === "M" || props.contentType === "T")*/ props.isMaterial &&
             (
                 props.isMaterialStudied && <CheckCircleIcon color={"success"}/>
-                /*props.isMaterialStudied
-                    ? <CheckCircleIcon color={"success"}/>
-                    : <CheckCircleIcon color={"warning"}/>*/
             )
         }
 

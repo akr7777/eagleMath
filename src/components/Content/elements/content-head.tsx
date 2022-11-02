@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {getFavoritesThunk, addToFavoritesThunk, deleteFromFavoritesThunk} from "../../../store/features/dashboardSlice";
+import {getFavoritesThunk, addToFavoritesThunk, deleteFromFavoritesThunk} from "../../../store/features/dashboardThunks";
 import {RootState, useAppDispatch} from "../../../store/store";
 import {IdFiledType} from "../../../store/features/categoriesSlice";
 import {useSelector} from "react-redux";
