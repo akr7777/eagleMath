@@ -35,6 +35,7 @@ export const initNewChapter: ContentType = {
     content: '',
 }
 
+
 const Content = () => {
     const dispatch = useAppDispatch();
     const {contentId} = useParams();
